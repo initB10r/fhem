@@ -1,0 +1,10 @@
+contrib/
+cache/
+restoreDir/
+NINA/
+unused/
+log/
+demolog/
+.bash_history
+.git-credentials
+.gitconfig
