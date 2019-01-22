@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<div class="gridster">
+<ul>
+<li data-row="1" data-col="1" data-sizex="1" data-sizey="9" data-template="menu.html"></li>
+
+<li data-row="1" data-col="2" data-sizex="2" data-sizey="2">
+	<header>Jalousie Haus</header>
+	<div data-type="label" data-device="fpJalousieAll" data-get="pct" data-unit="%" class="top-space big thin"></div>
+	
+	<div data-type="popup" data-height="190px" data-width="250px">
+	<div data-type="link" data-color="grey" data-border-color="grey" data-icon="fa-sort" class="top-space round">
+		auf / ab
+	</div>
+	<div class="dialog">
+		<header>Jalousie Jalousie Haus</header>
+		<div class="top-space inline">
+			<div data-type="switch"
+				data-device="fpJalousieAll"
+				data-get="pct"
+				data-get-on="25"
+				data-get-off="((?!25).)*"
+				data-set="pct"
+				data-set-on="25"
+				data-set-off="25"
+				data-on-color="white"
+				data-on-background-color="green"
+				data-icon="fa-minus">
+			</div>			
+			<div class="mini">25%</div>
+		</div>
+		<div class="top-space inline">
+			<div data-type="switch"
+				data-device="fpJalousieAll"
+				data-get="pct"
+				data-get-on="50"
+				data-get-off="((?!50).)*"
+				data-set="pct"
+				data-set-on="50"
+				data-set-off="50"
+				data-on-color="white"
+				data-on-background-color="green"
+				data-icon="fa-bars">
+			</div>			
+			<div class="mini">50%</div>
+		</div>
+		<div class="top-space inline">
+			<div data-type="switch"
+				data-device="fpJalousieAll"
+				data-get="pct"
+				data-get-on="75"
+				data-get-off="((?!75).)*"
+				data-set="pct"
+				data-set-on="75"
+				data-set-off="75"
+				data-on-color="white"
+				data-on-background-color="green"
+				data-icon="fa-align-justify">
+			</div>			
+			<div class="mini">75%</div>
+		</div>
+		<div class="newline"></div>
+		<div class="top-space inline">
+			<div data-type="switch"
+				data-device="fpJalousieAll"
+				data-get="pct"
+				data-get-on="1"
+				data-get-off="((?!1).)*"
+				data-set="pct"
+				data-set-on="1"
+				data-set-off="1"
+				data-on-color="white"
+				data-on-background-color="green"
+				data-icon="fa-chevron-down">
+			</div>
+			<div class="mini">zu</div>
+		</div>
+		<div class="top-space inline">
+			<div data-type="switch"
+				data-device="fpJalousieAll"
+				data-get="pct"
+				data-get-on="100"
+				data-get-off="((?!100).)*"
+				data-set="pct"
+				data-set-on="100"
+				data-set-off="100"
+				data-on-color="white"
+				data-on-background-color="green"
+				data-icon="fa-chevron-up">
+			</div>			
+			<div class="mini">auf</div>
+		</div>
+		</div>
+	</div>
+	</div>
+
+	<div data-type="slider" data-device="fpJalousieAll" data-get="pct" data-set="pct" data-height="113" class="top-space"></div>
+
+	<div data-type="symbol" data-device="fpJalousieAll" data-get="pct" data-states='[0,1]' data-colors='["red","green"]'  data-icon="fa-align-justify" class="small right"></div>
+	</ul>
+</div>
+</body>
+</html>

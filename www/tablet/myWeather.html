@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<div class="page" id="content4">
+<div class="gridster">
+<ul>
+
+	<li class="" data-row="1" data-col="1" data-sizex="6" data-sizey="4">
+		<div class="container weather">
+			<header  class="">Wetter in Friemersheim<div data-type="label" 
+							data-device="Wetter" 
+							data-get="_station"></div></header>
+			<table width="100%">
+				
+				<td style="" class="A2">
+					
+						<div data-type="weather"
+								data-device="Wetter"
+								data-get="weather"
+								data-imageset="kleinklima"
+								class="right-space"
+								style="font-size:100%"></div>
+						<br>
+						<div data-type="label"
+							data-device="Wetter"
+							data-get="condition" class="large shadow"></div>
+				
+				</td>	
+				<td style=""; text-align: left; class="B2"><center>
+					<div class="cell">
+						<div class="compressed normal shadow inline" data-type="symbol" data-icon="wi wi-thermometer" data-off-color="#999"></div>	
+							<div data-type="label"
+								data-device="Wetter"
+								data-get="temperature"
+								data-part="1"
+								data-unit=" °C"
+								data-limits="[-50,0,10,25,30,40]"
+								data-colors='["#9999ff","#ffbdff","#FAA460","#ff6900","#ff3333","#ff0000"]' 
+								class="w1x big inline shadow">
+							</div>
+					</div>	
+						
+					<div class="cell">									
+							<div class="compressed normal shadow inline" data-type="symbol" data-icon="wi wi-humidity" data-off-color="#999"></div> 							
+							<div data-type="label"
+								data-device="Wetter"
+								data-get="humidity"
+								data-part="1"
+								data-limits="[0,40,60]"
+								data-colors='["#9999ff","#FAA460","#ff6900"]'
+								data-unit=" %" 
+								class="w1x big inline shadow">
+							</div>
+					</div>	
+					<div class="cell">									
+							<div class="compressed normal shadow inline" data-type="symbol" data-icon="fa-eye-slash" data-off-color="#999"></div> 							
+							<div data-type="label"
+								data-device="Wetter"
+								data-get="visibility" 
+								data-limits="[-50,0,10,25,30,40]" 
+								data-colors='["#9999ff","#ffbdff","#FAA460","#ff6900","#ff3333","#ff0000"]' 
+								data-unit=" km"
+								class="w1x big inline shadow">
+							</div>
+					</div>	
+					<div class="cell">									
+							<div class="compressed normal shadow inline top-narrow" data-type="symbol" data-icon="wi wi-strong-wind" data-off-color="#999"></div>	
+							<div data-type="label"
+								data-device="Wetter"
+								data-get="wind" 
+								data-unit=" km/h"
+								data-limits="[0, 19, 28, 38, 49, 74, 102, 117]"
+								data-colors='["#dddddd","#dddddd","#FAA460","#FAA460","#ff9999","#ff6666","#ff3333","#ff0000"]'
+								class="w1x big inline shadow ">
+							</div>
+					</div>
+					<div class="cell">									
+							<div class="compressed normal shadow inline top-narrow" data-type="symbol" data-icon="wi wi-barometer" data-off-color="#999"></div>	
+						<div data-type="label"
+							data-device="Wetter"
+							data-get="pressure"
+							data-part="1"
+							data-unit=" hPa"
+							data-limits="[0,950,1000]"
+							data-colors='["#ff9999","#FAA460","#9999ff"]' 
+							class="w1x big inline shadow">
+							</div>
+					</div>
+				</td>		
+			</table>
+		</div>
+	</li>
+
+	<li class="" data-row="1" data-col="7" data-sizex="2" data-sizey="2">
+		<header class="" >Windrichtung</header>
+
+					<div class="cell center-align normal black" data-type="wind_direction" data-device="Wetter" data-direction="windDir" data-speed="wind"	data-calm="-" data-part="1" data-size="80" data-tickstep="45" data-angleoffset="0"></div>
+
+	</li>
+
+	<li class="" data-row="1" data-col="9" data-sizex="2" data-sizey="2">
+		<header class="" ><div data-type="label" data-device="Mondphasen" data-part="1" data-get="STATE"></div></header>
+										
+			<div data-type="image"
+				data-device="Mondphasen"
+				data-get="ftui"
+				style="margin-top:7px"
+				class="smal"
+				data-size="60%">
+				</div>
+	   
+	</li>
+
+	<li class="" data-row="5" data-col="9" data-sizex="2" data-sizey="2">
+		<header class="" >Ozon?</header>
+		<div class="centered">
+			<div data-type="label" 
+				data-device="UVOZON" 
+				data-get="Ozon" 
+				data-unit=" µg/m3" 
+				data-limits='[0,110,180,200,360]'
+				data-colors='["#FAA460","yellow","orange","red","fuchsia"]'
+				style="margin-top:7px"
+				class="big shadow"></div>
+			<div data-type="label" data-device="UVOZON" data-get="OzonDesc" style="margin-top:1px" class="truncate normal"></div>
+		</div>    
+	</li>
+	
+	<li class="" data-row="7" data-col="9" data-sizex="2" data-sizey="2">
+		<header class="" >UV</header>
+		<div class="centered">
+			<div data-type="label" 
+				data-device="Wetter" 
+				data-get="fc0_uv"  
+				data-unit=" min" 
+				data-limits='[0,29,59,119,239]'
+				data-colors='["fuchsia","red","#FAA460","#FFDAB9", "white"]'
+				style="margin-top:7px"
+				class="big shadow"></div>
+			<div data-type="label" data-device="UVOZON" data-get="UVDesc" style="margin-top:1px" class="truncate normal"></div>
+		</div>   
+	</li>
+	<li class="" data-row="5" data-col="1" data-sizex="2" data-sizey="4">
+		<header class=""><div data-type="label" data-device="Wetter" data-get="fc0_date"></div></header>					
+		<div class="container weather">
+			<div class="sheet">	
+				<div class="row">								
+					<div data-type="weather" data-device="Wetter" data-get="fc0_weatherDay" data-imageset="kleinklima" class="small"></div>
+					<div class="normal" data-type="label" data-device="Wetter" data-get="fc0_condition"></div>
+					<div class="hbox">										
+						<div data-type="label" class="small inline" >Temp:</div>	
+						<div data-type="label" data-device="Wetter" data-get="fc0_tempMin" data-limits="[-50,0,10,25,30,40]" data-colors='["#9999ff","#ffbdff","#FAA460","#ff6900","#ff3333","#ff0000"]' data-unit=" °C" class="normal inline"></div>
+						<div data-type="label" class="small inline" >/</div>	
+						<div data-type="label" data-device="Wetter" data-get="fc0_tempMax" data-limits="[-50,0,10,25,30,40]" data-colors='["#9999ff","#ffbdff","#FAA460","#ff6900","#ff3333","#ff0000"]' data-unit=" °C" class="normal inline"></div>
+					</div>
+					<div class="hbox">
+						<div data-type="label" class="small inline" >Regenrisiko:</div>	
+						<div data-type="label" data-device="Wetter" data-get="fc0_chOfRainDay" data-limits="[0,30,140]" data-colors='["#FAA460","#9999ff","#ff0000"]' data-unit=" %" class="normal inline"></div>
+					</div>
+					<div class="hbox">
+						<div data-type="label" class="small inline" >Sonnenanteil:</div>
+						<div data-type="label" data-device="Wetter" data-get="fc0_sun" data-limits="[0,5,10]" data-colors='["#FAA460","#9999ff","#ff0000"]' data-unit=" %" class="normal inline"></div>
+					</div>
+				<header class="semitransparentheaderround" >Nacht</header>
+				<div data-type="weather" data-device="Wetter" data-get="fc0_weatherNight" data-imageset="kleinklima" class="small"></div>
+				</div>
+			</div>								
+		</div>
+	</li>
+	<li class="" data-row="5" data-col="3" data-sizex="2" data-sizey="4">
+		<header class=""><div data-type="label" data-device="Wetter" data-get="fc1_date"></div></header>					
+		<div class="container weather">
+			<div class="sheet">	
+				<div class="row">								
+					<div data-type="weather" data-device="Wetter" data-get="fc1_weatherDay" data-imageset="kleinklima" class="small"></div>
+					<div class="normal" data-type="label" data-device="Wetter" data-get="fc1_condition"></div>
+					<div class="hbox">										
+						<div data-type="label" class="small inline" >Temp:</div>	
+						<div data-type="label" data-device="Wetter" data-get="fc1_tempMin" data-limits="[-50,0,10,25,30,40]" data-colors='["#9999ff","#ffbdff","#FAA460","#ff6900","#ff3333","#ff0000"]' data-unit=" °C" class="normal inline"></div>
+						<div data-type="label" class="small inline" >/</div>	
+						<div data-type="label" data-device="Wetter" data-get="fc1_tempMax" data-limits="[-50,0,10,25,30,40]" data-colors='["#9999ff","#ffbdff","#FAA460","#ff6900","#ff3333","#ff0000"]' data-unit=" °C" class="normal inline"></div>
+					</div>
+					<div class="hbox">
+						<div data-type="label" class="small inline" >Regenrisiko:</div>	
+						<div data-type="label" data-device="Wetter" data-get="fc1_chOfRainDay" data-limits="[0,30,140]" data-colors='["#FAA460","#9999ff","#ff0000"]' data-unit=" %" class="normal inline"></div>
+					</div>
+					<div class="hbox">
+						<div data-type="label" class="small inline" >Sonnenanteil:</div>
+						<div data-type="label" data-device="Wetter" data-get="fc1_sun" data-limits="[0,5,10]" data-colors='["#FAA460","#9999ff","#ff0000"]' data-unit=" %" class="normal inline"></div>
+					</div>
+				<header class="semitransparentheaderround" >Nacht</header>
+				<div data-type="weather" data-device="Wetter" data-get="fc1_weatherNight" data-imageset="kleinklima" class="small"></div>
+				</div>
+			</div>								
+		</div>
+	</li>
+
+	<li class="" data-row="5" data-col="5" data-sizex="2" data-sizey="4">
+		<header class=""><div data-type="label" data-device="Wetter" data-get="fc2_date"></div></header>					
+		<div class="container weather">
+			<div class="sheet">	
+				<div class="row">								
+					<div data-type="weather" data-device="Wetter" data-get="fc2_weatherDay" data-imageset="kleinklima" class="small"></div>
+					<div class="normal" data-type="label" data-device="Wetter" data-get="fc2_condition"></div>
+					<div class="hbox">										
+						<div data-type="label" class="small inline" >Temp:</div>	
+						<div data-type="label" data-device="Wetter" data-get="fc2_tempMin" data-limits="[-50,0,10,25,30,40]" data-colors='["#9999ff","#ffbdff","#FAA460","#ff6900","#ff3333","#ff0000"]' data-unit=" °C" class="normal inline"></div>
+						<div data-type="label" class="small inline" >/</div>	
+						<div data-type="label" data-device="Wetter" data-get="fc2_tempMax" data-limits="[-50,0,10,25,30,40]" data-colors='["#9999ff","#ffbdff","#FAA460","#ff6900","#ff3333","#ff0000"]' data-unit=" °C" class="normal inline"></div>
+					</div>
+					<div class="hbox">
+						<div data-type="label" class="small inline" >Regenrisiko:</div>	
+						<div data-type="label" data-device="Wetter" data-get="fc2_chOfRainDay" data-limits="[0,30,140]" data-colors='["#FAA460","#9999ff","#ff0000"]' data-unit=" %" class="normal inline"></div>
+					</div>
+					<div class="hbox">
+						<div data-type="label" class="small inline" >Sonnenanteil:</div>
+						<div data-type="label" data-device="Wetter" data-get="fc2_sun" data-limits="[0,5,10]" data-colors='["#FAA460","#9999ff","#ff0000"]' data-unit=" %" class="normal inline"></div>
+					</div>
+				<header class="semitransparentheaderround" >Nacht</header>
+				<div data-type="weather" data-device="Wetter" data-get="fc2_weatherNight" data-imageset="kleinklima" class="small"></div>
+				</div>
+			</div>								
+		</div>
+	</li>
+
+	<li class="" data-row="5" data-col="7" data-sizex="2" data-sizey="4">
+		<header class=""><div data-type="label" data-device="Wetter" data-get="fc3_date"></div></header>					
+		<div class="container weather">
+			<div class="sheet">	
+				<div class="row">								
+					<div data-type="weather" data-device="Wetter" data-get="fc3_weatherDay" data-imageset="kleinklima" class="small"></div>
+					<div class="normal" data-type="label" data-device="Wetter" data-get="fc3_condition"></div>
+					<div class="hbox">										
+						<div data-type="label" class="small inline" >Temp:</div>	
+						<div data-type="label" data-device="Wetter" data-get="fc3_tempMin" data-limits="[-50,0,10,25,30,40]" data-colors='["#9999ff","#ffbdff","#FAA460","#ff6900","#ff3333","#ff0000"]' data-unit=" °C" class="normal inline"></div>
+						<div data-type="label" class="small inline" >/</div>	
+						<div data-type="label" data-device="Wetter" data-get="fc3_tempMax" data-limits="[-50,0,10,25,30,40]" data-colors='["#9999ff","#ffbdff","#FAA460","#ff6900","#ff3333","#ff0000"]' data-unit=" °C" class="normal inline"></div>
+					</div>
+					<div class="hbox">
+						<div data-type="label" class="small inline" >Regenrisiko:</div>	
+						<div data-type="label" data-device="Wetter" data-get="fc3_chOfRainDay" data-limits="[0,30,60]" data-colors='["#FAA460","#9999ff","#ff0000"]' data-unit=" %" class="normal inline"></div>
+					</div>
+					<div class="hbox">
+						<div data-type="label" class="small inline" >Sonnenanteil:</div>
+						<div data-type="label" data-device="Wetter" data-get="fc3_sun" data-limits="[0,30,60]" data-colors='["#FAA460","#9999ff","#ff0000"]' data-unit=" %" class="normal inline"></div>
+					</div>
+				<header class="semitransparentheaderround" >Nacht</header>
+				<div data-type="weather" data-device="Wetter" data-get="fc3_weatherNight" data-imageset="kleinklima" class="small"></div>
+				</div>
+			</div>								
+		</div>
+	</li>
+
+	<li class="" data-row="3" data-col="7" data-sizex="4" data-sizey="2">
+		<div class="container weather">
+			<table width="100%">
+				<header class="" ><div data-type="label" 
+								data-device="Wetter" 
+								data-get="fc0_date"
+								style="display:inline"></div></header>
+						<div data-type="label"
+							data-device="Wetter"
+							style="margin-top:7px"
+							data-get="fc0_text" class="small" ></div>
+			</table>
+
+			<table width="100%">
+				<header class="semitransparentheaderround" ><div data-type="label" 
+							data-device="Wetter" 
+							data-get="fc0_date_night"
+							style="display:inline"></div></header>
+					<div data-type="label"
+						data-device="Wetter"
+						style="margin-top:7px"
+						data-get="fc0_text_night" class="small" ></div>
+			</table>
+		</div>
+	</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

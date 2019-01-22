@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * Just another dashboard for FHEM
+     *
+     * Version: 1.4.4
+     * Requires: jQuery v1.7+, font-awesome, jquery.gridster, jquery.toast
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * - create a new folder named 'tablet' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet
+     * - add 'define tablet_ui HTTPSRV tablet ./www/tablet Tablet Frontend' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet/
+     */
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="widget_base_width" content="116">
+    <meta name="widget_base_height" content="131">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+    <meta name="debug" content="0"> <!-- 1=output to console;0=no output -->
+    <!-- retina iPhone iOS 7 -->
+    <link rel="apple-touch-icon" href="/fhem/tablet/images/snail120.png" sizes="120x120">
+    <!-- retina iPad iOS 7 -->
+    <link rel="apple-touch-icon" href="/fhem/tablet/images/snail152.png" sizes="152x152">
+    
+    <link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.css" />
+    <link rel="stylesheet" href="/fhem/tablet/lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="/fhem/tablet/lib/jquery.toast.min.css" />
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="/fhem/tablet/css/fhem-green-ui.css" / -->
+    <link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui-user.css" />
+
+    <script src="/fhem/pgm2/jquery.min.js" defer></script>
+    <script src="/fhem/tablet/lib/jquery.toast.min.js" defer></script>
+    <script src="/fhem/tablet/lib/jquery.gridster.min.js" defer></script>
+    <script src="/fhem/tablet/js/fhem-tablet-ui.min.js" defer></script>
+
+    <!-- Remove this line to enable for usage with WebViewControl
+    <script defer>var wvcDevices = {'12345': 'Tablet'}; var wvcUserCssFile="webviewcontrol.css"</script>
+    <script src="/fhem/pgm2/cordova-2.3.0.js" defer></script>
+    <script src="/fhem/pgm2/webviewcontrol.js" defer></script>
+    <!-- End for WebViewControl -->
+
+    <title>FHEM-Tablet-UI</title>
+</head>
+<body>
+
+<div class="gridster">
+<ul>
+<li data-row="1" data-col="1" data-sizex="6" data-sizey="4" class="semitransparent">
+<header>                Wetter in Friemersheim            </header>
+<table border="10px" width="100%">       
+	<tr>
+		<td class="A2">A2
+			<div data-type="label" data-device="Wetter" data-get="fc0_date"></div>
+		</td>
+		<td class="B2">B2
+			<center>
+				<div data-type="label" class="inline small"><big>?</big><small> Sonne:</small><br></div>
+				<div data-type="label" data-device="Sonnenaufgang" data-get="state"></div>
+			</center>
+		</td>
+		<td class="C2">C2
+			<center>
+				<div data-type="label" class="inline small"><big>?</big><small> Sonne:</small><br></div>
+				<div data-type="label" data-device="Sonnenuntergang" data-get="state"></div>
+			</center>
+		</td>
+		<td class="D2">D2
+			<center>
+				<div data-type="label" class="inline small"><small>Sichtweite:</small><br></div>
+		        <div data-type="label" data-device="Wetter" data-get="visibility" data-unit=" km">
+		    </center>
+		</td>
+	</tr>
+	<tr>
+		<td class="A3">A3
+			<div data-type="label"><small>Temp<br></small></div>
+			<center>
+				<div data-type="label" data-device="Wetter" data-get="temperature" data-limits="[-50,0,10,25,30,40]" data-colors='["#9999ff","#ffbdff","#aa6900","#ff6900","#ff3333","#ff0000"]' data-unit="%B0C%0A" class="inline cell big"></div>
+		    </center>
+		</td>
+		<td class="B_C_3_4" colspan="2" rowspan="2">B_C_3_4
+			<div data-type="rotor" class="fade semitransparent">
+			<ul>
+				<li>
+					<div data-type="weather" data-device="Wetter" data-get="fc0_weatherMorning" data-imageset="kleinklima" style="font-size:250%"></div>
+					Morgens:&nbsp
+					<div data-type="label" data-device="Wetter" data-get="fc0_weatherMorning" class="inline"></div>
+				</li>
+				<li>
+					<div data-type="weather" data-device="Wetter" data-get="fc0_weatherDay" data-imageset="kleinklima" style="font-size:250%"></div>
+			        Tagsüber:&nbsp
+			        <div data-type="label" data-device="Wetter" data-get="fc0_weatherDay" class="inline"></div>
+			    </li>
+				<li>
+					<div data-type="weather" data-device="Wetter" data-get="fc4_weatherEvening" data-imageset="kleinklima" style="font-size:250%"></div>
+					Abend:&nbsp
+					<div data-type="label" data-device="Wetter" data-get="fc4_weatherEvening" class="inline"></div>
+				</li>
+				<li>
+					<div data-type="weather" data-device="Wetter" data-get="fc4_weatherNight" data-imageset="kleinklima" style="font-size:250%"></div>
+			        Nacht:&nbsp
+			        <div data-type="label" data-device="Wetter" data-get="fc4_weatherNight" class="inline"></div>
+			    </li>
+			    fc4_weatherEvening
+			</ul>
+		</div>
+		</td>
+		<td class="D3">D3
+			<center>
+				<div class="mini" data-type="wind_direction"
+				    data-device="Wetter"
+				    data-direction="windDir"
+				    data-speed="wind"
+				    data-speed-part="-1"
+				    data-calm="-"></div>
+			</center>
+		</td>
+	</tr>
+	<tr>
+		<td class="A4">A4
+			<div data-type="label"><small>Feuchte<br></small></div>
+			<center>
+				<div data-type="label" data-device="Wetter" data-get="humidity" data-limits="[0,40,60]" data-colors='["#9999ff","#aa6900","#ff6900"]' data-unit=" %" class="inline cell big"></div>
+			</center>
+		</td>
+		<td class="D4">D4
+			<center>
+				<div data-type="label"><small>Wind</small><br></div>
+				<div data-type="label" data-device="Wetter" data-get="wind" data-unit=" km/h" data-limits="[0,19,28,38,49,74,102,117]" data-colors='["#ffffff","#dddddd","#aa6900","#aa6900","#ff9999","#ff6666","#ff3333","#ff0000"]' style="display:inline" class="inline"></div>
+			</center>
+		</td>
+	</tr>
+	<tr>
+		<td class="A5">A5
+			<center><div data-type="label" class="inline"><small>UV-Index</small></div><br>
+				<div data-type="label" data-device="Wetter" data-get="fc0_uv" 
+					data-limits="[0,2,10]" data-colors='["grey","orange","red"]' style="display:inline"></div>
+			</center>
+		</td>
+		<td class="B5">B5
+			<center>
+				<div data-type="label" class="inline"><small>Regenrisiko</small></div><br>
+				<div data-type="label" data-device="Wetter" data-get="fc0_chOfRainDay" data-unit=" %" data-limits="[0,10,20,30,40,50,60,70,80,90,100]" data-colors='["#32AD4F","#3AAB2C","green","green","green","#F6AA1D","green","green","green","green","#F6451D"]' style="display:inline"></div>
+			</center>
+		</td>
+		<td class="C5">C5
+			<center>
+				<div data-type="label" class="inline"><small>Taupunkt</small></div><br>
+				<div data-type="label" data-device="Wetter" data-get="dewPoint" data-unit="%B0C%0A"></div>
+			</center>
+		</td>
+		<td class="D5">D5
+			<center>
+				<div data-type="label" class="inline"><small>Luftdruck</small></div><br>
+				<div data-type="label" data-device="Wetter" data-get="pressure" data-unit=" hPa" data-limits="[0,950,1000]" data-colors='["#ff9999","#aa6900","#9999ff"]'></div>
+				<div data-type="klimatrend" data-device="Wetter" data-get="statPressureTendency"></div>
+			</center>
+		</td>
+	</tr>
+</table>
+</li>
+</ul>
+
+
+</div>
+</body>
+</html>

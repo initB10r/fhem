@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+     /* FHEM tablet ui */
+     /*
+     * UI builder framework for FHEM
+     *
+     * Version: 2.2.0
+     * URL: https://github.com/knowthelist/fhem-tablet-ui
+     *
+     * Copyright (c) 2015-2016 Mario Stephan <mstephan@shared-files.de>
+     * Under MIT License (http://www.opensource.org/licenses/mit-license.php)
+     *
+     * !!!! Evaluation version - run only in a staging enviroment !!!!
+     *
+     * - create a new folder named 'tablet_eval' in /<fhem-path>/www
+     * - copy all files incl. sub folders into /<fhem-path>/www/tablet_eval
+     * - add 'define TABLETUIEVAL HTTPSRV ftui_eval ./www/tablet_eval Tablet-EVAL' in fhem.cfg
+     * - Tadaaa! A new fhem ui in http://<fhem-url>:8083/fhem/tablet_eval/
+     */
+    <meta name="widget_base_width" content="81">
+    <meta name="widget_base_height" content="38">
+    <meta name="gridster_disable" content="0">
+    -->
+    <meta name="longpoll" content="1">
+    <meta name="longpoll_type" content="websocket">
+    <meta name="longpoll_filter" content=".*">
+    <meta name="longpoll_maxage" content="240">
+    <meta name="shortpoll_interval" content="10">
+    
+    <meta name="debug" content="1"> <!-- verbose level 1-6 = output to console;0 = not output -->
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <!-- retina iPhone iOS 7 -->
+    <link rel="apple-touch-icon" href="/fhem/tablet/images/snail120.png" sizes="120x120">
+    <!-- retina iPad iOS 7 -->
+    <link rel="apple-touch-icon" href="/fhem/tablet/images/snail152.png" sizes="152x152">
+
+    <link rel="stylesheet" href="lib/jquery.gridster.min.css" />
+    <link rel="stylesheet" href="css/fhem-tablet-ui.css" />
+    <link rel="stylesheet" href="css/fhem-mobil-ui.css" />
+    <link rel="stylesheet" href="lib/font-awesome.min.css" />
+    <link rel="stylesheet" href="lib/jquery.toast.min.css" />
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
+    <link rel="stylesheet" href="css/fhem-tablet-ui-user.css">
+
+    <script src="../pgm2/jquery.min.js"></script>
+    <script src="lib/jquery.toast.min.js"></script>
+    <script src="lib/jquery.gridster.min.js"></script>
+    <script src="js/fhem-tablet-ui.js" defer></script>
+
+    <title>Schneckendashboard</title>
+</head>
+<body>
+    <nav id="menu">
+    <div data-type="link" class="default top-space-2x left-space-3x"
+    	data-url="#myDashboard.html"
+        data-active-pattern=".*#myDashboard.html"
+        data-load="#content1"
+        data-icon="fa-home" 
+        data-color="white"
+        data-width="115"
+        data-text-align="middle">
+    <span>Dashboard</span></div>
+    <div data-type="link" class="nocache top-space-2x left-space-3x"
+    	data-url="#myGarden.html"
+        data-active-pattern=".*#myGarden.html"
+        data-load="#content2"
+        data-icon="fa-leaf"
+        data-color="white"
+        data-width="115"
+        data-text-align="middle">
+    <span>Garten</span></div>
+    <div data-type="link" class="nocache top-space-2x left-space-3x"
+    	data-url="#myKodi.html"
+	    data-active-pattern=".*#myKodi.html"
+        data-load="#content3"
+        data-icon="fa-music" 
+        data-color="white"
+        data-width="115"
+        data-text-align="middle">
+    <span>Kodi</span></div>
+    <div data-type="link" class="nocache top-space-2x left-space-3x"
+    	data-url="#myWeather.html"
+	    data-active-pattern=".*#myWeather.html"
+        data-load="#content4"
+        data-icon="fa-sun-o" 
+        data-color="white"
+        data-width="115"
+        data-text-align="middle">
+    <span>Wetter</span></div>
+    
+    <div data-type="link" class="nocache top-space-2x left-space-3x"
+    	data-url="#myCalendar.html"
+	    data-active-pattern=".*#myCalendar.html"
+        data-load="#content5"
+        data-icon="fa-calendar" 
+        data-color="white"
+        data-width="115"
+        data-text-align="middle">
+    <span>Kalender</span></div>
+
+    <div data-type="link" class="blank nocache top-space-2x left-space-3x"
+    	data-url="http://schneckenfhem:8083/fhem"
+        data-icon="fa-cogs" 
+        data-color="white"
+        data-width="115"
+        data-text-align="middle">
+    <span>FHEM Main</span></div>
+    <div data-type="link" class="blank nocache top-space-2x left-space-3x"
+    	data-url="http://schneckenpi:8083/fhem"
+        data-icon="fa-cogs" 
+        data-color="white"
+        data-width="115"
+        data-text-align="middle">
+    <span>FHEM rpi</span></div>
+    
+    <div data-type="link" class="nocache top-space-2x left-space-3x"
+    	data-url="#myTest.html"
+	    data-active-pattern=".*#myTest.html"
+        data-load="#content6"
+        data-icon="fa-code" 
+        data-color="white"
+        data-width="115"
+        data-text-align="middle">
+    <span>Testseite</span></div>
+    </nav>
+
+
+    <main id="panel" class="row">
+	    <header id="header-nav" class="bg-lightgray">
+	    <div data-type="slideout" class="col-25 big left-align" style="padding-top:10px;"></div>
+	    <div id="linkname" class="col-50 bigger bold center-align" style="padding-top:10px"></div>
+	    <div data-type="clock" data-format="d.n.Y H:i" class="col-25 bigger bold right-align" style="padding-top:10px"></div>
+	    </header>
+        <div class="page" id="content1"></div>
+        <div class="page" id="content2"></div>
+        <div class="page" id="content3"></div>
+        <div class="page" id="content4"></div>
+        <div class="page" id="content5"></div>
+        <div class="page" id="content6"></div>
+    </main>
+</body>
+</html>

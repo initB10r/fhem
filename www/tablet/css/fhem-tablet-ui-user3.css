@@ -1,0 +1,230 @@
+div.hide {
+  display: none;
+}
+.xdsoft_datetimepicker {
+    width: 150px !important;
+    height: 350px !important;
+}
+ .xdsoft_datetimepicker .xdsoft_timepicker.active {
+    width: 95% !important;
+ }
+ .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+    height: 280px !important;
+}
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box >div >div {
+    text-align: center !important;
+        height: 50px !important;
+        line-height: 50px !important;
+}
+.xdsoft_datetimepicker .xdsoft_label > .xdsoft_select > div > .xdsoft_option {
+    padding: 2px 25px 2px 5px !important;
+}
+.xdsoft_datetimepicker .xdsoft_calendar th {
+        height: 40px !important;
+}
+.xdsoft_datetimepicker .xdsoft_calendar td,.xdsoft_datetimepicker .xdsoft_calendar th {
+        height: 50px !important;
+}
+.xdsoft_scrollbar {
+    width: 20px !important;
+}
+
+#hier>.label-precomma{
+    font-size:100%;
+}
+#hier>.label-comma{
+    left: 3px;
+    top: 0px;
+    position: relative;
+}
+#hier>.label-aftercomma{
+    font-size:60%;
+    left: 5px;
+    top: 0px;
+    position: relative;
+}
+#hier>.label-unit{
+    font-size:30%;
+    left: -1.3em;
+    top: -1.6em;
+    position: relative;
+}
+
+#hier1>.label-precomma{
+    font-size:100%;
+}
+#hier1>.label-comma{
+    left: 3px;
+    top: 0px;
+    position: relative;
+}
+#hier1>.label-aftercomma{
+    font-size:40%;
+    left: 5px;
+    top: 0px;
+    position: relative;
+}
+#hier1>.label-unit{
+    font-size:40%;
+    left: 1px;
+    top: -1.1em;
+    position: relative;
+}
+
+#hier2>.label-precomma{
+    font-size:100%;
+}
+#hier2>.label-comma{
+    left: 110px;
+    top: 0px;
+    position: absolute;
+}
+#hier2>.label-aftercomma{
+    font-size:80%;
+    left: 10px;
+    top: 0px;
+    position: relative;
+}
+#hier2>.label-unit{
+    font-size:80%;
+    left: -0.1em;
+    top: -0.2em;
+    position: relative;
+}
+#screensaver { 
+  position: absolute; 
+  width: 100%; 
+  height:100%; 
+  left:0px; 
+  top: 0px; 
+  display: none; 
+  z-index:9999; 
+  background-color:#111111;
+}
+.screensaverbig {
+  font-size: 66px;
+}
+.fa-battery-full,.fa-battery-empty{
+/*
+Verkleinere das Batterie-Symbol
+*/
+    font-size: .5em!important;/*.5em=halb so gross wie normal*/
+
+
+	padding-left:1em;
+	line-height:340%;
+
+	/*
+
+	^^^^^^
+	evtl. aktivieren zum ausgleichen (fuer mehr symetrie) - am tablet testen
+	*/
+}
+.nachOben
+{
+	/*
+	*div mit zeile unter thermo-rad anheben (bat,temp,mode)
+	*umfassende div-zeile statt jedes elemnt = besser weil, unabhaengig von schriftgroesse einzelner elemente
+	*/
+
+	margin:0px;
+	padding:0px;
+	/*^^^^
+	*nur um sicher zu gehen*/
+
+	position:relative!important; /*wird benoetigt fuer effekkt*/
+	top:-1.6em!important; /*-20px = 20 Pixel nach oben*/
+	width:inherit;
+}
+
+.clockDots
+{
+	position:relative;
+	top:-1.4em;
+	animation: blink 1.5s steps(5, start) infinite;
+      	-webkit-animation: blink 1.5s steps(5, start) infinite;
+margin-bottom:-1.3em;	
+}
+@keyframes blink {
+      to {
+        visibility: hidden;
+      }
+    }
+    @-webkit-keyframes blink {
+      to {
+        visibility: hidden;
+      }
+    }
+.orange2
+{
+	color:#ffa30d;
+}
+.btn_eco,.btn_eco:before,.btn_eco:after,.btn_eco *
+{
+	color:green!important;
+}
+
+
+.buttonTable,.buttonTable *
+{
+	border-collapse:collapse;
+	border:none;
+	border-spacing:0px;
+	padding:0px;
+	margin:0px;
+}
+
+.table_temp_outside,.table_temp_outside *{
+border-collapse:collapse;
+}
+.table_temp_outside,.table_temp_outside tr{
+width:100%;
+}
+.table_temp_outside td:nth-child(2){
+float:left;
+}
+hr { 
+    width: 90%; 
+    height: 1px; 
+    margin: 0 auto;
+    color: #ffa30d;
+    background: #ffa30d;
+    border:none;
+}
+
+#rechteck {
+   width: 80px; 
+   height: 30px; 
+    background: #111111;
+    border: 3px solid #ffa30d;
+}
+
+@keyframes marquee {
+    0%   { transform: translate(0, 0); }
+    100% { transform: translate(-100%, 0); }
+}
+
+.marquee {
+ width: 350px;
+ margin: 0 auto;
+ overflow: hidden;
+ white-space: nowrap;
+ box-sizing: border-box;
+ /* border: 1px red solid; */
+}
+
+.marquee span {
+    display: inline-block;
+    padding-left: 100%;
+    text-indent: 0;
+    /* border: 1px green solid; */
+    animation: marquee 10s linear infinite;
+     -webkit-animation: marquee 10s linear infinite;
+      -moz-animation: marquee 10s linear infinite;
+       -o-animation: marquee 10s linear infinite;
+}
+
+.marquee:hover {
+  animation-play-state: paused;
+ -webkit-animation-play-state: paused;
+}

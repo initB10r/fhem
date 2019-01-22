@@ -1,0 +1,20 @@
+{
+    "bridge": {
+        "name": "FHEM",
+        "username": "52:54:00:94:85:38",
+        "port": 51826,
+        "pin": "333-28-444"
+    },
+    "platforms": [
+        {
+            "platform": "FHEM",
+            "name": "FHEM",
+            "server": "192.168.146.7",
+            "port": "8083",
+            "ssl": false,
+            "filter": "room=Homekit"
+        }
+     ],
+
+    "accessories": []
+}

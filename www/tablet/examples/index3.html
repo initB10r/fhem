@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 <title>FHEM-Tablet-UI</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="widget_base_width" content="100">
+        <meta name="widget_base_height" content="100">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+        <meta name="debug" content="0"> <!-- 1=output to console;0=no output -->
+		<meta http-equiv="Cache-Control" content="no-store" />
+		<meta name="gridster_disable" content="1">
+
+        <link rel="stylesheet" href="lib/jquery.gridster.min.css" />
+    	<link rel="stylesheet" href="css/fhem-tablet-ui.css" />
+    	<link rel="stylesheet" href="lib/font-awesome.min.css" />
+    	<link rel="stylesheet" href="lib/jquery.toast.min.css" />
+        <link rel="stylesheet" href="lib/openautomation.css" />
+   		<link rel="stylesheet" href="lib/fhemSVG.css" />
+   		<link rel="stylesheet" href="css/fhem-tablet-ui-wdtimer.css" />
+
+        <!-- define your personal style here, it wont be overwritten  -->
+        <link rel="stylesheet" href="css/fhem-tablet-ui-user3.css" />
+		<link rel="stylesheet" href="css/fhem-tablet-ui-weekprofile.css" />
+	
+	<script src="../pgm2/jquery.min.js"></script>
+    <script src="lib/jquery.toast.min.js"></script>
+    <script src="lib/jquery.gridster.min.js"></script>
+    <script src="js/fhem-tablet-ui.js" defer></script>
+    
+    
+    
+
+    <!-- define your personal style here, it wont be overwritten  -->
+    <!-- link rel="stylesheet" href="css/fhem-green-ui.css" / -->
+    <!-- link rel="stylesheet" href="css/fhem-tablet-ui-user.css" / -->
+
+    
+   
+</head>
+
+<body>
+
+<div class="gridster">
+
+<ul>
+
+<!-- ============== Wetter ================ -->
+<!-- ======================================= -->
+<li data-row="1" data-col="2" data-sizex="7" data-sizey="3">
+               <div class="container weather">
+            <header><div class="col-1-3">Mondphase</div><div class="col-1-3">Wetter</div><div class="col-1-3">Ausentemperatur</div>
+			</header></div>
+			<div class="container weather">
+		<div class="col-1-3">
+     <div style="align:center;vertical-align:bottom;color:#ffa30d;font-size:17px">
+            <div data-type="image"
+        		data-device="Mond"
+        		data-get="ftui"
+        		data-size="70"
+        		class="top-narrow-10px"></div>
+    		<div data-type="label" 
+     			data-device="Mond" 
+     			data-get="STATE"></div>
+     </div>
+  </div>  
+ 
+    	<div class="col-1-3">
+    	 <div class="top-narrow">
+	<div style="text-align:center;color:#ffa30d; font-size:70px" data-type="clock" data-format="H i" ></div>
+	<div style="text-align:center;color:#ffa30d; font-size:70px" class="clockDots">:</div>
+</div>
+		<div style="text-align:center;color:#ffa30d; font-size:23px"
+			data-type="clock" 
+			data-format="D  d. F"
+			data-shortday-length="2"
+			class="top-narrow-2x"></div>
+	</div>	
+        <div class="col-1-3">
+        <div style="text-align:center;vertical-align:top;color:#ffa30d; font-size:17px">
+        	<div data-type="label"
+				data-device="HM_Sensor" 
+				data-get="temperature"
+				data-unit=" &deg;C"
+				class="bigger inline top-narrow-2x"></div>
+        	 <div data-type="klimatrend" 
+        		data-device="HM_Sensor" 
+        		data-get="statTemperatureTendency"
+    			data-refperiod="1"
+    			data-stagnating-color="green"
+    			data-icon="fa-angle"
+    			data-rising-color="red"
+    			data-falling-color="blue"
+    			data-highmark="1"
+    			data-highmark-icon="fa-angle-double"
+    			data-highmark-rising-color="red"
+    			data-highmark-falling-color="blue"
+    			class="inline bigger top-narrow"></div>
+		</div>
+ 
+        <div style="text-align:center;color:#ffa30d; font-size:23px">
+        	<div data-type="label" 
+		 		data-device="HM_Sensor"
+		 		data-get="statTemperatureMonth"
+		 		data-color="blue"
+		 		data-part="2"
+		 		data-unit=" &deg;C"
+		 		class="inline top-narrow"></div>min
+			 <div data-type="label" 
+		 		data-device="HM_Sensor"
+		 		data-get="statTemperatureMonth"
+		 		data-color="#FF0000"
+		 		data-part="6"
+		 		data-unit=" &deg;C"
+		 		class="inline top-narrow-2x"></div>max
+		 </div>
+        </div></div>
+	<div class="top-space"><hr></div>
+    	 <div class="container weather">
+    	 <div style="color:#ffa30d">
+						<div class="col-1-5">
+    
+						<div data-type="label"
+							class="large" 
+                            data-device="Wetter"
+                            data-get="fc1_day_of_week"></div>
+                        
+			    		<div data-type="weather" 
+                            data-device="Wetter"
+                            data-get="fc1_condition"
+			    			data-imageset="kleinklima"
+                            img style="width:90%"></div>
+
+                            <div data-type="label"
+                            data-device="Wetter"
+                            data-get="fc1_condition"></div>                        
+							<div data-type="label" 
+   		                 	data-device="Wetter"
+							class="large inline"
+                   		 	data-get="fc1_low_c"                            
+		  	 				data-unit=" &deg;C"></div>≈
+                            <div data-type="label" 
+                            data-device="Wetter"
+			    			class="large inline"
+                            data-get="fc1_high_c"
+                           data-unit=" &deg;C"></div>
+                         </div>
+                         <div class="col-1-5">
+    
+							<div data-type="label"
+							class="large" 
+                            data-device="Wetter"
+                            data-get="fc2_day_of_week"></div>
+                        
+			    			<div data-type="weather" 
+                            data-device="Wetter"
+                            data-get="fc2_condition"
+			    			data-imageset="kleinklima"
+                            img style="width:90%"></div>
+
+                            <div data-type="label"
+                            data-device="Wetter"
+                            data-get="fc2_condition"></div>                       
+							<div data-type="label" 
+   		                 	data-device="Wetter"
+							class="large inline"
+                   		 	data-get="fc2_low_c"                            
+		  	 				data-unit=" &deg;C"></div>≈
+                            <div data-type="label" 
+                            data-device="Wetter"
+			    			class="large inline"
+                            data-get="fc2_high_c"
+                           data-unit=" &deg;C"></div>
+                         </div>
+                         <div class="col-1-5">
+    
+							<div data-type="label"
+							class="large" 
+                            data-device="Wetter"
+                            data-get="fc3_day_of_week"></div>
+                        
+			    			<div data-type="weather" 
+                            data-device="Wetter"
+                            data-get="fc3_condition"
+			    			data-imageset="kleinklima"
+                            img style="width:90%"></div>
+
+                            <div data-type="label"
+                            data-device="Wetter"
+                            data-get="fc3_condition"></div>                       
+							<div data-type="label" 
+   		                 	data-device="Wetter"
+							class="large inline"
+                   		 	data-get="fc3_low_c"                            
+		  	 				data-unit=" &deg;C"></div>≈
+                            <div data-type="label" 
+                            data-device="Wetter"
+			    			class="large inline"
+                            data-get="fc3_high_c"
+                           data-unit=" &deg;C"></div>
+                         </div>
+                         <div class="col-1-5">
+							<div data-type="label"
+							class="large" 
+                            data-device="Wetter"
+                            data-get="fc4_day_of_week"></div>
+                        
+			    			<div data-type="weather" 
+                            data-device="Wetter"
+                            data-get="fc4_condition"
+			    			data-imageset="kleinklima"
+                            img style="width:90%"></div>
+
+                            <div data-type="label"
+                            data-device="Wetter"
+                            data-get="fc4_condition"></div>                       
+							<div data-type="label" 
+   		                 	data-device="Wetter"
+							class="large inline"
+                   		 	data-get="fc4_low_c"                            
+		  	 				data-unit=" &deg;C"></div>≈
+                            <div data-type="label" 
+                            data-device="Wetter"
+			    			class="large inline"
+                            data-get="fc4_high_c"
+                           data-unit=" &deg;C"></div>
+                         </div>
+                         <div class="col-1-5">
+						<div data-type="label"
+							class="large" 
+                            data-device="Wetter"
+                            data-get="fc5_day_of_week"></div>
+                        
+			    			<div data-type="weather" 
+                            data-device="Wetter"
+                            data-get="fc5_condition"
+			    			data-imageset="kleinklima"
+                            img style="width:90%"></div>
+
+                            <div data-type="label"
+                            data-device="Wetter"
+                            data-get="fc5_condition"></div>                       
+							<div data-type="label" 
+   		                 	data-device="Wetter"
+							class="large inline"
+                   		 	data-get="fc5_low_c"                            
+		  	 				data-unit=" &deg;C"></div>≈
+                            <div data-type="label" 
+                            data-device="Wetter"
+			    			class="large inline"
+                            data-get="fc5_high_c"
+                           data-unit=" &deg;C"></div>
+                         </div>
+        </div>                 
+	</div>
+</li>
+
+
+</ul></div>
+</body>
+</html>

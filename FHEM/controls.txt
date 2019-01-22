@@ -1,0 +1,3 @@
+http://fhem.de/fhemupdate/controls_fhem.txt
+https://raw.githubusercontent.com/kc-GitHub/FHEM-HM485/master/controls_hm485.txt
+https://raw.githubusercontent.com/knowthelist/fhem-tablet-ui/master/controls_fhemtabletui.txt

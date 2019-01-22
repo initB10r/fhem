@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>IPSec</key>
+			<dict>
+				<key>AuthenticationMethod</key>
+				<string>SharedSecret</string>
+				<key>LocalIdentifier</key>
+				<!-- FRITZ!Box Benutzername -->
+				<string>marc</string>
+				<key>LocalIdentifierType</key>
+				<string>KeyID</string>
+				<key>RemoteAddress</key>
+				<!-- DDNS-URL der FRITZ!Box -->				
+				<string>vpn.bauschlicher.de</string>
+				<key>SharedSecret</key>
+				<data>
+				ZVNIdDhZTmZHZXlvUmNEZg==
+				</data>
+				<key>XAuthEnabled</key>
+				<integer>1</integer>
+				<key>XAuthName</key>
+				<!-- FRITZ!Box Benutzername -->
+				<string>marc</string>
+				<key>XAuthPassword</key>
+				<!-- FRITZ!Box Passwort des Benutzers -->
+				<string>Mh25bh09!</string>
+				<!-- VPN-On-Demand Codeblock -->
+				<key>OnDemandEnabled</key>
+				<integer>1</integer>
+				<key>OnDemandRules</key>
+				<array>
+				<!-- VPN beim Zugriff auf Heimnetz-Adressen aufbauen -->
+					<dict>
+						<key>Action</key>
+						<string>EvaluateConnection</string>
+						<key>ActionParameters</key>
+						<array>
+							<dict>
+								<key>Domains</key>
+								<array>
+									<string>schneckenAlarm</string>
+									<string>schneckenCCU2</string>
+									<string>schneckenDrucker1</string>
+									<string>schneckenfhem</string>
+									<string>schneckenHarmonyHub</string>
+									<string>schneckenNAS</string>
+									<string>schneckenPI</string>
+									<string>schneckenSOGo</string>
+									<string>schneckenKodi</string>
+								</array>
+								<key>RequiredDNSServers</key>
+								<string>192.168.146.8</string>
+								<key>DomainAction</key>
+								<string>ConnectIfNeeded</string>
+							</dict>
+						</array>
+					</dict>
+					<dict>
+						<key>DNSServerAddressMatch</key>
+							<array>
+								<string>192.168.146.8</string>
+								<string>192.168.146.*</string>
+							</array>
+						<key>Action</key>
+						<string>Connect</string>
+					</dict>
+					<dict>
+						<!-- VPN bei ausgewählten WLAN-Netzen deaktivieren -->
+						<key>InterfaceTypeMatch</key>
+						<string>WiFi</string>
+						<key>SSIDMatch</key>
+						<array>
+							<string>schneckenHaus</string>
+							<string>schneckenGast</string>
+						</array>
+						<key>Action</key>
+						<string>Disconnect</string>
+					</dict>
+					<dict>
+						<!-- VPN bei aktiver WLAN-Verbindung aktivieren -->
+						<key>InterfaceTypeMatch</key>
+						<string>WiFi</string>
+						<key>Action</key>
+						<string>Connect</string>
+					</dict>
+					<dict>
+						<!-- VPN im Mobilfunknetz nicht aktivieren -->
+						<key>InterfaceTypeMatch</key>
+						<string>Cellular</string>
+						<key>Action</key>
+						<string>Disconnect</string>
+					</dict>
+					<dict>
+						<!-- VPN Default state -->
+						<key>Action</key>
+						<string>Disconnect</string>
+					</dict>
+				</array>
+				<!-- VPN-On-Demand Codeblock ENDE-->
+			</dict>
+			<key>IPv4</key>
+			<dict>
+				<key>OverridePrimary</key>
+				<integer>1</integer>
+			</dict>
+			<key>PayloadDescription</key>
+			<string>Configures VPN settings</string>
+			<key>PayloadDisplayName</key>
+			<string>VPN</string>
+			<key>PayloadIdentifier</key>
+			<string>com.apple.vpn.managed.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</string>
+			<key>PayloadType</key>
+			<string>com.apple.vpn.managed</string>
+			<key>PayloadUUID</key>
+			<!-- PayloadUUID -->
+			<string>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</string>
+			<key>PayloadVersion</key>
+			<real>1</real>
+			<key>Proxies</key>
+			<dict>
+				<key>HTTPEnable</key>
+				<integer>0</integer>
+				<key>HTTPSEnable</key>
+				<integer>0</integer>
+			</dict>
+			<key>UserDefinedName</key>
+			<string>schneckenVPN</string>
+			<key>VPNType</key>
+			<string>IPSec</string>
+		</dict>
+	</array>
+	<key>PayloadDisplayName</key>
+	<string>VPN on Demand-Profildatei</string>
+	<key>PayloadIdentifier</key>
+	<!-- PayloadIdentifier -->
+	<string>xxxxxxxxxxxxxxxxxx</string>
+	<key>PayloadRemovalDisallowed</key>
+	<false/>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<!-- PayloadUUID -->
+	<string>xxxxxxxxxxxxxxxxxx</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

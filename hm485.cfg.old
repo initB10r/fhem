@@ -1,0 +1,297 @@
+#################################################################################
+# HM485 Setting
+#
+
+# Serial hm485d
+#define HM485_Interface HM485_LAN /dev/ttyUSB0
+#attr HM485_Interface HM485d_serialNumber 4711
+
+# WIZ hm485d
+#define HM485_Interface HM485_LAN localhost:2000
+#attr HM485_Interface HM485d_bind 1
+#attr HM485_Interface HM485d_detatch 0
+#attr HM485_Interface HM485d_device 192.168.146.14:5000
+#attr HM485_Interface HM485d_logfile 4
+#attr HM485_Interface HM485d_startTimeout 10
+#attr HM485_Interface hmwId 00000001
+#attr HM485_Interface room HM485
+#attr HM485_Interface webCmd RAW 00009067 98 00000001 780e00:RAW 00009067 98 00000001 780e01:discovery start
+
+# HMW Lan Gateway
+define HM485_LAN HM485_LAN 192.168.146.14:1000
+attr HM485_LAN hmwId 00000001
+attr HM485_LAN room HM485
+
+#################################################################################
+# RS 485 I/O Modul 12 Eing?nge, 7 Schaltausg?nge Setting
+#
+define HMW_IO_12_Sw7_DR_JEQ0311021 HM485 00009067
+attr HMW_IO_12_Sw7_DR_JEQ0311021 IODev HM485_LAN
+attr HMW_IO_12_Sw7_DR_JEQ0311021 room HM485
+define FileLog_HMW_IO_12_Sw7_DR_JEQ0311021 FileLog ./log/HMW_IO_12_Sw7_DR_JEQ0311021-%Y.log HMW_IO_12_Sw7_DR_JEQ0311021
+attr FileLog_HMW_IO_12_Sw7_DR_JEQ0311021 logtype text
+attr FileLog_HMW_IO_12_Sw7_DR_JEQ0311021 room FileLog
+
+define HMW_IO_12_Sw7_DR_JEQ0311021_01 HM485 00009067_01
+attr HMW_IO_12_Sw7_DR_JEQ0311021_01 room HM485
+attr HMW_IO_12_Sw7_DR_JEQ0311021_01 subType key
+
+define HMW_IO_12_Sw7_DR_JEQ0311021_02 HM485 00009067_02
+attr HMW_IO_12_Sw7_DR_JEQ0311021_02 room HM485
+attr HMW_IO_12_Sw7_DR_JEQ0311021_02 subType key
+
+define HMW_IO_12_Sw7_DR_JEQ0311021_03 HM485 00009067_03
+attr HMW_IO_12_Sw7_DR_JEQ0311021_03 room HM485
+attr HMW_IO_12_Sw7_DR_JEQ0311021_03 subType key
+
+define HMW_IO_12_Sw7_DR_JEQ0311021_04 HM485 00009067_04
+attr HMW_IO_12_Sw7_DR_JEQ0311021_04 room HM485
+attr HMW_IO_12_Sw7_DR_JEQ0311021_04 subType key
+
+define HMW_IO_12_Sw7_DR_JEQ0311021_05 HM485 00009067_05
+attr HMW_IO_12_Sw7_DR_JEQ0311021_05 room HM485
+attr HMW_IO_12_Sw7_DR_JEQ0311021_05 subType key
+
+define HMW_IO_12_Sw7_DR_JEQ0311021_06 HM485 00009067_06
+attr HMW_IO_12_Sw7_DR_JEQ0311021_06 room HM485
+attr HMW_IO_12_Sw7_DR_JEQ0311021_06 subType key
+
+define HMW_IO_12_Sw7_DR_JEQ0311021_07 HM485 00009067_07
+attr HMW_IO_12_Sw7_DR_JEQ0311021_07 room HM485
+attr HMW_IO_12_Sw7_DR_JEQ0311021_07 subType key
+
+define HMW_IO_12_Sw7_DR_JEQ0311021_08 HM485 00009067_08
+attr HMW_IO_12_Sw7_DR_JEQ0311021_08 room HM485
+attr HMW_IO_12_Sw7_DR_JEQ0311021_08 subType key
+
+define HMW_IO_12_Sw7_DR_JEQ0311021_09 HM485 00009067_09
+attr HMW_IO_12_Sw7_DR_JEQ0311021_09 room HM485
+attr HMW_IO_12_Sw7_DR_JEQ0311021_09 subType key
+
+define HMW_IO_12_Sw7_DR_JEQ0311021_10 HM485 00009067_10
+attr HMW_IO_12_Sw7_DR_JEQ0311021_10 room HM485
+attr HMW_IO_12_Sw7_DR_JEQ0311021_10 subType key
+
+define HMW_IO_12_Sw7_DR_JEQ0311021_11 HM485 00009067_11
+attr HMW_IO_12_Sw7_DR_JEQ0311021_11 room HM485
+attr HMW_IO_12_Sw7_DR_JEQ0311021_11 subType key
+
+define HMW_IO_12_Sw7_DR_JEQ0311021_12 HM485 00009067_12
+attr HMW_IO_12_Sw7_DR_JEQ0311021_12 room HM485
+attr HMW_IO_12_Sw7_DR_JEQ0311021_12 subType key
+
+define HMW_Zuweg HM485 00009067_13
+attr HMW_Zuweg fm_type smarttogglebutton
+attr HMW_Zuweg room Watering,Garten,Favourites
+attr HMW_Zuweg subType switch
+attr HMW_Zuweg wateringOddDays 1
+attr HMW_Zuweg wateringWhileRaining 0
+
+define HMW_Hecke_rundherum HM485 00009067_14
+attr HMW_Hecke_rundherum fm_type smarttogglebutton
+attr HMW_Hecke_rundherum room Watering,Garten,Favourites
+attr HMW_Hecke_rundherum subType switch
+attr HMW_Hecke_rundherum wateringOddDays 1
+attr HMW_Hecke_rundherum wateringWhileRaining 0
+
+define HMW_Rasen_Terrasse HM485 00009067_15
+attr HMW_Rasen_Terrasse fm_type smarttogglebutton
+attr HMW_Rasen_Terrasse room Watering,Garten,Favourites
+attr HMW_Rasen_Terrasse subType switch
+attr HMW_Rasen_Terrasse wateringOddDays 1
+attr HMW_Rasen_Terrasse wateringWhileRaining 0
+
+define HMW_Bauerngarten HM485 00009067_16
+attr HMW_Bauerngarten fm_type smarttogglebutton
+attr HMW_Bauerngarten room Watering,Garten,Favourites
+attr HMW_Bauerngarten subType switch
+attr HMW_Bauerngarten wateringOddDays 1
+attr HMW_Bauerngarten wateringWhileRaining 0
+
+define HMW_Rasen_Kinder HM485 00009067_17
+attr HMW_Rasen_Kinder fm_type smarttogglebutton
+attr HMW_Rasen_Kinder room Watering,Garten,Favourites
+attr HMW_Rasen_Kinder subType switch
+attr HMW_Rasen_Kinder wateringOddDays 1
+attr HMW_Rasen_Kinder wateringWhileRaining 0
+
+define HMW_Beete_rund_ums_Haus HM485 00009067_18
+attr HMW_Beete_rund_ums_Haus fm_type smarttogglebutton
+attr HMW_Beete_rund_ums_Haus room Watering,Garten,Favourites
+attr HMW_Beete_rund_ums_Haus subType switch
+attr HMW_Beete_rund_ums_Haus wateringOddDays 1
+attr HMW_Beete_rund_ums_Haus wateringWhileRaining 0
+
+define HMW_IO_TOROEFFNER HM485 00009067_19
+attr HMW_IO_TOROEFFNER alias Toröffner
+attr HMW_IO_TOROEFFNER fm_type smarttogglebutton
+attr HMW_IO_TOROEFFNER room Favourites,HM485,Homekit
+attr HMW_IO_TOROEFFNER subType switch
+
+#################################################################################
+# RS 485 Schaltaktor 2-fach / 76801 Setting
+#
+define HMW_LC_Sw2_DR_JEQ0546714 HM485 000093BA
+attr HMW_LC_Sw2_DR_JEQ0546714 IODev HM485_LAN
+attr HMW_LC_Sw2_DR_JEQ0546714 room HM485
+define FileLog_HMW_LC_Sw2_DR_JEQ0546714 FileLog ./log/HMW_LC_Sw2_DR_JEQ0546714-%Y.log HMW_LC_Sw2_DR_JEQ0546714
+attr FileLog_HMW_LC_Sw2_DR_JEQ0546714 logtype text
+attr FileLog_HMW_LC_Sw2_DR_JEQ0546714 room FileLog
+
+define HMW_LC_Sw2_DR_JEQ0546714_01 HM485 000093BA_01
+attr HMW_LC_Sw2_DR_JEQ0546714_01 room HM485
+attr HMW_LC_Sw2_DR_JEQ0546714_01 subType key
+
+define HMW_LC_Sw2_DR_JEQ0546714_02 HM485 000093BA_02
+attr HMW_LC_Sw2_DR_JEQ0546714_02 room HM485
+attr HMW_LC_Sw2_DR_JEQ0546714_02 subType key
+
+define HMW_LC_Sw2_DR_JEQ0546714_03 HM485 000093BA_03
+attr HMW_LC_Sw2_DR_JEQ0546714_03 room HM485
+attr HMW_LC_Sw2_DR_JEQ0546714_03 subType switch
+
+define HMW_LC_Sw2_DR_JEQ0546714_04 HM485 000093BA_04
+attr HMW_LC_Sw2_DR_JEQ0546714_04 room HM485
+attr HMW_LC_Sw2_DR_JEQ0546714_04 subType switch
+
+
+#################################################################################
+#  RS485 Schliesserkontakt mit 12 Eing?ngen
+#
+define HMW_SEN_SC_12_FM_JEQ0645890 HM485 0000BBB1
+attr HMW_SEN_SC_12_FM_JEQ0645890 IODev HM485_LAN
+attr HMW_SEN_SC_12_FM_JEQ0645890 alias HMW SEN SC 12 FM JEQ0645890
+attr HMW_SEN_SC_12_FM_JEQ0645890 room HM485
+define FileLog_HMW_SEN_SC_12_FM_JEQ0645890 FileLog ./log/HMW_SEN_SC_12_FM_JEQ0645890-%Y.log HMW_SEN_SC_12_FM_JEQ0645890
+attr FileLog_HMW_SEN_SC_12_FM_JEQ0645890 logtype text
+attr FileLog_HMW_SEN_SC_12_FM_JEQ0645890 room FileLog
+
+define HMW_SEN_EMA_PA4_internScharf HM485 0000BBB1_01
+attr HMW_SEN_EMA_PA4_internScharf room HM485
+attr HMW_SEN_EMA_PA4_internScharf subType sensor
+define HMW_SEN_EMA_PA5_externScharf HM485 0000BBB1_02
+attr HMW_SEN_EMA_PA5_externScharf room HM485
+attr HMW_SEN_EMA_PA5_externScharf subType sensor
+define HMW_SEN_EMA_PA6_alarm HM485 0000BBB1_03
+attr HMW_SEN_EMA_PA6_alarm room HM485
+attr HMW_SEN_EMA_PA6_alarm subType sensor
+define HMW_SEN_EMA_PA7_tuerTerasseAuf HM485 0000BBB1_04
+attr HMW_SEN_EMA_PA7_tuerTerasseAuf room HM485
+attr HMW_SEN_EMA_PA7_tuerTerasseAuf subType sensor
+define HMW_SEN_EMA_PA8_tuerSeiteneingangAuf HM485 0000BBB1_05
+attr HMW_SEN_EMA_PA8_tuerSeiteneingangAuf room HM485
+attr HMW_SEN_EMA_PA8_tuerSeiteneingangAuf subType sensor
+define HMW_SEN_EMA_PA9_tuerGaesteAuf HM485 0000BBB1_06
+attr HMW_SEN_EMA_PA9_tuerGaesteAuf room HM485
+attr HMW_SEN_EMA_PA9_tuerGaesteAuf subType sensor
+define HMW_SEN_07_unused HM485 0000BBB1_07
+attr HMW_SEN_07_unused room HM485
+attr HMW_SEN_07_unused subType sensor
+define HMW_SEN_TOR_STRASSE HM485 0000BBB1_08
+attr HMW_SEN_TOR_STRASSE room HM485
+attr HMW_SEN_TOR_STRASSE subType sensor
+define HMW_SEN_09_unused HM485 0000BBB1_09
+attr HMW_SEN_09_unused room HM485
+attr HMW_SEN_09_unused subType sensor
+define HMW_SEN_10_unused HM485 0000BBB1_10
+attr HMW_SEN_10_unused room HM485
+attr HMW_SEN_10_unused subType sensor
+define HMW_SEN_11_unused HM485 0000BBB1_11
+attr HMW_SEN_11_unused room HM485
+attr HMW_SEN_11_unused subType sensor
+define HMW_SEN_12_unused HM485 0000BBB1_12
+attr HMW_SEN_12_unused room HM485
+attr HMW_SEN_12_unused subType sensor
+
+define HMW_SEN_TOR_STRASSE_Notify notify HMW_SEN_TOR_STRASSE {\
+	if ("$EVENT" eq "sensor_closed") {;;\
+		doorBell();;\
+		};;\
+	}
+attr HMW_SEN_TOR_STRASSE_Notify room HM485
+
+define notificationIP dummy
+attr notificationIP room HM485
+
+
+define TOROEFFNER dummy
+attr TOROEFFNER room HM485
+attr TOROEFFNER webCmd 3:10:20:30:45:60:90:120:240
+
+define ALARM_TOROEFFNER_ON notify TOROEFFNER {\
+	Log 1,"ALARM_TOROEFFNER_ON $NAME $EVENT";;\
+	fhem "reload 99_myUtils";;\
+	doorControl($EVENT);;\
+	}
+attr ALARM_TOROEFFNER_ON room HM485
+
+define ALARM_ON_Notify notify HMW_SEN_EMA_PA6_alarm {\
+	if ("$EVENT" eq "sensor: 0") {;;\
+		doorControl(180);;\
+		};;\
+	}
+attr ALARM_ON_Notify room HM485
+
+define HMW_IO_12_Sw7_DR_LEQ1286184 HM485 0001131D
+attr HMW_IO_12_Sw7_DR_LEQ1286184 IODev HM485_LAN
+attr HMW_IO_12_Sw7_DR_LEQ1286184 room HM485
+define FileLog_HMW_IO_12_Sw7_DR_LEQ1286184 FileLog ./log/HMW_IO_12_Sw7_DR_LEQ1286184-%Y.log HMW_IO_12_Sw7_DR_LEQ1286184
+attr FileLog_HMW_IO_12_Sw7_DR_LEQ1286184 logtype text
+attr FileLog_HMW_IO_12_Sw7_DR_LEQ1286184 room FileLog
+
+define HMW_IO_12_Sw7_DR_LEQ1286184_02 HM485 0001131D_02
+attr HMW_IO_12_Sw7_DR_LEQ1286184_02 room HM485
+attr HMW_IO_12_Sw7_DR_LEQ1286184_02 subType key
+define HMW_IO_12_Sw7_DR_LEQ1286184_03 HM485 0001131D_03
+attr HMW_IO_12_Sw7_DR_LEQ1286184_03 room HM485
+attr HMW_IO_12_Sw7_DR_LEQ1286184_03 subType key
+define HMW_IO_12_Sw7_DR_LEQ1286184_04 HM485 0001131D_04
+attr HMW_IO_12_Sw7_DR_LEQ1286184_04 room HM485
+attr HMW_IO_12_Sw7_DR_LEQ1286184_04 subType key
+define HMW_IO_12_Sw7_DR_LEQ1286184_05 HM485 0001131D_05
+attr HMW_IO_12_Sw7_DR_LEQ1286184_05 room HM485
+attr HMW_IO_12_Sw7_DR_LEQ1286184_05 subType key
+define HMW_IO_12_Sw7_DR_LEQ1286184_06 HM485 0001131D_06
+attr HMW_IO_12_Sw7_DR_LEQ1286184_06 room HM485
+attr HMW_IO_12_Sw7_DR_LEQ1286184_06 subType key
+define HMW_IO_12_Sw7_DR_LEQ1286184_07 HM485 0001131D_07
+attr HMW_IO_12_Sw7_DR_LEQ1286184_07 room HM485
+attr HMW_IO_12_Sw7_DR_LEQ1286184_07 subType key
+define HMW_IO_12_Sw7_DR_LEQ1286184_08 HM485 0001131D_08
+attr HMW_IO_12_Sw7_DR_LEQ1286184_08 room HM485
+attr HMW_IO_12_Sw7_DR_LEQ1286184_08 subType key
+define HMW_IO_12_Sw7_DR_LEQ1286184_09 HM485 0001131D_09
+attr HMW_IO_12_Sw7_DR_LEQ1286184_09 room HM485
+attr HMW_IO_12_Sw7_DR_LEQ1286184_09 subType key
+define HMW_IO_12_Sw7_DR_LEQ1286184_10 HM485 0001131D_10
+attr HMW_IO_12_Sw7_DR_LEQ1286184_10 room HM485
+attr HMW_IO_12_Sw7_DR_LEQ1286184_10 subType key
+define HMW_IO_12_Sw7_DR_LEQ1286184_11 HM485 0001131D_11
+attr HMW_IO_12_Sw7_DR_LEQ1286184_11 room HM485
+attr HMW_IO_12_Sw7_DR_LEQ1286184_11 subType key
+define HMW_IO_12_Sw7_DR_LEQ1286184_12 HM485 0001131D_12
+attr HMW_IO_12_Sw7_DR_LEQ1286184_12 room HM485
+attr HMW_IO_12_Sw7_DR_LEQ1286184_12 subType key
+define HMW_Strahler_Nebeneingang HM485 0001131D_13
+attr HMW_Strahler_Nebeneingang room HM485,Homekit
+attr HMW_Strahler_Nebeneingang subType switch
+define HMW_Strahler_Terrasse HM485 0001131D_14
+attr HMW_Strahler_Terrasse room HM485,Homekit
+attr HMW_Strahler_Terrasse subType switch
+define HMW_Strahler_Bauerngarten HM485 0001131D_15
+attr HMW_Strahler_Bauerngarten room HM485,Homekit
+attr HMW_Strahler_Bauerngarten subType switch
+define HMW_IO_12_Sw7_DR_LEQ1286184_16 HM485 0001131D_16
+attr HMW_IO_12_Sw7_DR_LEQ1286184_16 room HM485
+attr HMW_IO_12_Sw7_DR_LEQ1286184_16 subType switch
+define HMW_IO_12_Sw7_DR_LEQ1286184_17 HM485 0001131D_17
+attr HMW_IO_12_Sw7_DR_LEQ1286184_17 room HM485
+attr HMW_IO_12_Sw7_DR_LEQ1286184_17 subType switch
+define HMW_IO_12_Sw7_DR_LEQ1286184_18 HM485 0001131D_18
+attr HMW_IO_12_Sw7_DR_LEQ1286184_18 room HM485
+attr HMW_IO_12_Sw7_DR_LEQ1286184_18 subType switch
+define HMW_IO_12_Sw7_DR_LEQ1286184_19 HM485 0001131D_19
+attr HMW_IO_12_Sw7_DR_LEQ1286184_19 room HM485
+attr HMW_IO_12_Sw7_DR_LEQ1286184_19 subType switch
+
+

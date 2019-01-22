@@ -1,0 +1,79 @@
+<html>
+	<header>
+<script attr='' type="text/javascript" src="/fhem/pgm2/jquery.min.js"></script>
+<style type="text/css">
+
+body {
+    font-family:"Brush Script MT", cursive;
+}
+h1 {
+    font-size: 2em;
+    margin-bottom: 0.2em;
+    padding-bottom: 0;
+}
+p {
+    font-size: 1.5em;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+#loading {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(192, 192, 192, 0.5);
+    background-image: url("loading.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+</style>
+<script type="text/javascript">
+function onReady(callback) {
+  var intervalID = window.setInterval(checkReady, 1000);
+  function checkReady() {
+		$.get("/fhem/www/images/default/fhemicon.png?"+ $.now())
+    	.done(function() { 
+      window.clearInterval(intervalID);
+      callback.call(this);
+    }).fail(function() { 
+    	console.log("WARTEN")
+    })
+	}
+}
+
+function show(id, value) {
+    document.getElementById(id).style.display = value ? 'block' : 'none';
+}
+
+
+$(function(){
+	$.get("/fhem?cmd=shutdown%20restart") 
+		.done(function() { 
+    	console.log("DONE WARTEN")
+    }).fail(function() { 
+    	console.log("FAIL WARTEN")
+    });
+
+setTimeout(function(){
+	onReady(function () {
+	   	window.location.replace("/fhem");
+	    });
+}, 5000);	
+});
+
+
+  </script>
+
+
+	</header>
+<body>
+<div id="page">
+     <h1>Restarting FHEM - please wait</h1>
+</div>
+<div id="loading"></div>
+</body>
+</html>

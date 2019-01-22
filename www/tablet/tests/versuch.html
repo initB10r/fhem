@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>FHEM-Tablet-UI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
+<!--<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />-->
+<meta name="widget_base_width" content="116">
+<meta name="widget_base_height" content="131">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="longpoll" content="1"> <!-- 1=longpoll;0=shortpoll every 30sec -->
+<meta name="debug" content="0"> <!-- 1=output to console;0=no output -->
+
+<link rel="stylesheet" href="/fhem/tablet/lib/jquery.gridster.min.css" />
+<link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui.css" />
+<link rel="stylesheet" href="/fhem/tablet/lib/font-awesome.min.css" />
+<link rel="stylesheet" href="/fhem/tablet/lib/jquery.toast.min.css" />
+
+<!-- define your personal style here, it wont be overwritten  -->
+<!-- link rel="stylesheet" href="/fhem/tablet/css/fhem-green-ui.css" / -->
+<link rel="stylesheet" href="/fhem/tablet/css/fhem-tablet-ui-user.css" />
+
+</head>
+<body>
+    <header>MENU</header>
+    <div class="cell">
+        <div data-type="pagetab" data-url="index.html"  data-icon="fa-home" class="cell"></div>
+        <div data-type="pagetab" data-url="index_2.html" data-icon="fa-sliders" class="cell"></div>
+        <div data-type="pagetab" data-url="index_3.html" data-icon="fa-music" class="cell"></div>
+        <div data-type="pagetab" data-url="index_4.html" data-icon="fa-hotel" class="cell"></div>
+        <div data-type="pagetab" data-url="index_5.html" data-icon="fa-music" class="cell"></div>
+        <div data-type="pagetab" data-url="index_6.html" data-icon="fa-database" class="cell"></div>
+        <div data-type="pagetab" data-url="index_7.html" data-icon="fa-fax" class="cell"></div>
+    </div>
+<!--<div class="gridster">
+<ul>
+<li data-row="1" data-col="1" data-sizex="1" data-sizey="3">
+	<header>Strahler</header>
+	<div class="cell left">
+		<div data-type="switch" data-device="HMW_Strahler_Bauerngarten" class="cell"></div>
+		<div data-type="label" class="cell">Bauerngarten</div>
+		
+		<div data-type="switch" data-device="HMW_Strahler_Terrasse" class="cell"></div>
+		<div data-type="label" class="cell">Terrasse</div>
+		
+		<div data-type="switch" data-device="HMW_Strahler_Nebeneingang" class="cell" ></div>
+		<div data-type="label" class="cell">Nebeneingang</div>
+	</div>
+</li>
+<li data-row="1" data-col="2" data-sizex="2" data-sizey="2">
+	<header>KALENDER</header>
+	<div class="cell left-align" style="color:#AA6900">
+		<div style="font-weight: bold; text-decoration: underline;" class="darker">Heute:</div> 
+		<div data-type="label" data-device="myCalendarView" data-get="today_001_summary" style="color:#AA6900" class="left-align"></div>
+		<div data-type="label" data-device="myCalendarView" data-get="today_002_summary" style="color:#AA6900" class="left-align"></div>
+		<div data-type="label" data-device="myCalendarView" data-get="today_003_summary" style="color:#AA6900" class="left-align"></div>
+		<div data-type="label" data-device="myCalendarView" data-get="today_004_summary" style="color:#AA6900" class="left-align"></div>
+		<div data-type="label" data-device="myCalendarView" data-get="today_005_summary" style="color:#AA6900" class="left-align"></div>
+		<hr style="color: #AA6900; height: 0.5px;">
+		<div style="font-weight: bold; text-decoration: underline;" class="darker">Morgen:</div>
+		<div data-type="label" data-device="myCalendarView" data-get="tomorrow_001_summary" style="color:#AA6900" class="left-align"></div>
+		<div data-type="label" data-device="myCalendarView" data-get="tomorrow_002_summary" style="color:#AA6900" class="left-align"></div>
+		<div data-type="label" data-device="myCalendarView" data-get="tomorrow_003_summary" style="color:#AA6900" class="left-align"></div>
+		<div data-type="label" data-device="myCalendarView" data-get="tomorrow_004_summary" style="color:#AA6900" class="left-align"></div>
+		<div data-type="label" data-device="myCalendarView" data-get="tomorrow_005_summary" style="color:#AA6900" class="left-align"></div>
+	</div>
+</li>
+<li data-row="1" data-col="3" data-sizex="3" data-sizey="4">
+	<header>KAMERAS</header>
+	<div class="cell left-align" style="color:#AA6900">
+		<div style="font-weight: bold; text-decoration: underline;" class="darker">Hauseingang</div> 
+		<div data-type="image" data-size="100%" data-url="http://root:33284@192.168.146.24/cgi-bin/viewer/video.jpg?resolution=640x480"></div>
+		<div style="font-weight: bold; text-decoration: underline;" class="darker">Terrasse</div> 
+		<div data-type="image" data-size="100%" data-url="http://root:33284@192.168.146.22/cgi-bin/viewer/video.jpg?resolution=640x480"></div>
+	</div>
+</li>
+<li data-row="1" data-col="4" data-sizex="2" data-sizey="2">
+	<header>Wetter</header>
+	<div data-type="weather" 
+     data-device="Wetter_Duisburg" 
+     data-get="condition" 
+     class="cell big">
+</div>
+</li>
+</ul>
+</div>
+-->
+</body>
+    <script type="text/javascript" src="/fhem/pgm2/jquery.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/lib/jquery.toast.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/lib/jquery.gridster.min.js"></script>
+    <script type="text/javascript" src="/fhem/tablet/js/fhem-tablet-ui.min.js"></script>
+
+    <!-- Remove this line to enable for usage with WebViewControl
+    <script type="text/javascript" src="/fhem/pgm2/cordova-2.3.0.js"></script>
+    <script type="text/javascript" src="/fhem/pgm2/webviewcontrol.js"></script>
+    <script type="text/javascript">var wvcDevices = {'12345': 'Tablet'}; var wvcUserCssFile="webviewcontrol.css"</script>
+    End for WebViewControl -->
+</html>

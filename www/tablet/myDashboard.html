@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+<div class="page" id="content1">
+<div class="gridster">
+<ul>
+<li data-row="1" data-col="1" data-sizex="4" data-sizey="7">
+	<header>Kalender</header>
+	<div data-template="/fhem?cmd={ CalendarAsHtml('myCalendar','all 20') }&XHR=1"></div>
+</li>
+<li data-row="8" data-col="1" data-sizex="2" data-sizey="4">
+<header>Alarm</header>
+<div>
+	<div data-type="symbol" data-device="HMW_VRT1_InternScharf" data-states='["on","off"]' data-icons='["fa-lock","fa-unlock"]' data-colors='["Orange","Gray"]' class=""></div>
+	<div data-type="label">intern scharf</div>
+</div>
+<div>
+	<div data-type="symbol" data-device="HMW_VRT1_ExternScharf" data-states='["on","off"]' data-icons='["fa-lock","fa-unlock"]' data-colors='["Red","Gray"]' class=""></div>
+	<div data-type="label">extern scharf</div>
+</div>
+</li> 
+<li data-row="8" data-col="3" data-sizex="2" data-sizey="4">
+<header>Jalousie Haus</header>
+<div class="cell top-space-2x">
+	<div data-type="select" data-device="fpJalousieAll" data-alias='["Bitte wählen","Zu","25 %","50 %","75 %","Auf"]' data-items='["","1","25","50","75","100"]'></div>
+</div>
+<div>
+<div data-type="switch" data-device="nightMode" data-icon="fa-bed" class="cell" ></div>
+<div data-type="label" class="cell">Nachtmodus</div>
+</div>
+</li>
+
+<li data-row="1" data-col="5" data-sizex="6" data-sizey="7" class="semitransparent">
+<header>                
+
+<div>Wetter in Friemersheim (
+		SO: <div data-type="label" data-device="WDS_SO" data-get="temperature" class="inline"></div> -
+		SW: <div data-type="label" data-device="WDS_SW" data-get="temperature" class="inline"></div> -
+		NW: <div data-type="label" data-device="WDS_NW" data-get="temperature" class="inline"></div>)
+</div>
+            </header>
+<table border="0px" width="100%">       
+	<tr>
+		<td class="A2"><div data-type="label" data-device="Wetter" data-get="fc0_date"></div></td>
+		<td class="B2">
+			<center>
+				<div data-type="label" class="inline small"><small>Sonnenaufgang</small><br></div>
+				<div data-type="label" data-device="Sonnenaufgang" data-get="state"></div>
+			</center>
+		</td>
+		<td class="C2">
+			<center>
+				<div data-type="label" class="inline small"><small>Sonnenuntergang</small><br></div>
+				<div data-type="label" data-device="Sonnenuntergang" data-get="state"></div>
+			</center>
+		</td>
+		<td class="D2">
+			<center>
+				<div data-type="label" class="inline small"><small>Sichtweite:</small><br></div>
+		        <div data-type="label" data-device="Wetter" data-get="visibility" data-unit=" km">
+		    </center>
+		</td>
+	</tr>
+	<tr>
+		<td class="A3">
+			<div data-type="label"><small>Temp<br></small></div>
+			<center>
+				<div data-type="label" data-device="Wetter" data-get="temperature" data-limits="[-50,0,10,25,30,40]" data-colors='["#9999ff","#ffbdff","#aa6900","#ff6900","#ff3333","#ff0000"]' data-unit="%B0C%0A" class="inline cell big"></div>
+		    </center>
+		</td>
+		<td class="B_C_3_4" colspan="2" rowspan="4" valign="top">
+			<div data-type="rotor" class="fade semitransparent">
+			<ul>
+				<li>
+					<div data-type="weather" data-device="Wetter" data-get="fc0_weatherMorning" data-imageset="kleinklima" class="cell small"></div>
+					Morgens:&nbsp
+					<div data-type="label" data-device="Wetter" data-get="fc0_weatherMorning" class="inline"></div>
+				</li>
+				<li>
+					<div data-type="weather" data-device="Wetter" data-get="fc0_weatherDay" data-imageset="kleinklima" class="cell small"></div>
+			        Tagsüber:&nbsp
+			        <div data-type="label" data-device="Wetter" data-get="fc0_weatherDay" class="inline"></div>
+			    </li>
+				<li>
+					<div data-type="weather" data-device="Wetter" data-get="fc4_weatherEvening" data-imageset="kleinklima" class="cell small"></div>
+					Abend:&nbsp
+					<div data-type="label" data-device="Wetter" data-get="fc4_weatherEvening" class="inline"></div>
+				</li>
+				<li>
+					<div data-type="weather" data-device="Wetter" data-get="fc4_weatherNight" data-imageset="kleinklima" class="cell small"></div>
+			        Nacht:&nbsp
+			        <div data-type="label" data-device="Wetter" data-get="fc4_weatherNight" class="inline"></div>
+			    </li>
+			</ul>
+		</div>
+		</td>
+		<td class="D3">
+			<center>
+				<div class="mini" data-type="wind_direction" data-device="Wetter" data-direction="windDir" data-speed="wind" data-speed-part="-1" data-calm="-"></div>
+			</center>
+		</td>
+	</tr>
+	<tr>
+		<td class="A4">
+			<div data-type="label"><small>Feuchte<br></small></div>
+			<center>
+				<div data-type="label" data-device="Wetter" data-get="humidity" data-limits="[0,40,60]" data-colors='["#9999ff","#aa6900","#ff6900"]' data-unit=" %" class="inline cell big"></div>
+			</center>
+		</td>
+		<td class="D4">
+			<center>
+				<div data-type="label"><small>Wind</small><br></div>
+				<div data-type="label" data-device="Wetter" data-get="wind" data-unit=" km/h" data-limits="[0,19,28,38,49,74,102,117]" data-colors='["#ffffff","#dddddd","#aa6900","#aa6900","#ff9999","#ff6666","#ff3333","#ff0000"]' style="display:inline" class="inline"></div>
+			</center>
+		</td>
+	</tr>
+	<tr>
+		<td class="D4">
+			<center>
+				<div data-type="label"><small>min. Temp</small><br></div>
+				<div data-type="label" data-device="Wetter" data-get="fc0_tempMin" data-limits="[-50,0,10,25,30,40]" data-colors='["#9999ff","#ffbdff","#aa6900","#ff6900","#ff3333","#ff0000"]' data-unit="%B0C%0A" class="inline"></div>
+			</center>
+		</td>
+		<td class="D4">
+			<center>
+				<div data-type="label"><small>max. Temp</small><br></div>
+				<div data-type="label" data-device="Wetter" data-get="fc0_tempMax" data-limits="[-50,0,10,25,30,40]" data-colors='["#9999ff","#ffbdff","#aa6900","#ff6900","#ff3333","#ff0000"]' data-unit="%B0C%0A" class="inline"></div>
+			</center>
+		</td>
+	</tr>
+	<tr>
+		<td class="D4">
+		<center>
+			<div data-type="label"><small>rel. Sonnen</small><br></div>
+			<div data-type="label" data-device="Wetter" data-get="fc0_sun" data-unit=" %" class="inline"></div>
+		</center>
+		</td>
+		<td class="D4">
+			<center>
+				<div data-type="label"><small>Wind</small><br></div>
+				<div data-type="label" data-device="Wetter" data-get="wind" data-unit=" km/h" data-limits="[0,19,28,38,49,74,102,117]" data-colors='["#ffffff","#dddddd","#aa6900","#aa6900","#ff9999","#ff6666","#ff3333","#ff0000"]' style="display:inline" class="inline"></div>
+			</center>
+		</td>
+	</tr>
+	<tr>
+		<td class="B5">
+			<center>
+				<div data-type="label" class="inline"><small>Regenrisiko</small></div><br>
+				<div data-type="label" data-device="Wetter" data-get="fc0_chOfRainDay" data-unit=" %" data-limits="[0,10,20,30,40,50,60,70,80,90,100]" data-colors='["#32AD4F","#3AAB2C","green","green","green","#F6AA1D","green","green","green","green","#F6451D"]' style="display:inline"></div>
+			</center>
+		</td>
+		<td class="A5">
+			<center><div data-type="label" class="inline"><small>UV-Index</small></div><br>
+				<div data-type="label" data-device="Wetter" data-get="fc0_uv" 
+					data-limits="[0,2,10]" data-colors='["grey","orange","red"]' style="display:inline"></div>
+			</center>
+		</td>
+		<td class="C5">
+			<center>
+				<div data-type="label" class="inline"><small>Taupunkt</small></div><br>
+				<div data-type="label" data-device="Wetter" data-get="dewPoint" data-unit="%B0C%0A"></div>
+			</center>
+		</td>
+		<td class="D5">
+			<center>
+				<div data-type="label" class="inline"><small>Luftdruck</small></div><br>
+				<div data-type="label" data-device="Wetter" data-get="pressure" data-unit=" hPa" data-limits="[0,950,1000]" data-colors='["#ff9999","#aa6900","#9999ff"]'></div>
+				<div data-type="klimatrend" data-device="Wetter" data-get="statPressureTendency"></div>
+			</center>
+		</td>
+	</tr>
+</table>
+</li>		
+<li data-row="8" data-col="5" data-sizex="6" data-sizey="4">
+<header>Unwetterwarnungen</header>
+<div data-type="uwz" data-device="Unwetterzentrale" data-detail='["WarnUWZLevel_Color", "IconURL", "ShortText","WarnTime"]' data-max="5" class=""></div>
+</li>
+<li data-row="1" data-col="13" data-sizex="2" data-sizey="7">
+	<header>Strahler</header>
+	<table width="100%" height="95%">
+	<tr>
+		<td>
+		<div data-type="switch" data-device="HMW_HSK1_Strahler_Bauerngarten" ></div>
+		<div data-type="label">Bauerngarten</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div data-type="switch" data-device="HMW_HSK1_Strahler_Terrasse" ></div>
+		<div data-type="label">Terrasse</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div data-type="switch" data-device="HMW_HSK1_Strahler_Nebeneingang" ></div>
+		<div data-type="label">Nebeneingang</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div data-type="switch" data-device="HM_Sw2_Haustuer_Lampe" ></div>
+		<div data-type="label">Hauseingang</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div data-type="switch" data-device="motionDetectionActive" data-icon="fa-feed"></div>
+		<div data-type="label">Motion-Detection</div>
+	</tr>
+	</table>
+</li>
+
+
+
+
+
+<li data-row="1" data-col="11" data-sizex="2" data-sizey="7">
+	<header>Cam</header>
+	<div data-type="image" data-size="90%" data-url="http://192.168.146.24/video3.mjpg"></div>
+    <div data-type="link" class="" data-width="100" data-icon-left="fa-video-camera" data-color="blue" data-url="rtsp://192.168.146.24/live.sdp">Hauseingang</div>	 
+	<div data-type="image" data-size="90%" data-url="http://192.168.146.22/video3.mjpg"></div>
+	<div data-type="link" class="" data-width="100" data-icon-left="fa-video-camera" data-color="blue" data-url="rtsp://192.168.146.22/live.sdp">Terrasse</div>
+</li>
+<li data-row="8" data-col="11" data-sizex="2" data-sizey="4">
+	<header>Kodi</header>
+	<table width="100%" border=0>
+	<tr>
+		<td width="50%">
+		<div data-type="push" data-device="AV_Receiver"  data-icon="fa-volume-off" data-background-icon="fa-square-o" data-set-on="Mute"></div>
+		</td><td width="50%">
+		<div style="border-radius: 15px 15px 15px 15px; width: 85px; height: 40px; cursor: pointer; color: grey; border-color: grey; border-width: 2px; border-style: solid; opacity: 1; vertical-align:middle; display: table-cell;">
+			<div data-type="switch" class="inline tiny" data-icon="fa-plug" data-device="PLUG_TV"></div>
+			<div class="inline big">TV</div>
+		</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2>
+		<div data-type="switch" data-device="myHarmony" data-icon="fa-power-off" data-cmd="set" data-set="activity" data-set-on="SHIELDTV" data-set-off="PowerOff" data-get="currentActivity" data-get-on="SHIELDTV" data-get-off="!on"></div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<div data-type="push" data-device="AV_Receiver"  data-icon="fa-volume-down" data-background-icon="fa-square-o" data-set-on="VolumeDown"></div>
+		</td><td>
+		<div data-type="push" data-device="AV_Receiver" data-icon="fa-volume-up" data-background-icon="fa-square-o" data-set-on="VolumeUp"></div>
+		</td>
+	</tr>
+	</table>
+</li>    
+<li data-row="8" data-col="11" data-sizex="2" data-sizey="4">
+<header>Tor</header>
+<div data-type="switch" data-device="HMW_NSK1_Toroeffner" class="cell" ></div>
+<div data-type="label" class="cell">aufstellen</div>
+<div data-type="tts" data-device="speak"></div>
+</li>    
+</ul>
+</div>
+</div>
+</body>
+</html>

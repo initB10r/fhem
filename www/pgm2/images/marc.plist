@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>IPSec</key>
+			<dict>
+				<key>AuthenticationMethod</key>
+				<string>SharedSecret</string>
+				<key>LocalIdentifier</key>
+				<!-- FRITZ!Box Benutzername -->
+				<string>marc</string>
+				<key>LocalIdentifierType</key>
+				<string>KeyID</string>
+				<key>RemoteAddress</key>
+				<!-- DDNS-URL der FRITZ!Box -->				
+				<string>192.168.146.1</string>
+				<key>SharedSecret</key>
+				<data>
+				ZVNIdDhZTmZHZXlvUmNEZg==
+				</data>
+				<key>XAuthEnabled</key>
+				<integer>1</integer>
+				<key>XAuthName</key>
+				<!-- FRITZ!Box Benutzername -->
+				<string>marc</string>
+				<key>XAuthPassword</key>
+				<!-- FRITZ!Box Passwort des Benutzers -->
+				<string></string>
+				<!-- VPN-On-Demand Codeblock -->
+				<key>OnDemandEnabled</key>
+				<integer>1</integer>
+				<key>OnDemandRules</key>
+				<array>
+				<!-- VPN beim Zugriff auf Heimnetz-Adressen aufbauen -->
+					<dict>
+						<key>Action</key>
+						<string>EvaluateConnection</string>
+						<key>ActionParameters</key>
+						<array>
+							<dict>
+								<key>Domains</key>
+								<array>
+									<string>*.local</string>
+									<string>*.fritz.box</string>
+									<string>fritz.box</string>
+									<string>schnecken*</string>
+									<string>192.168.146.*</string>
+								</array>
+								<key>DomainAction</key>
+								<string>ConnectIfNeeded</string>
+							</dict>
+						</array>
+					</dict>
+					<dict>
+						<!-- VPN bei ausgew㧬ten WLAN-Netzen deaktivieren -->
+						<key>InterfaceTypeMatch</key>
+						<string>WiFi</string>
+						<key>SSIDMatch</key>
+						<array>
+							<string>schneckenHaus</string>
+							<string>schneckenGast</string>
+						</array>
+						<key>Action</key>
+						<string>Disconnect</string>
+					</dict>
+					<dict>
+						<!-- VPN bei aktiver WLAN-Verbindung aktivieren -->
+						<key>InterfaceTypeMatch</key>
+						<string>WiFi</string>
+						<key>Action</key>
+						<string>Connect</string>
+					</dict>
+					<dict>
+						<!-- VPN im Mobilfunknetz nicht aktivieren -->
+						<key>InterfaceTypeMatch</key>
+						<string>Cellular</string>
+						<key>Action</key>
+						<string>Disconnect</string>
+					</dict>
+					<dict>
+						<!-- VPN Default state -->
+						<key>Action</key>
+						<string>Disconnect</string>
+					</dict>
+				</array>
+				<!-- VPN-On-Demand Codeblock ENDE-->
+			</dict>
+			<key>IPv4</key>
+			<dict>
+				<key>OverridePrimary</key>
+				<integer>1</integer>
+			</dict>
+			<key>PayloadDescription</key>
+			<string>Configures VPN settings</string>
+			<key>PayloadDisplayName</key>
+			<string>VPN</string>
+			<key>PayloadIdentifier</key>
+			<string>com.apple.vpn.managed.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</string>
+			<key>PayloadType</key>
+			<string>com.apple.vpn.managed</string>
+			<key>PayloadUUID</key>
+			<!-- PayloadUUID -->
+			<string>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</string>
+			<key>PayloadVersion</key>
+			<real>1</real>
+			<key>Proxies</key>
+			<dict>
+				<key>HTTPEnable</key>
+				<integer>0</integer>
+				<key>HTTPSEnable</key>
+				<integer>0</integer>
+			</dict>
+			<key>UserDefinedName</key>
+			<string>VPN FRITZ!Box</string>
+			<key>VPNType</key>
+			<string>IPSec</string>
+		</dict>
+	</array>
+	<key>PayloadDisplayName</key>
+	<string>VPN on Demand-Profildatei</string>
+	<key>PayloadIdentifier</key>
+	<!-- PayloadIdentifier -->
+	<string>xxxxxxxxxxxxxxxxxx</string>
+	<key>PayloadRemovalDisallowed</key>
+	<false/>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<!-- PayloadUUID -->
+	<string>xxxxxxxxxxxxxxxxxx</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

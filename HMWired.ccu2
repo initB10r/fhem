@@ -1,0 +1,529 @@
+#get d_ccu devicelist create ^SW.* t=dev f=%n room=HMCCU
+#################################################################################
+# CCU2 Setting
+#
+define d_rpcBidCos_Wired HMCCURPCPROC 192.168.146.12 BidCos-Wired
+attr d_rpcBidCos_Wired alias CCU RPC BidCos-Wired
+attr d_rpcBidCos_Wired eventMap /rpcserver on:on/rpcserver off:off/
+attr d_rpcBidCos_Wired group HMCCU
+attr d_rpcBidCos_Wired room HMCCU,System
+attr d_rpcBidCos_Wired stateFormat rpcstate/state
+attr d_rpcBidCos_Wired verbose 2
+
+#################################################################################
+# HMW_NSK1_Nebensicherungskasten_IO_12_Sw7
+#
+#DEV
+#define HMW_NSK1_Nebensicherungskasten_IO_12_Sw7 HMCCUDEV JEQ0311021
+#attr HMW_NSK1_Nebensicherungskasten_IO_12_Sw7 IODev d_ccu
+#attr HMW_NSK1_Nebensicherungskasten_IO_12_Sw7 group HMW_NSK1_Nebensicherungskasten
+#attr HMW_NSK1_Nebensicherungskasten_IO_12_Sw7 room HMCCU
+
+#CHN 0
+define HMW_NSK1_Nebensicherungskasten_IO_12_Sw7_0 HMCCUCHN JEQ0311021:0
+attr HMW_NSK1_Nebensicherungskasten_IO_12_Sw7_0 IODev d_ccu
+attr HMW_NSK1_Nebensicherungskasten_IO_12_Sw7_0 group HMW_NSK1_Nebensicherungskasten
+attr HMW_NSK1_Nebensicherungskasten_IO_12_Sw7_0 room HMCCU
+
+#CHN 1-n
+define HMW_NSK1_Bewaesserung_Zuweg HMCCUCHN JEQ0311021:13
+attr HMW_NSK1_Bewaesserung_Zuweg IODev d_ccu
+attr HMW_NSK1_Bewaesserung_Zuweg ccureadingfilter STATE
+attr HMW_NSK1_Bewaesserung_Zuweg controldatapoint STATE
+attr HMW_NSK1_Bewaesserung_Zuweg group HMW_NSK1_Nebensicherungskasten,Schalter
+attr HMW_NSK1_Bewaesserung_Zuweg room Garten,HMCCU,Watering
+attr HMW_NSK1_Bewaesserung_Zuweg statedatapoint STATE
+attr HMW_NSK1_Bewaesserung_Zuweg statevals on:true,off:false
+attr HMW_NSK1_Bewaesserung_Zuweg substitute STATE!(1|true):on,(0|false):off
+attr HMW_NSK1_Bewaesserung_Zuweg webCmd control
+attr HMW_NSK1_Bewaesserung_Zuweg widgetOverride control:uzsuToggle,off,on
+define HMW_NSK1_Bewaesserung_Hecke_rundherum HMCCUCHN JEQ0311021:14
+attr HMW_NSK1_Bewaesserung_Hecke_rundherum IODev d_ccu
+attr HMW_NSK1_Bewaesserung_Hecke_rundherum ccureadingfilter STATE
+attr HMW_NSK1_Bewaesserung_Hecke_rundherum controldatapoint STATE
+attr HMW_NSK1_Bewaesserung_Hecke_rundherum group HMW_NSK1_Nebensicherungskasten,Schalter
+attr HMW_NSK1_Bewaesserung_Hecke_rundherum room Garten,HMCCU,Watering
+attr HMW_NSK1_Bewaesserung_Hecke_rundherum statedatapoint STATE
+attr HMW_NSK1_Bewaesserung_Hecke_rundherum statevals on:true,off:false
+attr HMW_NSK1_Bewaesserung_Hecke_rundherum substitute STATE!(1|true):on,(0|false):off
+attr HMW_NSK1_Bewaesserung_Hecke_rundherum webCmd control
+attr HMW_NSK1_Bewaesserung_Hecke_rundherum widgetOverride control:uzsuToggle,off,on
+define HMW_NSK1_Bewaesserung_Rasen_Terrasse HMCCUCHN JEQ0311021:15
+attr HMW_NSK1_Bewaesserung_Rasen_Terrasse IODev d_ccu
+attr HMW_NSK1_Bewaesserung_Rasen_Terrasse ccureadingfilter STATE
+attr HMW_NSK1_Bewaesserung_Rasen_Terrasse controldatapoint STATE
+attr HMW_NSK1_Bewaesserung_Rasen_Terrasse group HMW_NSK1_Nebensicherungskasten,Schalter
+attr HMW_NSK1_Bewaesserung_Rasen_Terrasse room Garten,HMCCU,Watering
+attr HMW_NSK1_Bewaesserung_Rasen_Terrasse statedatapoint STATE
+attr HMW_NSK1_Bewaesserung_Rasen_Terrasse statevals on:true,off:false
+attr HMW_NSK1_Bewaesserung_Rasen_Terrasse substitute STATE!(1|true):on,(0|false):off
+attr HMW_NSK1_Bewaesserung_Rasen_Terrasse webCmd control
+attr HMW_NSK1_Bewaesserung_Rasen_Terrasse widgetOverride control:uzsuToggle,off,on
+define HMW_NSK1_Bewaesserung_Bauerngarten HMCCUCHN JEQ0311021:16
+attr HMW_NSK1_Bewaesserung_Bauerngarten IODev d_ccu
+attr HMW_NSK1_Bewaesserung_Bauerngarten ccureadingfilter STATE
+attr HMW_NSK1_Bewaesserung_Bauerngarten controldatapoint STATE
+attr HMW_NSK1_Bewaesserung_Bauerngarten group HMW_NSK1_Nebensicherungskasten,Schalter
+attr HMW_NSK1_Bewaesserung_Bauerngarten room Garten,HMCCU,Watering
+attr HMW_NSK1_Bewaesserung_Bauerngarten statedatapoint STATE
+attr HMW_NSK1_Bewaesserung_Bauerngarten statevals on:true,off:false
+attr HMW_NSK1_Bewaesserung_Bauerngarten substitute STATE!(1|true):on,(0|false):off
+attr HMW_NSK1_Bewaesserung_Bauerngarten webCmd control
+attr HMW_NSK1_Bewaesserung_Bauerngarten widgetOverride control:uzsuToggle,off,on
+define HMW_NSK1_Bewaesserung_Rasen_Kinder HMCCUCHN JEQ0311021:17
+attr HMW_NSK1_Bewaesserung_Rasen_Kinder IODev d_ccu
+attr HMW_NSK1_Bewaesserung_Rasen_Kinder ccureadingfilter STATE
+attr HMW_NSK1_Bewaesserung_Rasen_Kinder controldatapoint STATE
+attr HMW_NSK1_Bewaesserung_Rasen_Kinder group HMW_NSK1_Nebensicherungskasten,Schalter
+attr HMW_NSK1_Bewaesserung_Rasen_Kinder room Garten,HMCCU,Watering
+attr HMW_NSK1_Bewaesserung_Rasen_Kinder statedatapoint STATE
+attr HMW_NSK1_Bewaesserung_Rasen_Kinder statevals on:true,off:false
+attr HMW_NSK1_Bewaesserung_Rasen_Kinder substitute STATE!(1|true):on,(0|false):off
+attr HMW_NSK1_Bewaesserung_Rasen_Kinder webCmd control
+attr HMW_NSK1_Bewaesserung_Rasen_Kinder widgetOverride control:uzsuToggle,off,on
+define HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus HMCCUCHN JEQ0311021:18
+attr HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus IODev d_ccu
+attr HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus ccureadingfilter STATE
+attr HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus controldatapoint STATE
+attr HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus group HMW_NSK1_Nebensicherungskasten,Schalter
+attr HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus room Garten,HMCCU,Watering
+attr HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus statedatapoint STATE
+attr HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus statevals on:true,off:false
+attr HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus substitute STATE!(1|true):on,(0|false):off
+attr HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus webCmd control
+attr HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus widgetOverride control:uzsuToggle,off,on
+define HMW_NSK1_Toroeffner HMCCUCHN JEQ0311021:19
+attr HMW_NSK1_Toroeffner IODev d_ccu
+attr HMW_NSK1_Toroeffner ccureadingfilter STATE
+attr HMW_NSK1_Toroeffner controldatapoint STATE
+attr HMW_NSK1_Toroeffner group HMW_NSK1_Nebensicherungskasten,Schalter
+attr HMW_NSK1_Toroeffner room Garten,HMCCU
+attr HMW_NSK1_Toroeffner statedatapoint STATE
+attr HMW_NSK1_Toroeffner statevals on:true,off:false
+attr HMW_NSK1_Toroeffner substitute STATE!(1|true):on,(0|false):off
+attr HMW_NSK1_Toroeffner webCmd control
+attr HMW_NSK1_Toroeffner widgetOverride control:uzsuToggle,off,on
+
+#Unused
+#define HMW_NSK1_Taster_Unused_01 HMCCUCHN JEQ0311021:1
+#attr HMW_NSK1_Taster_Unused_01 IODev d_ccu
+#attr HMW_NSK1_Taster_Unused_01 group Unused
+#attr HMW_NSK1_Taster_Unused_01 room HMCCU
+#define HMW_NSK1_Taster_Unused_02 HMCCUCHN JEQ0311021:2
+#attr HMW_NSK1_Taster_Unused_02 IODev d_ccu
+#attr HMW_NSK1_Taster_Unused_02 group Unused
+#attr HMW_NSK1_Taster_Unused_02 room HMCCU
+#define HMW_NSK1_Taster_Unused_03 HMCCUCHN JEQ0311021:3
+#attr HMW_NSK1_Taster_Unused_03 IODev d_ccu
+#attr HMW_NSK1_Taster_Unused_03 group Unused
+#attr HMW_NSK1_Taster_Unused_03 room HMCCU
+#define HMW_NSK1_Taster_Unused_04 HMCCUCHN JEQ0311021:4
+#attr HMW_NSK1_Taster_Unused_04 IODev d_ccu
+#attr HMW_NSK1_Taster_Unused_04 group Unused
+#attr HMW_NSK1_Taster_Unused_04 room HMCCU
+#define HMW_NSK1_Taster_Unused_05 HMCCUCHN JEQ0311021:5
+#attr HMW_NSK1_Taster_Unused_05 IODev d_ccu
+#attr HMW_NSK1_Taster_Unused_05 group Unused
+#attr HMW_NSK1_Taster_Unused_05 room HMCCU
+#define HMW_NSK1_Taster_Unused_06 HMCCUCHN JEQ0311021:6
+#attr HMW_NSK1_Taster_Unused_06 IODev d_ccu
+#attr HMW_NSK1_Taster_Unused_06 group Unused
+#attr HMW_NSK1_Taster_Unused_06 room HMCCU
+#define HMW_NSK1_Taster_Unused_07 HMCCUCHN JEQ0311021:7
+#attr HMW_NSK1_Taster_Unused_07 IODev d_ccu
+#attr HMW_NSK1_Taster_Unused_07 group Unused
+#attr HMW_NSK1_Taster_Unused_07 room HMCCU
+#define HMW_NSK1_Taster_Unused_08 HMCCUCHN JEQ0311021:8
+#attr HMW_NSK1_Taster_Unused_08 IODev d_ccu
+#attr HMW_NSK1_Taster_Unused_08 group Unused
+#attr HMW_NSK1_Taster_Unused_08 room HMCCU
+#define HMW_NSK1_Taster_Unused_09 HMCCUCHN JEQ0311021:9
+#attr HMW_NSK1_Taster_Unused_09 IODev d_ccu
+#attr HMW_NSK1_Taster_Unused_09 group Unused
+#attr HMW_NSK1_Taster_Unused_09 room HMCCU
+#define HMW_NSK1_Taster_Unused_10 HMCCUCHN JEQ0311021:10
+#attr HMW_NSK1_Taster_Unused_10 IODev d_ccu
+#attr HMW_NSK1_Taster_Unused_10 group Unused
+#attr HMW_NSK1_Taster_Unused_10 room HMCCU
+#define HMW_NSK1_Taster_Unused_11 HMCCUCHN JEQ0311021:11
+#attr HMW_NSK1_Taster_Unused_11 IODev d_ccu
+#attr HMW_NSK1_Taster_Unused_11 group Unused
+#attr HMW_NSK1_Taster_Unused_11 room HMCCU
+#define HMW_NSK1_Taster_Unused_12 HMCCUCHN JEQ0311021:12
+#attr HMW_NSK1_Taster_Unused_12 IODev d_ccu
+#attr HMW_NSK1_Taster_Unused_12 group Unused
+#attr HMW_NSK1_Taster_Unused_12 room HMCCU
+
+#################################################################################
+# HMW_NSK2_Nebensicherungskasten_LC_Sw2
+#
+#DEV
+#define HMW_NSK2_Nebensicherungskasten_LC_Sw2 HMCCUDEV JEQ0546714
+#attr HMW_NSK2_Nebensicherungskasten_LC_Sw2 IODev d_ccu
+#attr HMW_NSK2_Nebensicherungskasten_LC_Sw2 group HMW_NSK2_Nebensicherungskasten
+#attr HMW_NSK2_Nebensicherungskasten_LC_Sw2 room HMCCU
+
+#CHN 0
+define HMW_NSK2_Nebensicherungskasten_LC_Sw2_0 HMCCUCHN JEQ0546714:0
+attr HMW_NSK2_Nebensicherungskasten_LC_Sw2_0 IODev d_ccu
+attr HMW_NSK2_Nebensicherungskasten_LC_Sw2_0 group HMW_NSK2_Nebensicherungskasten
+attr HMW_NSK2_Nebensicherungskasten_LC_Sw2_0 room HMCCU
+
+#CHN 1-n
+
+#Unused
+#define HMW_NSK2_Taster_Unused_01 HMCCUCHN JEQ0546714:1
+#attr HMW_NSK2_Taster_Unused_01 IODev d_ccu
+#attr HMW_NSK2_Taster_Unused_01 group Unused
+#attr HMW_NSK2_Taster_Unused_01 room HMCCU
+#define HMW_NSK2_Taster_Unused_02 HMCCUCHN JEQ0546714:2
+#attr HMW_NSK2_Taster_Unused_02 IODev d_ccu
+#attr HMW_NSK2_Taster_Unused_02 group Unused
+#attr HMW_NSK2_Taster_Unused_02 room HMCCU
+#define HMW_NSK2_Schalter_Unused_03 HMCCUCHN JEQ0546714:3
+#attr HMW_NSK2_Schalter_Unused_03 IODev d_ccu
+#attr HMW_NSK2_Schalter_Unused_03 group Unused
+#attr HMW_NSK2_Schalter_Unused_03 room HMCCU
+#define HMW_NSK2_Schalter_Unused_04 HMCCUCHN JEQ0546714:4
+#attr HMW_NSK2_Schalter_Unused_04 IODev d_ccu
+#attr HMW_NSK2_Schalter_Unused_04 group Unused
+#attr HMW_NSK2_Schalter_Unused_04 room HMCCU
+
+#################################################################################
+# HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12
+#
+#DEV
+#define HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12 HMCCUDEV JEQ0645890
+#attr HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12 IODev d_ccu
+#attr HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12 group HMW_VRT1_Verteiler_Alarmanlage
+#attr HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12 room HMCCU
+
+#CHN 0
+define HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0 HMCCUCHN JEQ0645890:0
+attr HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0 IODev d_ccu
+attr HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0 group HMW_VRT1_Verteiler_Alarmanlage
+attr HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0 room HMCCU
+
+#CHN 1-n
+define HMW_VRT1_InternScharf HMCCUCHN JEQ0645890:1
+attr HMW_VRT1_InternScharf IODev d_ccu
+attr HMW_VRT1_InternScharf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
+attr HMW_VRT1_InternScharf room HMCCU
+attr HMW_VRT1_InternScharf statedatapoint 1.SENSOR
+attr HMW_VRT1_InternScharf substitute 1.SENSOR!(1|true):off,(0|false):on
+
+define HMW_VRT1_ExternScharf HMCCUCHN JEQ0645890:2
+attr HMW_VRT1_ExternScharf IODev d_ccu
+attr HMW_VRT1_ExternScharf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
+attr HMW_VRT1_ExternScharf room HMCCU
+attr HMW_VRT1_ExternScharf statedatapoint 2.SENSOR
+attr HMW_VRT1_ExternScharf substitute 2.SENSOR!(1|true):off,(0|false):on
+
+define HMW_VRT1_AlarmAktiv HMCCUCHN JEQ0645890:3
+attr HMW_VRT1_AlarmAktiv IODev d_ccu
+attr HMW_VRT1_AlarmAktiv group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
+attr HMW_VRT1_AlarmAktiv room HMCCU
+attr HMW_VRT1_AlarmAktiv statedatapoint 3.SENSOR
+attr HMW_VRT1_AlarmAktiv substitute 3.SENSOR!(1|true):off,(0|false):on
+
+define HMW_VRT1_TerasseAuf HMCCUCHN JEQ0645890:4
+attr HMW_VRT1_TerasseAuf IODev d_ccu
+attr HMW_VRT1_TerasseAuf devStateIcon closed:signal_Fenster_Offen.off open:signal_Fenster_Offen.on
+attr HMW_VRT1_TerasseAuf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
+attr HMW_VRT1_TerasseAuf room HMCCU
+attr HMW_VRT1_TerasseAuf statedatapoint 4.SENSOR
+attr HMW_VRT1_TerasseAuf substitute 4.SENSOR!(1|true):closed,(0|false):open
+
+define HMW_VRT1_SeiteneingangAuf HMCCUCHN JEQ0645890:5
+attr HMW_VRT1_SeiteneingangAuf IODev d_ccu
+attr HMW_VRT1_SeiteneingangAuf devStateIcon closed:signal_Fenster_Offen.off open:signal_Fenster_Offen.on
+attr HMW_VRT1_SeiteneingangAuf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
+attr HMW_VRT1_SeiteneingangAuf room HMCCU
+attr HMW_VRT1_SeiteneingangAuf statedatapoint 5.SENSOR
+attr HMW_VRT1_SeiteneingangAuf substitute 5.SENSOR!(1|true):closed,(0|false):open
+
+define HMW_VRT1_GaesteterasseAuf HMCCUCHN JEQ0645890:6
+attr HMW_VRT1_GaesteterasseAuf IODev d_ccu
+attr HMW_VRT1_GaesteterasseAuf devStateIcon closed:signal_Fenster_Offen.off open:signal_Fenster_Offen.on
+attr HMW_VRT1_GaesteterasseAuf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
+attr HMW_VRT1_GaesteterasseAuf room HMCCU
+attr HMW_VRT1_GaesteterasseAuf statedatapoint 6.SENSOR
+attr HMW_VRT1_GaesteterasseAuf substitute 6.SENSOR!(1|true):closed,(0|false):open
+
+define HMW_VRT1_KlingelTor HMCCUCHN JEQ0645890:8
+attr HMW_VRT1_KlingelTor IODev d_ccu
+attr HMW_VRT1_KlingelTor group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
+attr HMW_VRT1_KlingelTor room HMCCU
+attr HMW_VRT1_KlingelTor statedatapoint 8.SENSOR
+attr HMW_VRT1_KlingelTor substitute 8.SENSOR!(1|true):off,(0|false):on
+define FileLog_HMW_VRT1_KlingelTor FileLog ./log/HMW_VRT1_KlingelTor-%Y.log HMW_VRT1_KlingelTor
+attr FileLog_HMW_VRT1_KlingelTor logtype text
+attr FileLog_HMW_VRT1_KlingelTor room FileLog,HMCCU
+
+#Unused
+#define HMW_VRT1_Verschluss_Unused_07 HMCCUCHN JEQ0645890:7
+#attr HMW_VRT1_Verschluss_Unused_07 IODev d_ccu
+#attr HMW_VRT1_Verschluss_Unused_07 group Unused
+#attr HMW_VRT1_Verschluss_Unused_07 room HMCCU
+#define HMW_VRT1_Verschluss_Unused_09 HMCCUCHN JEQ0645890:9
+#attr HMW_VRT1_Verschluss_Unused_09 IODev d_ccu
+#attr HMW_VRT1_Verschluss_Unused_09 group Unused
+#attr HMW_VRT1_Verschluss_Unused_09 room HMCCU
+#define HMW_VRT1_Verschluss_Unused_10 HMCCUCHN JEQ0645890:10
+#attr HMW_VRT1_Verschluss_Unused_10 IODev d_ccu
+#attr HMW_VRT1_Verschluss_Unused_10 group Unused
+#attr HMW_VRT1_Verschluss_Unused_10 room HMCCU
+#define HMW_VRT1_Verschluss_Unused_11 HMCCUCHN JEQ0645890:11
+#attr HMW_VRT1_Verschluss_Unused_11 IODev d_ccu
+#attr HMW_VRT1_Verschluss_Unused_11 group Unused
+#attr HMW_VRT1_Verschluss_Unused_11 room HMCCU
+#define HMW_VRT1_Verschluss_Unused_12 HMCCUCHN JEQ0645890:12
+#attr HMW_VRT1_Verschluss_Unused_12 IODev d_ccu
+#attr HMW_VRT1_Verschluss_Unused_12 group Unused
+#attr HMW_VRT1_Verschluss_Unused_12 room HMCCU
+
+#################################################################################
+# HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7
+#
+#DEV
+#define HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7 HMCCUDEV LEQ1286184
+#attr HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7 IODev d_ccu
+#attr HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7 group HMW_HSK1_Hauptsicherungskasten
+#attr HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7 room HMCCU
+
+#CHN 0
+define HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 HMCCUCHN LEQ1286184:0
+attr HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 IODev d_ccu
+attr HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 group HMW_HSK1_Hauptsicherungskasten
+attr HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 room HMCCU
+
+#CHN 1-n
+define HMW_HSK1_KlingelHaus HMCCUCHN LEQ1286184:1
+attr HMW_HSK1_KlingelHaus IODev d_ccu
+attr HMW_HSK1_KlingelHaus event-on-update-reading 1\.PRESS_(SHORT|LONG).*
+attr HMW_HSK1_KlingelHaus group HMW_HSK1_Hauptsicherungskasten
+attr HMW_HSK1_KlingelHaus room HMCCU
+attr HMW_HSK1_KlingelHaus substitute PRESS_SHORT,PRESS_LONG!(1|true):pressed
+define FileLog_HMW_HSK1_KlingelHaus FileLog ./log/HMW_HSK1_KlingelHaus-%Y.log HMW_HSK1_KlingelHaus
+attr FileLog_HMW_HSK1_KlingelHaus logtype text
+attr FileLog_HMW_HSK1_KlingelHaus room FileLog,HMCCU
+
+define HMW_HSK1_BM_Kueche HMCCUCHN LEQ1286184:2
+attr HMW_HSK1_BM_Kueche IODev d_ccu
+attr HMW_HSK1_BM_Kueche alias Bewegungsmelder Küche
+attr HMW_HSK1_BM_Kueche ccureadingname 2.PRESS_(SHORT|LONG):pressed
+attr HMW_HSK1_BM_Kueche dependencyDevice HM_Sw2_Haustuer_Lampe,webcamHaustuere,webcamTerrasse
+attr HMW_HSK1_BM_Kueche dependencyValue 30
+attr HMW_HSK1_BM_Kueche event-on-update-reading pressed
+attr HMW_HSK1_BM_Kueche group Bewegungsmelder,HMW_HSK1_Hauptsicherungskasten
+attr HMW_HSK1_BM_Kueche room Garten,HMCCU
+attr HMW_HSK1_BM_Kueche stateFormat { ReadingsTimestamp ("HMW_HSK1_BM_Kueche", "pressed", "n/a") }
+attr HMW_HSK1_BM_Kueche substitute PRESS_SHORT,PRESS_LONG!(1|true):pressed
+define FileLog_HMW_HSK1_BM_Kueche FileLog ./log/HMW_HSK1_BM_Kueche-%Y.log HMW_HSK1_BM_Kueche
+attr FileLog_HMW_HSK1_BM_Kueche room FileLog,Garten,HMCCU
+
+define HMW_HSK1_BM_Esszimmer HMCCUCHN LEQ1286184:3
+attr HMW_HSK1_BM_Esszimmer IODev d_ccu
+attr HMW_HSK1_BM_Esszimmer alias Bewegungsmelder Esszimmer
+attr HMW_HSK1_BM_Esszimmer ccureadingname 3.PRESS_(SHORT|LONG):pressed
+attr HMW_HSK1_BM_Esszimmer dependencyDevice HMW_HSK1_Strahler_Terrasse,HMW_HSK1_Strahler_Bauerngarten,webcamHaustuere,webcamTerrasse
+attr HMW_HSK1_BM_Esszimmer dependencyValue 30
+attr HMW_HSK1_BM_Esszimmer event-on-update-reading pressed
+attr HMW_HSK1_BM_Esszimmer group Bewegungsmelder,HMW_HSK1_Hauptsicherungskasten
+attr HMW_HSK1_BM_Esszimmer room Garten,HMCCU
+attr HMW_HSK1_BM_Esszimmer stateFormat { ReadingsTimestamp ("HMW_HSK1_BM_Esszimmer", "pressed", "n/a") }
+attr HMW_HSK1_BM_Esszimmer substitute PRESS_SHORT,PRESS_LONG!(1|true):pressed
+define FileLog_HMW_HSK1_BM_Esszimmer FileLog ./log/HMW_HSK1_BM_Esszimmer-%Y.log HMW_HSK1_BM_Esszimmer
+attr FileLog_HMW_HSK1_BM_Esszimmer room FileLog,Garten,HMCCU
+
+define HMW_HSK1_BM_Wohnzimmer HMCCUCHN LEQ1286184:4
+attr HMW_HSK1_BM_Wohnzimmer IODev d_ccu
+attr HMW_HSK1_BM_Wohnzimmer alias Bewegungsmelder Wohnzimmer
+attr HMW_HSK1_BM_Wohnzimmer ccureadingname 4.PRESS_(SHORT|LONG):pressed
+attr HMW_HSK1_BM_Wohnzimmer dependencyDevice HMW_HSK1_Strahler_Nebeneingang,HMW_HSK1_Strahler_Terrasse,webcamHaustuere,webcamTerrasse
+attr HMW_HSK1_BM_Wohnzimmer dependencyValue 30
+attr HMW_HSK1_BM_Wohnzimmer event-on-update-reading pressed
+attr HMW_HSK1_BM_Wohnzimmer group Bewegungsmelder,HMW_HSK1_Hauptsicherungskasten
+attr HMW_HSK1_BM_Wohnzimmer room Garten,HMCCU
+attr HMW_HSK1_BM_Wohnzimmer stateFormat { ReadingsTimestamp ("HMW_HSK1_BM_Wohnzimmer", "pressed", "n/a") }
+attr HMW_HSK1_BM_Wohnzimmer substitute PRESS_SHORT,PRESS_LONG!(1|true):pressed
+define FileLog_HMW_HSK1_BM_Wohnzimmer FileLog ./log/HMW_HSK1_BM_Wohnzimmer-%Y.log HMW_HSK1_BM_Wohnzimmer
+attr FileLog_HMW_HSK1_BM_Wohnzimmer room FileLog,Garten,HMCCU
+
+define HMW_HSK1_BM_Bauerngarten HMCCUCHN LEQ1286184:5
+attr HMW_HSK1_BM_Bauerngarten IODev d_ccu
+attr HMW_HSK1_BM_Bauerngarten alias Bewegungsmelder Bauerngarten
+attr HMW_HSK1_BM_Bauerngarten ccureadingname 5.PRESS_(SHORT|LONG):pressed
+attr HMW_HSK1_BM_Bauerngarten dependencyDevice HMW_HSK1_Strahler_Terrasse
+attr HMW_HSK1_BM_Bauerngarten dependencyValue 30
+attr HMW_HSK1_BM_Bauerngarten event-on-update-reading pressed
+attr HMW_HSK1_BM_Bauerngarten group Bewegungsmelder,HMW_HSK1_Hauptsicherungskasten
+attr HMW_HSK1_BM_Bauerngarten room Garten,HMCCU
+attr HMW_HSK1_BM_Bauerngarten stateFormat { ReadingsTimestamp ("HMW_HSK1_BM_Bauerngarten", "pressed", "n/a") }
+attr HMW_HSK1_BM_Bauerngarten substitute PRESS_SHORT,PRESS_LONG!(1|true):pressed
+define FileLog_HMW_HSK1_BM_Bauerngarten FileLog ./log/HMW_HSK1_BM_Bauerngarten-%Y.log HMW_HSK1_BM_Bauerngarten
+attr FileLog_HMW_HSK1_BM_Bauerngarten room FileLog,Garten,HMCCU
+
+define HMW_HSK1_Strahler_Nebeneingang HMCCUCHN LEQ1286184:13
+attr HMW_HSK1_Strahler_Nebeneingang IODev d_ccu
+attr HMW_HSK1_Strahler_Nebeneingang alias Strahler Nebeneingang
+attr HMW_HSK1_Strahler_Nebeneingang ccureadingfilter STATE
+attr HMW_HSK1_Strahler_Nebeneingang controldatapoint STATE
+attr HMW_HSK1_Strahler_Nebeneingang group HMW_HSK1_Hauptsicherungskasten,Schalter
+attr HMW_HSK1_Strahler_Nebeneingang room Garten,HMCCU
+attr HMW_HSK1_Strahler_Nebeneingang statedatapoint STATE
+attr HMW_HSK1_Strahler_Nebeneingang statevals on:true,off:false
+attr HMW_HSK1_Strahler_Nebeneingang substitute STATE!(1|true):on,(0|false):off
+attr HMW_HSK1_Strahler_Nebeneingang webCmd control
+attr HMW_HSK1_Strahler_Nebeneingang widgetOverride control:uzsuToggle,off,on
+define HMW_HSK1_Strahler_Terrasse HMCCUCHN LEQ1286184:14
+attr HMW_HSK1_Strahler_Terrasse IODev d_ccu
+attr HMW_HSK1_Strahler_Terrasse alias Strahler Terrasse
+attr HMW_HSK1_Strahler_Terrasse ccureadingfilter STATE
+attr HMW_HSK1_Strahler_Terrasse controldatapoint STATE
+attr HMW_HSK1_Strahler_Terrasse group HMW_HSK1_Hauptsicherungskasten,Schalter
+attr HMW_HSK1_Strahler_Terrasse room Garten,HMCCU
+attr HMW_HSK1_Strahler_Terrasse statedatapoint STATE
+attr HMW_HSK1_Strahler_Terrasse statevals on:true,off:false
+attr HMW_HSK1_Strahler_Terrasse substitute STATE!(1|true):on,(0|false):off
+attr HMW_HSK1_Strahler_Terrasse webCmd control
+attr HMW_HSK1_Strahler_Terrasse widgetOverride control:uzsuToggle,off,on
+define HMW_HSK1_Strahler_Bauerngarten HMCCUCHN LEQ1286184:15
+attr HMW_HSK1_Strahler_Bauerngarten IODev d_ccu
+attr HMW_HSK1_Strahler_Bauerngarten alias Strahler Bauerngarten
+attr HMW_HSK1_Strahler_Bauerngarten ccureadingfilter STATE
+attr HMW_HSK1_Strahler_Bauerngarten controldatapoint STATE
+attr HMW_HSK1_Strahler_Bauerngarten group HMW_HSK1_Hauptsicherungskasten,Schalter
+attr HMW_HSK1_Strahler_Bauerngarten room Garten,HMCCU
+attr HMW_HSK1_Strahler_Bauerngarten statedatapoint STATE
+attr HMW_HSK1_Strahler_Bauerngarten statevals on:true,off:false
+attr HMW_HSK1_Strahler_Bauerngarten substitute STATE!(1|true):on,(0|false):off
+attr HMW_HSK1_Strahler_Bauerngarten webCmd control
+attr HMW_HSK1_Strahler_Bauerngarten widgetOverride control:uzsuToggle,off,on
+define HMW_HSK1_IR_Strahler HMCCUCHN LEQ1286184:16
+attr HMW_HSK1_IR_Strahler IODev d_ccu
+attr HMW_HSK1_IR_Strahler alias IR Strahler
+attr HMW_HSK1_IR_Strahler ccureadingfilter STATE
+attr HMW_HSK1_IR_Strahler controldatapoint STATE
+attr HMW_HSK1_IR_Strahler group HMW_HSK1_Hauptsicherungskasten,Schalter
+attr HMW_HSK1_IR_Strahler room Garten,HMCCU
+attr HMW_HSK1_IR_Strahler statedatapoint STATE
+attr HMW_HSK1_IR_Strahler statevals on:true,off:false
+attr HMW_HSK1_IR_Strahler substitute STATE!(1|true):on,(0|false):off
+attr HMW_HSK1_IR_Strahler webCmd control
+attr HMW_HSK1_IR_Strahler widgetOverride control:uzsuToggle,off,on
+define HMW_HSK1_Bewegungsmelder HMCCUCHN LEQ1286184:17
+attr HMW_HSK1_Bewegungsmelder IODev d_ccu
+attr HMW_HSK1_Bewegungsmelder alias Bewegungsmelder
+attr HMW_HSK1_Bewegungsmelder ccureadingfilter STATE
+attr HMW_HSK1_Bewegungsmelder controldatapoint STATE
+attr HMW_HSK1_Bewegungsmelder group HMW_HSK1_Hauptsicherungskasten,Schalter
+attr HMW_HSK1_Bewegungsmelder room Garten,HMCCU
+attr HMW_HSK1_Bewegungsmelder statedatapoint STATE
+attr HMW_HSK1_Bewegungsmelder statevals on:true,off:false
+attr HMW_HSK1_Bewegungsmelder substitute STATE!(1|true):on,(0|false):off
+attr HMW_HSK1_Bewegungsmelder webCmd control
+attr HMW_HSK1_Bewegungsmelder widgetOverride control:uzsuToggle,off,on
+
+#Unused
+#define HMW_HSK1_Taster_Unused_06 HMCCUCHN LEQ1286184:6
+#attr HMW_HSK1_Taster_Unused_06 IODev d_ccu
+#attr HMW_HSK1_Taster_Unused_06 group Unused
+#attr HMW_HSK1_Taster_Unused_06 room HMCCU
+#define HMW_HSK1_Taster_Unused_07 HMCCUCHN LEQ1286184:7
+#attr HMW_HSK1_Taster_Unused_07 IODev d_ccu
+#attr HMW_HSK1_Taster_Unused_07 group Unused
+#attr HMW_HSK1_Taster_Unused_07 room HMCCU
+#define HMW_HSK1_Taster_Unused_08 HMCCUCHN LEQ1286184:8
+#attr HMW_HSK1_Taster_Unused_08 IODev d_ccu
+#attr HMW_HSK1_Taster_Unused_08 group Unused
+#attr HMW_HSK1_Taster_Unused_08 room HMCCU
+#define HMW_HSK1_Taster_Unused_09 HMCCUCHN LEQ1286184:9
+#attr HMW_HSK1_Taster_Unused_09 IODev d_ccu
+#attr HMW_HSK1_Taster_Unused_09 group Unused
+#attr HMW_HSK1_Taster_Unused_09 room HMCCU
+#define HMW_HSK1_Taster_Unused_10 HMCCUCHN LEQ1286184:10
+#attr HMW_HSK1_Taster_Unused_10 IODev d_ccu
+#attr HMW_HSK1_Taster_Unused_10 group Unused
+#attr HMW_HSK1_Taster_Unused_10 room HMCCU
+#define HMW_HSK1_Taster_Unused_11 HMCCUCHN LEQ1286184:11
+#attr HMW_HSK1_Taster_Unused_11 IODev d_ccu
+#attr HMW_HSK1_Taster_Unused_11 group Unused
+#attr HMW_HSK1_Taster_Unused_11 room HMCCU
+#define HMW_HSK1_Taster_Unused_12 HMCCUCHN LEQ1286184:12
+#attr HMW_HSK1_Taster_Unused_12 IODev d_ccu
+#attr HMW_HSK1_Taster_Unused_12 group Unused
+#attr HMW_HSK1_Taster_Unused_12 room HMCCU
+#define HMW_HSK1_Schalter_Unused_18 HMCCUCHN LEQ1286184:18
+#attr HMW_HSK1_Schalter_Unused_18 IODev d_ccu
+#attr HMW_HSK1_Schalter_Unused_18 group Unused
+#attr HMW_HSK1_Schalter_Unused_18 room HMCCU
+#define HMW_HSK1_Schalter_Unused_19 HMCCUCHN LEQ1286184:19
+#attr HMW_HSK1_Schalter_Unused_19 IODev d_ccu
+#attr HMW_HSK1_Schalter_Unused_19 group Unused
+#attr HMW_HSK1_Schalter_Unused_19 room HMCCU
+
+#################################################################################
+# DUMMY SECTION
+#
+define motionDetectionActive dummy
+attr motionDetectionActive room Garten,HMCCU
+attr motionDetectionActive webCmd on:off
+
+#################################################################################
+# Notif SECTION
+#
+define HMW_HSK1_BM_Esszimmer_Notif notify HMW_HSK1_BM_Esszimmer {\
+	Log 1, "*** HMW_HSK1_BM_Esszimmer_Notif *** --> $NAME - $EVENT";;\
+        spotlightControl($NAME);;\
+	}
+attr HMW_HSK1_BM_Esszimmer_Notif room Garten,HMCCU
+
+define HMW_HSK1_BM_Kueche_Notif notify HMW_HSK1_BM_Kueche {\
+	Log 1, "*** HMW_HSK1_BM_Kueche_Notif *** --> $NAME - $EVENT";;\
+        spotlightControl($NAME);;\
+	}
+attr HMW_HSK1_BM_Kueche_Notif room Garten,HMCCU
+
+define HMW_VRT1_KlingelTor_Notify notify HMW_VRT1_KlingelTor {\
+	if ("$EVENT" eq "on") {;;\
+		doorBell();;\
+		};;\
+	}
+attr HMW_VRT1_KlingelTor_Notify room Garten,HMCCU
+
+define HMW_HSK1_KlingelHaus_Notify notify HMW_HSK1_KlingelHaus {\
+	execRinging();;\
+	}
+attr HMW_HSK1_KlingelHaus_Notify room HMCCU
+
+define HMW_VRT1_InternScharf_Notify_on notify HMW_VRT1_InternScharf:on set motionDetectionActive on
+attr HMW_VRT1_InternScharf_Notify_on room HMCCU
+
+define HMW_VRT1_ExternScharf_Notify_on notify HMW_VRT1_ExternScharf:on set motionDetectionActive on
+attr HMW_VRT1_ExternScharf_Notify_on room HMCCU
+
+#################################################################################
+# AT SECTION
+#
+define motionDetectionActive_On_At at *{sunset("HORIZON=-0.833",1200,"17:00","21:45")} {\
+	fhem("set motionDetectionActive on");;\
+	}
+attr motionDetectionActive_On_At room Garten,HMCCU
+
+define motionDetectionActive_Off_At at *{sunrise("HORIZON=-0.833",-900,"06:30","08:00")} {\
+	fhem("set motionDetectionActive off");;\
+	}
+attr motionDetectionActive_Off_At room Garten,HMCCU
+
+define irSpotlightOn at *{sunset("HORIZON=-2",1200,"16:30","23:00")} {\
+	fhem("set HMW_HSK1_IR_Strahler on");;\
+	}
+attr irSpotlightOn disable 0
+attr irSpotlightOn room Garten,HMCCU
+
+define irSpotlightOff at *{sunrise("HORIZON=-2",-900,"04:00","09:00")} {\
+	fhem("set HMW_HSK1_IR_Strahler off");;\
+	}
+attr irSpotlightOff disable 0
+attr irSpotlightOff room Garten,HMCCU

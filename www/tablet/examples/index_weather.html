@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<div class="gridster">
+<ul>
+<li data-row="1" data-col="1" data-sizex="1" data-sizey="9" data-template="menu.html"></li>
+
+<li data-row="1" data-col="1" data-sizex="6" data-sizey="4" class="semitransparent">
+<header>                Wetter in Friemersheim            </header>
+<table border="10px" width="100%">       
+	<tr>
+		<td class="A2">A2
+			<div data-type="label" data-device="Wetter" data-get="fc0_date"></div>
+		</td>
+		<td class="B2">B2
+			<center>
+				<div data-type="label" class="inline small"><big>?</big><small> Sonne:</small><br></div>
+				<div data-type="label" data-device="Sonnenaufgang" data-get="state"></div>
+			</center>
+		</td>
+		<td class="C2">C2
+			<center>
+				<div data-type="label" class="inline small"><big>?</big><small> Sonne:</small><br></div>
+				<div data-type="label" data-device="Sonnenuntergang" data-get="state"></div>
+			</center>
+		</td>
+		<td class="D2">D2
+			<center>
+				<div data-type="label" class="inline small"><small>Sichtweite:</small><br></div>
+		        <div data-type="label" data-device="Wetter" data-get="visibility" data-unit=" km">
+		    </center>
+		</td>
+	</tr>
+	<tr>
+		<td class="A3">A3
+			<div data-type="label"><small>Temp<br></small></div>
+			<center>
+				<div data-type="label" data-device="Wetter" data-get="temperature" data-limits="[-50,0,10,25,30,40]" data-colors='["#9999ff","#ffbdff","#aa6900","#ff6900","#ff3333","#ff0000"]' data-unit="%B0C%0A" class="inline cell big"></div>
+		    </center>
+		</td>
+		<td class="B_C_3_4" colspan="2" rowspan="2">B_C_3_4
+			<div data-type="rotor" class="fade semitransparent">
+			<ul>
+				<li>
+					<div data-type="weather" data-device="Wetter" data-get="fc0_weatherMorning" data-imageset="kleinklima" style="font-size:250%"></div>
+					Morgens:&nbsp
+					<div data-type="label" data-device="Wetter" data-get="fc0_weatherMorning" class="inline"></div>
+				</li>
+				<li>
+					<div data-type="weather" data-device="Wetter" data-get="fc0_weatherDay" data-imageset="kleinklima" style="font-size:250%"></div>
+			        Tagsüber:&nbsp
+			        <div data-type="label" data-device="Wetter" data-get="fc0_weatherDay" class="inline"></div>
+			    </li>
+				<li>
+					<div data-type="weather" data-device="Wetter" data-get="fc4_weatherEvening" data-imageset="kleinklima" style="font-size:250%"></div>
+					Abend:&nbsp
+					<div data-type="label" data-device="Wetter" data-get="fc4_weatherEvening" class="inline"></div>
+				</li>
+				<li>
+					<div data-type="weather" data-device="Wetter" data-get="fc4_weatherNight" data-imageset="kleinklima" style="font-size:250%"></div>
+			        Nacht:&nbsp
+			        <div data-type="label" data-device="Wetter" data-get="fc4_weatherNight" class="inline"></div>
+			    </li>
+			    fc4_weatherEvening
+			</ul>
+		</div>
+		</td>
+		<td class="D3">D3
+			<center>
+				<div class="mini" data-type="wind_direction"
+				    data-device="Wetter"
+				    data-direction="windDir"
+				    data-speed="wind"
+				    data-speed-part="-1"
+				    data-calm="-"></div>
+			</center>
+		</td>
+	</tr>
+	<tr>
+		<td class="A4">A4
+			<div data-type="label"><small>Feuchte<br></small></div>
+			<center>
+				<div data-type="label" data-device="Wetter" data-get="humidity" data-limits="[0,40,60]" data-colors='["#9999ff","#aa6900","#ff6900"]' data-unit=" %" class="inline cell big"></div>
+			</center>
+		</td>
+		<td class="D4">D4
+			<center>
+				<div data-type="label"><small>Wind</small><br></div>
+				<div data-type="label" data-device="Wetter" data-get="wind" data-unit=" km/h" data-limits="[0,19,28,38,49,74,102,117]" data-colors='["#ffffff","#dddddd","#aa6900","#aa6900","#ff9999","#ff6666","#ff3333","#ff0000"]' style="display:inline" class="inline"></div>
+			</center>
+		</td>
+	</tr>
+	<tr>
+		<td class="A5">A5
+			<center><div data-type="label" class="inline"><small>UV-Index</small></div><br>
+				<div data-type="label" data-device="Wetter" data-get="fc0_uv" 
+					data-limits="[0,2,10]" data-colors='["grey","orange","red"]' style="display:inline"></div>
+			</center>
+		</td>
+		<td class="B5">B5
+			<center>
+				<div data-type="label" class="inline"><small>Regenrisiko</small></div><br>
+				<div data-type="label" data-device="Wetter" data-get="fc0_chOfRainDay" data-unit=" %" data-limits="[0,10,20,30,40,50,60,70,80,90,100]" data-colors='["#32AD4F","#3AAB2C","green","green","green","#F6AA1D","green","green","green","green","#F6451D"]' style="display:inline"></div>
+			</center>
+		</td>
+		<td class="C5">C5
+			<center>
+				<div data-type="label" class="inline"><small>Taupunkt</small></div><br>
+				<div data-type="label" data-device="Wetter" data-get="dewPoint" data-unit="%B0C%0A"></div>
+			</center>
+		</td>
+		<td class="D5">D5
+			<center>
+				<div data-type="label" class="inline"><small>Luftdruck</small></div><br>
+				<div data-type="label" data-device="Wetter" data-get="pressure" data-unit=" hPa" data-limits="[0,950,1000]" data-colors='["#ff9999","#aa6900","#9999ff"]'></div>
+				<div data-type="klimatrend" data-device="Wetter" data-get="statPressureTendency"></div>
+			</center>
+		</td>
+	</tr>
+</table>
+</li>
+</ul>
+
+
+</div>
+</body>
+</html>
