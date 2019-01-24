@@ -84,6 +84,7 @@
       <a href="#setdefaultattr">setdefaultattr</a> &nbsp;
       <a href="#setreading">setreading</a> &nbsp;
       <a href="#setstate">setstate</a> &nbsp;
+      <a href="#setuuid">setuuid</a> &nbsp;
       <a href="#shutdown">shutdown</a> &nbsp;
       <a href="#sleep">sleep</a> &nbsp;
       <a href="#template">template</a> &nbsp;
@@ -452,6 +453,7 @@
       <a href="#TeslaPowerwall2AC">TeslaPowerwall2AC</a> &nbsp;
       <a href="#THINKINGCLEANER">THINKINGCLEANER</a> &nbsp;
       <a href="#THZ">THZ</a> &nbsp;
+      <a href="#todoist">todoist</a> &nbsp;
       <a href="#TPLinkHS110">TPLinkHS110</a> &nbsp;
       <a href="#TRAFFIC">TRAFFIC</a> &nbsp;
       <a href="#TRX">TRX</a> &nbsp;
@@ -1931,6 +1933,17 @@ Die folgenden lokalen Attribute werden von mehreren Ger&auml;ten verwendet:
 <!-- setstate end -->
 
 
+<a name="setuuid"></a>
+<h3>setuuid</h3>
+<div class='langLinks'>[<a href='commandref.html#setuuid'>EN</a> DE]</div>
+<ul>
+  <code>setuuid &lt;device&gt; &lt;uuid&gt;</code>
+  <br><br>
+  Systembefehl, um den FUUID internen Wert zu setzen.
+  Ist nicht vom Benutzer zu verwenden.
+</ul>
+<!-- setstate end -->
+
 <a name="shutdown"></a>
 <h3>shutdown</h3>
 <div class='langLinks'>[<a href='commandref.html#shutdown'>EN</a> DE]</div>
@@ -2029,6 +2042,11 @@ Die folgenden lokalen Attribute werden von mehreren Ger&auml;ten verwendet:
 
   <b>Attributes</b>
   <ul>
+    <a name="altitude"></a>
+    <li>altitude<br>
+       H&ouml;he in Metern &uuml;ber dem Meeresspiegel, Voreinstellung ist 0.
+    </li><br>
+
     <li><a href="#archivedir">archivedir</a></li>
     <li><a href="#archivecmd">archivecmd</a></li>
     <li><a href="#nrarchive">nrarchive</a></li>
@@ -2175,6 +2193,18 @@ Die folgenden lokalen Attribute werden von mehreren Ger&auml;ten verwendet:
         dessen Wert an FHEM/FhemUtils/ angeh&auml;ngt wird.
     </li><br>
 
+    <a name="latitude"></a>
+    <li>latitude<br>
+        Geographische Breite in Dezimalgrad, Voreinstellung ist 50.112,
+        Frankfurt am Main.
+    </li><br>
+
+    <a name="longitude"></a>
+    <li>longitude<br>
+        Geographische L&auml;nge in Dezimalgrad, Voreinstellung ist 8.686,
+        Frankfurt am Main.
+    </li><br>
+
     <a name="logdir"></a>
     <li>logdir<br>
         Falls gesetzt, wird %L in dem logfile Attribut (oder in der Dateinamen 
@@ -2195,6 +2225,13 @@ Die folgenden lokalen Attribute werden von mehreren Ger&auml;ten verwendet:
         <code>global</code> Ger&auml;t hinzu wie Sie es auch bei einem FileLog
         device tun k&ouml;nnten.<br> Sie k&ouml;nnen den Namen der Logdatei
         mit&nbsp; <code>{ $currlogfile }festlegen</code>.
+    </li><br>
+
+    <a name="maxShutdownDelay"></a>
+    <li>maxShutdownDelay<br>
+        Einige Module ben&ouml;tigen Zeit zum Aufr&auml;umen beim shutdown,
+        aber FHEM begrenzt diese Zeit auf 10 Sekunden. Mit diesem Attribut
+        kann man sie anpassen.
     </li><br>
 
     <a name="modpath"></a>
@@ -3143,6 +3180,9 @@ Die folgenden lokalen Attribute werden von mehreren Ger&auml;ten verwendet:
         Schaltet den TV aus. Der State des Gerätes wird auf "set_off" gesetzt. Dieser Wert wird nach 60 Sekunden wieder überschrieben oder sobald der TV entsprechend "off" meldet.</li>
       <li><a name="BRAVIAon"></a><i>on</i><br>
         Einschalten des TV, ab Modelljahr 2013 per WOL. Der State des Gerätes wird auf "set_on" gesetzt. Dieser Wert wird nach 60 Sekunden wieder überschrieben oder sobald der TV entsprechend "on" meldet.</li>
+      <li><i>openUrl</i><br>
+        Öffnet eine URL auf dem Bildschirm.
+        Diese Funktion ist ab Modelljahr 2013 verfügbar.</li>
       <li><i>pause</i><br>
         Pausiert die Wiedergabe einer Aufnahme, einer internen App, etc.</li>
       <li><i>play</i><br>
@@ -11597,6 +11637,8 @@ DOIFtools stellt Funktionen zur Unterstützung von DOIF-Geräten bereit.<br>
 								 <a href="#DbRepattr">Attribut</a> "allowDeletion" gesetzt sein. <br>
                                  Bei der Ausführung dieses Kommandos werden keine Einschränkungen durch gesetzte Attribute
                                  "device", "reading", "time.*" bzw. "aggregation" berücksichtigt. <br>
+                                 Dieses Kommando akzeptiert ebenfalls das Setzen von SQL Session Variablen wie z.B.
+                                 "SET @open:=NULL, @closed:=NULL;". <br>
 								 Sollen die im Modul gesetzten <a href="#DbRepattr">Attribute</a> "timestamp_begin" bzw. 
 								 "timestamp_end" im Statement berücksichtigt werden, können die Platzhalter 
 								 "<b>§timestamp_begin§</b>" bzw. "<b>§timestamp_end§</b>" dafür verwendet werden. <br><br>
@@ -11620,7 +11662,26 @@ DOIFtools stellt Funktionen zur Unterstützung von DOIF-Geräten bereit.<br>
                                  <li>set &lt;name&gt; sqlCmd select * from history where DEVICE = "Test" </li>
                                  <li>set &lt;name&gt; sqlCmd insert into history (TIMESTAMP, DEVICE, TYPE, EVENT, READING, VALUE, UNIT) VALUES ('2017-05-09 17:00:14','Test','manuell','manuell','Tes§e','TestValue','°C') </li>    
                                  </ul>
-								 <br>
+                                 <br>
+                                 
+                                 Nachfolgend noch ein Beispiel für ein komplexeres Statement (MySQL) unter Mitgabe von
+                                 SQL Session Variablen: <br><br>
+                                 
+                                 <ul>
+                                 <li>set &lt;name&gt; sqlCmd SET @open:=NULL, @closed:=NULL;
+                                        SELECT
+                                            TIMESTAMP, VALUE,DEVICE,
+                                            @open AS open,
+                                            @open := IF(VALUE = 'open', TIMESTAMP, NULL) AS curr_open,
+                                            @closed  := IF(VALUE = 'closed',  TIMESTAMP, NULL) AS closed
+                                        FROM history WHERE
+                                           DATE(TIMESTAMP) = CURDATE() AND
+                                           DEVICE = "HT_Fensterkontakt" AND
+                                           READING = "state" AND
+                                           (VALUE = "open" OR VALUE = "closed")
+                                           ORDER BY  TIMESTAMP; </li>
+                                 </ul>
+								 <br>                                 
 								 
 								 Das Ergebnis des Statements wird im <a href="#DbRepReadings">Reading</a> "SqlResult" dargestellt.
 								 Die Ergebnis-Formatierung kann durch das <a href="#DbRepattr">Attribut</a> "sqlResultFormat" ausgewählt, sowie der verwendete
@@ -11841,7 +11902,9 @@ DOIFtools stellt Funktionen zur Unterstützung von DOIF-Geräten bereit.<br>
     <li><b> dbValue &lt;SQL-Statement&gt;</b> - 
                             Führt das angegebene SQL-Statement <b>blockierend</b> aus. Diese Funktion ist durch ihre Arbeitsweise 
                             speziell für den Einsatz in benutzerspezifischen Scripten geeignet. <br>
-                            Die Eingabe akzeptiert Mehrzeiler und gibt ebenso mehrzeilige Ergebisse zurück. 
+                            Die Eingabe akzeptiert Mehrzeiler und gibt ebenso mehrzeilige Ergebisse zurück.
+                            Dieses Kommando akzeptiert ebenfalls das Setzen von SQL Session Variablen wie z.B.
+                            "SET @open:=NULL, @closed:=NULL;". <br>                            
                             Werden mehrere Felder selektiert und zurückgegeben, erfolgt die Feldtrennung mit dem Trenner 
                             des <a href="#DbRepattr">Attributes</a> "sqlResultFieldSep" (default "|"). Mehrere Ergebniszeilen 
                             werden mit Newline ("\n") separiert. <br>
@@ -20406,8 +20469,8 @@ Von nun an k&oumlnnen die Player gesteuert werden. Au&szligerdem wird der Status
 			Standard: 1, g&uuml;ltige Werte: 0, 1, 2<br><br>
 		</li>
 		<li>altitude<br>
-			Wenn dieser Wert definiert ist, wird diese Angabe zus&auml; f&uuml;r die Berechnung des 
-			Luftdrucks bezogen auf Meeresh&ouml;he (Normalnull) NN herangezogen.<br>
+			Wenn dieser Wert definiert ist, wird diese Angabe zus&auml;tzlich f&uuml;r die Berechnung des
+			Luftdrucks bezogen auf Meeresh&ouml;he (Normalhöhennull) <abbr>NHN</abbr> herangezogen.<br>
 			Bemerkung: Dies ist ein globales Attribut.<br><br>
 			<code>attr global altitude 220</code>
 		</li>
@@ -20513,8 +20576,8 @@ Von nun an k&oumlnnen die Player gesteuert werden. Au&szligerdem wird der Status
       Default: 1, valid values: 0, 1, 2<br><br>
     </li>
     <li>altitude<br>
-      Wenn dieser Wert definiert ist, wird diese Angabe zus&auml;tzlich f&uuml;r die Berechnung des 
-      Luftdrucks bezogen auf Meeresh&ouml;he (Normalnull) NN herangezogen.<br>
+      Wenn dieser Wert definiert ist, wird diese Angabe zus&auml;tzlich f&uuml;r die Berechnung des
+	  Luftdrucks bezogen auf Meeresh&ouml;he (Normalh�hennull) <abbr>NHN</abbr> herangezogen.<br>
       Bemerkung: Dies ist ein globales Attribut.<br><br>
       <code>attr global altitude 220</code>
     </li>
@@ -29746,10 +29809,16 @@ Siehe <a href="#PW_Switch">PW_Switch</a>.
 <div>
 	<ul>
 			<p>Das Modul ROLLO bietet eine einfache Moeglichkeit, mit ein bis zwei Relais den Hoch-/Runterlauf eines Rolladen zu steuern und punktgenau anzuhalten.<br>
-			Ausserdem wird die aktuelle Position in FHEM dargestellt. Ueber welche Hardware/Module die Ausgaenge angesprochen werden ist dabei egal.<br /><h4>Example</h4>
+			Ausserdem wird die aktuelle Position in FHEM dargestellt. Ueber welche Hardware/Module die Ausgaenge angesprochen werden ist dabei egal.<br />
+			<h4>Anmerkung</h4>
+			Wenn ROLLO installiert wurde, bevor es Bestandteil von FHEM wurde und lange kein Update gemacht wurde, wirst du die "position" readings und das entsprechende set Kommando vermissen. "position" wurde durch "pct" ersetzt, um Kompatibilität mit anderen Modulen (wie <a href="https://fhem.de/commandref_DE.html#AutoShuttersControl">Automatic shutter control - ASC</a>) sicher zu stellen. Bitte passe deine notifies/DOIFs entsprechend an.
+			
+			<h4>Example</h4>
 			<p>
 				<code>define TestRollo ROLLO</code>
 				<br />
+				
+			
 			</p><a name="ROLLO_Define"></a>
 			<h4>Define</h4>
 			<p>
@@ -32313,6 +32382,7 @@ Hier wird definiert, dass ein Event erzeugt werden soll, wenn innerhalb von 2 Se
       <li>Start einer Aufnahme</li>
       <li>Stop einer Aufnahme (per Befehl bzw. automatisch nach Ablauf der Aufnahmedauer) </li>
       <li>Auslösen von Schnappschnüssen und optionaler Email-Versand mittels integrierten Email-Client </li>
+      <li>Auslösen von Schnappschnüssen aller definierten Kameras und optionaler gemeinsamer Email-Versand mittels integrierten Email-Client </li>
       <li>Deaktivieren einer Kamera in Synology Surveillance Station</li>
       <li>Aktivieren einer Kamera in Synology Surveillance Station</li>
       <li>Steuerung der Belichtungsmodi Tag, Nacht bzw. Automatisch </li>
@@ -32892,7 +32962,7 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
   <br><br>
   
   <ul>
-  <li><b> set &lt;name&gt; [on [&lt;rectime&gt;] | off] </b> &nbsp;&nbsp;&nbsp;&nbsp;(gilt für CAM)</li><br>
+  <li><b> set &lt;name&gt; [ on [&lt;rectime&gt;] | off ] </b> &nbsp;&nbsp;&nbsp;&nbsp;(gilt für CAM)</li><br>
 
   Der Befehl "set &lt;name&gt; on" startet eine Aufnahme. Die Standardaufnahmedauer beträgt 15 Sekunden. Sie kann mit dem 
   Attribut "rectime" individuell festgelegt werden. 
@@ -33094,55 +33164,49 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
   <li><b> set &lt;name&gt; snap [&lt;Anzahl&gt;] [&lt;Zeitabstand&gt;] [snapEmailTxt:"subject => &lt;Betreff-Text&gt;, body => &lt;Mitteilung-Text&gt;"]</b> &nbsp;&nbsp;&nbsp;&nbsp;(gilt für CAM)</li> <br>
   
   Ein oder mehrere Schnappschüsse werden ausgelöst. Es kann die Anzahl der auszulösenden Schnappschüsse und deren zeitlicher
-  Abstand in Sekunden optional angegeben werden. Ohne Angabe wird ein Schnappschuß getriggert.
-  Es wird die ID und der Filename des letzten Snapshots als Wert der Variable "LastSnapId" bzw. "LastSnapFilename" in den 
-  Readings der Kamera gespeichert. <br>
-  Der Email-Versand wird durch das Setzen des <a href="#SSCamattr">Attributs</a> "snapEmailTxt" eingeschaltet. Der Text
-  im Attribut "snapEmailTxt" kann durch die Spezifikation des optionalen "snapEmailTxt:"-Tags, wie oben gezeigt, temporär
-  überschrieben bzw. geändert werden. <br><br>
+  Abstand in Sekunden optional angegeben werden. Ohne Angabe wird ein Schnappschuß getriggert. <br>
+  Es wird die ID und der Filename des letzten Snapshots als Wert der Readings "LastSnapId" bzw. "LastSnapFilename" in  
+  der Kamera gespeichert. <br>
+  Um die Daten der letzen 1-10 Schnappschüsse zu versionieren, kann das <a href="#SSCamattr">Attribut</a> "snapReadingRotate"
+  verwendet werden.
+  <br><br>
+  Ein <b>Email-Versand</b> der Schnappschüsse kann durch Setzen des <a href="#SSCamattr">Attributs</a> "snapEmailTxt" aktiviert
+  werden. Zuvor ist der Email-Versand, wie im Abschnitt <a href="#SSCamEmail">Einstellung Email-Versand</a> beschrieben,
+  einzustellen. (Für weitere Informationen "<b>get &lt;name&gt; versionNotes 7</b>" ausführen) <br>
+  Der Text im Attribut "snapEmailTxt" kann durch die Spezifikation des optionalen "snapEmailTxt:"-Tags, wie oben 
+  gezeigt, temporär überschrieben bzw. geändert werden. <br><br>
   
-  <b>Email-Versand </b> <br><br>
-  Die Schnappschüsse können nach der Erstellung per <b>Email</b> gemeinsam versendet werden. Dazu enthält das Modul einen 
-  eigenen Email-Client. 
-  Zur Verwendung dieser Funktion muss das Perl-Modul <b>MIME::Lite</b> installiert sein. Auf Debian-System kann 
-  es mit <br><br>
-   
-   <ul>
-    sudo apt-get install libmime-lite-perl
-   </ul>
-   <br>
-   
-  installiert werden. <br><br>
+  <b>Beispiele:</b>
+  <pre>
+    set &lt;name&gt; snap 4 
+    set &lt;name&gt; snap 3 3 snapEmailTxt:"subject => Bewegungsalarm $CAM, body => Eine Bewegung wurde am Carport registriert"
+  </pre>
+  </ul>
+  <br><br>
   
-  Für die Verwendung des Email-Versands müssen einige Attribute gesetzt oder können optional genutzt werden. <br>
-  Die Credentials für den Zugang zum Email-Server müssen mit dem Befehl <b>"set &lt;name&gt; smtpcredentials &lt;user&gt; &lt;password&gt;"</b>
-  gesetzt werden. Der Verbindungsaufbau zum Postausgangsserver erfolgt initial unverschüsselt und wechselt zu einer verschlüsselten
-  Verbindung wenn SSL zur Verfügung steht. In diesem Fall erfolgt auch die Übermittlung von User/Password verschlüsselt.
-  Ist das Attribut "smtpSSLPort" definiert, erfolgt der Verbindungsaufbau zum Email-Server sofort verschlüsselt.
-  Optionale Attribute sind gekennzeichnet: <br><br>
+  <ul>
+  <li><b> set &lt;name&gt; snapCams [&lt;Anzahl&gt;] [&lt;Zeitabstand&gt;] [CAM:"&lt;Kamera&gt;, &lt;Kamera&gt, ..."]</b> &nbsp;&nbsp;&nbsp;&nbsp;(gilt für SVS)</li> <br>
   
-  <ul>   
-    <table>  
-    <colgroup> <col width=12%> <col width=88%> </colgroup>
-      <tr><td style="vertical-align:top"> <b>snapEmailTxt</b> <td>- Aktiviert den Email-Versand. Die Eingabe hat die Form: <br>
-                                                                  <code>subject => &lt;Betreff-Text&gt;, body => &lt;Mitteilung-Text&gt;</code><br>
-                                                                  Es können die Platzhalter $CAM, $DATE und $TIME verwendet werden. $CAM wird 
-                                                                  durch den Device-Alias bzw. den Namen der Kamera in der SVS
-                                                                  ersetzt falls der Device-Alias nicht gesetzt ist. 
-                                                                  $DATE und $TIME werden durch das aktuelle Datum und Zeit ersetzt.</td></tr>
-      <tr><td>                            <b>smtpHost</b>     </td><td>- Hostname oder IP-Adresse des Postausgangsservers (z.B. securesmtp.t-online.de) </td></tr>
-      <tr><td>                            <b>smtpFrom</b>     </td><td>- Absenderadresse (&lt;name&gt@&lt;domain&gt) </td></tr>
-      <tr><td>                            <b>smtpTo</b>       </td><td>- Empfängeradresse(n) (&lt;name&gt@&lt;domain&gt) </td></tr>
-      <tr><td>                            <b>smtpPort</b>     </td><td>- (optional) Port des Postausgangsservers (default: 25) </td></tr>
-	  <tr><td>                            <b>smtpCc</b>       </td><td>- (optional) Carbon-Copy Empfängeradresse(n) (&lt;name&gt@&lt;domain&gt) </td></tr>
-	  <tr><td>                            <b>smtpNoUseSSL</b> </td><td>- (optional) "1" wenn kein SSL beim Email-Versand verwendet werden soll (default: 0) </td></tr>
-	  <tr><td>                            <b>smtpSSLPort</b>  </td><td>- (optional) SSL-Port des Postausgangsservers (default: 465) </td></tr>
-	  <tr><td>                            <b>smtpDebug</b>    </td><td>- (optional) zum Debugging der SMTP-Verbindung setzen </td></tr>
-    </table>
-   </ul>     
-   <br>
-   
-  Zur näheren Erläuterung siehe Beschreibung der <a href="#SSCamattr">Attribute</a>. <br>
+  Ein oder mehrere Schnappschüsse der angegebenen Kamera-Devices werden ausgelöst. Sind keine Kamera-Devices angegeben, 
+  werden die Schnappschüsse bei allen in FHEM definierten Kamera-Devices getriggert.  
+  Optional kann die Anzahl der auszulösenden Schnappschüsse (default: 1) und deren zeitlicher Abstand in Sekunden
+  (default: 2) angegeben werden. <br>
+  Es wird die ID und der Filename des letzten Snapshots als Wert der Readings "LastSnapId" bzw. "LastSnapFilename"  
+  der entsprechenden Kamera gespeichert. <br><br>
+  Ein <b>Email-Versand</b> der Schnappschüsse kann durch Setzen des <a href="#SSCamattr">Attributs</a> <b>"snapEmailTxt"</b> im 
+  SVS-Device <b>UND</b> in den Kamera-Devices, deren Schnappschüsse versendet werden sollen, aktiviert werden. 
+  Bei Kamera-Devices die kein Attribut "snapEmailTxt" gesetzt haben, werden die Schnappschüsse ausgelöst, aber nicht versendet.
+  Zuvor ist der Email-Versand, wie im Abschnitt <a href="#SSCamEmail">Einstellung Email-Versand</a> beschrieben,
+  einzustellen. (Für weitere Informationen "<b>get &lt;name&gt; versionNotes 7</b>" ausführen) <br>
+  Es wird ausschließlich der im Attribut "snapEmailTxt" des SVS-Devices hinterlegte Email-Text in der erstellten Email 
+  verwendet. Der Text im Attribut "snapEmailTxt" der einzelnen Kameras wird ignoriert !! <br><br>
+  
+  <b>Beispiele:</b>
+  <pre>
+    set &lt;name&gt; snapCams 4 
+    set &lt;name&gt; snapCams 3 3 CAM:"CamHE1, CamCarport"
+  </pre>
+  
   </ul>
   <br><br>
   
@@ -33393,10 +33457,61 @@ http(s)://&lt;hostname&gt;&lt;port&gt;/webapi/entry.cgi?api=SYNO.SurveillanceSta
   
   </ul>
   <br><br>
-
+  
+  <a name="SSCamEmail"></a>
+  <b>Einstellung Email-Versand </b> <br><br>
+  <ul>
+  Schnappschüsse können nach der Erstellung per <b>Email</b> gemeinsam versendet werden. Dazu enthält das Modul einen 
+  eigenen Email-Client. 
+  Zur Verwendung dieser Funktion muss das Perl-Modul <b>MIME::Lite</b> installiert sein. Auf Debian-Systemen kann 
+  es mit <br><br>
+   
+   <ul>
+    sudo apt-get install libmime-lite-perl
+   </ul>
+   <br>
+   
+  installiert werden. <br><br>
+  
+  Für die Verwendung des Email-Versands müssen einige Attribute gesetzt oder können optional genutzt werden. <br>
+  Die Credentials für den Zugang zum Email-Server müssen mit dem Befehl <b>"set &lt;name&gt; smtpcredentials &lt;user&gt; &lt;password&gt;"</b>
+  hinterlegt werden. Der Verbindungsaufbau zum Postausgangsserver erfolgt initial unverschüsselt und wechselt zu einer verschlüsselten
+  Verbindung wenn SSL zur Verfügung steht. In diesem Fall erfolgt auch die Übermittlung von User/Password verschlüsselt.
+  Ist das Attribut "smtpSSLPort" definiert, erfolgt der Verbindungsaufbau zum Email-Server sofort verschlüsselt. 
+  <br><br>
+  
+  Optionale Attribute sind gekennzeichnet: <br><br>
+  
+  <ul>   
+    <table>  
+    <colgroup> <col width=12%> <col width=88%> </colgroup>
+      <tr><td style="vertical-align:top"> <b>snapEmailTxt</b> <td>- <b>Aktiviert den Email-Versand</b>. Das Attribut hat das Format: <br>
+                                                                  <ul>
+                                                                  <code>subject => &lt;Betreff-Text&gt;, body => &lt;Mitteilung-Text&gt;</code><br>
+                                                                  </ul>
+                                                                  Es können die Platzhalter $CAM, $DATE und $TIME verwendet werden. $CAM wird 
+                                                                  durch den Device-Namen, Device-Alias bzw. den Namen der Kamera in der SVS
+                                                                  ersetzt falls der Device-Alias nicht gesetzt ist. 
+                                                                  $DATE und $TIME werden durch das aktuelle Datum und Zeit ersetzt.</td></tr>
+      <tr><td>                            <b>smtpHost</b>     </td><td>- Hostname oder IP-Adresse des Postausgangsservers (z.B. securesmtp.t-online.de) </td></tr>
+      <tr><td>                            <b>smtpFrom</b>     </td><td>- Absenderadresse (&lt;name&gt@&lt;domain&gt) </td></tr>
+      <tr><td>                            <b>smtpTo</b>       </td><td>- Empfängeradresse(n) (&lt;name&gt@&lt;domain&gt) </td></tr>
+      <tr><td>                            <b>smtpPort</b>     </td><td>- (optional) Port des Postausgangsservers (default: 25) </td></tr>
+	  <tr><td>                            <b>smtpCc</b>       </td><td>- (optional) Carbon-Copy Empfängeradresse(n) (&lt;name&gt@&lt;domain&gt) </td></tr>
+	  <tr><td>                            <b>smtpNoUseSSL</b> </td><td>- (optional) "1" wenn kein SSL beim Email-Versand verwendet werden soll (default: 0) </td></tr>
+	  <tr><td>                            <b>smtpSSLPort</b>  </td><td>- (optional) SSL-Port des Postausgangsservers (default: 465) </td></tr>
+	  <tr><td>                            <b>smtpDebug</b>    </td><td>- (optional) zum Debugging der SMTP-Verbindung setzen </td></tr>
+    </table>
+   </ul>     
+   <br>
+   
+  Zur näheren Erläuterung siehe Beschreibung der <a href="#SSCamattr">Attribute</a>. <br>
+  </ul>
+  <br><br>
+  
   <a name="SSCamPolling"></a>
   <b>Polling der Kamera/SVS-Eigenschaften:</b><br><br>
-
+  <ul>
   Die Abfrage der Kameraeigenschaften erfolgt automatisch, wenn das Attribut "pollcaminfoall" (siehe Attribute) mit einem Wert &gt; 10 gesetzt wird. <br>
   Per Default ist das Attribut "pollcaminfoall" nicht gesetzt und das automatische Polling nicht aktiv. <br>
   Der Wert dieses Attributes legt das Intervall der Abfrage in Sekunden fest. Ist das Attribut nicht gesetzt oder &lt; 10 wird kein automatisches Polling <br>
@@ -33430,8 +33545,9 @@ http(s)://&lt;hostname&gt;&lt;port&gt;/webapi/entry.cgi?api=SYNO.SurveillanceSta
 
   Sind mehrere Kameras in SSCam definiert, sollte "pollcaminfoall" nicht bei allen Kameras auf exakt den gleichen Wert gesetzt werden um Verarbeitungsengpässe <br>
   und dadurch versursachte potentielle Fehlerquellen bei der Abfrage der Synology Surveillance Station zu vermeiden. <br>
-  Ein geringfügiger Unterschied zwischen den Pollingintervallen der definierten Kameras von z.B. 1s kann bereits als ausreichend angesehen werden. <br><br> 
-
+  Ein geringfügiger Unterschied zwischen den Pollingintervallen der definierten Kameras von z.B. 1s kann bereits als ausreichend angesehen werden. 
+  </ul>
+  <br><br> 
 
 <a name="SSCaminternals"></a>
 <b>Internals</b> <br><br>
@@ -33746,7 +33862,13 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
 	 Im Modus "Full" wird die original vorhandene Auflösung der Images abgerufen. Dies erfordert mehr Ressourcen und kann die 
 	 Anzeige verlangsamen. Mit "snapGalleryBoost=1" kann die Ausgabe beschleunigt werden, da in diesem Fall die Aufnahmen über 
 	 Polling abgerufen und nur noch zur Anzeige gebracht werden. </li><br>
-	
+
+  <a name="snapReadingRotate"></a>
+  <li><b>snapReadingRotate 0...10</b><br>
+    Aktiviert die Versionierung von Schnappschußreadings (default: 0). Es wird eine fortlaufende Nummer der Readings 
+    "LastSnapFilename", "LastSnapId" und "LastSnapTime" bis zum eingestellten Wert von snapReadingRotate erzeugt und enthält 
+    die Daten der letzten X Schnappschüsse. </li><br>
+    
   <a name="showStmInfoFull"></a>
   <li><b>showStmInfoFull</b><br>
     zusaätzliche Streaminformationen wie LiveStreamUrl, StmKeyUnicst, StmKeymjpegHttp werden 
@@ -33802,7 +33924,7 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
     <tr><td><li>CamIP</li>              </td><td>- IP-Adresse der Kamera  </td></tr>
     <tr><td><li>CamLastRec</li>         </td><td>- Pfad / Name der letzten Aufnahme   </td></tr>
     <tr><td><li>CamLastRecId</li>       </td><td>- die ID der letzten Aufnahme   </td></tr>
-    <tr><td><li>CamLastRecTime</li>     </td><td>- Datum / Startzeit - Stopzeit der letzten Aufnahme   </td></tr>
+    <tr><td><li>CamLastRecTime</li>     </td><td>- Datum / Startzeit - Stopzeit der letzten Aufnahme (Format abhängig vom global Attribut "language")  </td></tr>
     <tr><td><li>CamLiveFps</li>         </td><td>- Frames pro Sekunde des Live-Streams  </td></tr>    
     <tr><td><li>CamLiveMode</li>        </td><td>- Quelle für Live-Ansicht (DS, Camera)  </td></tr>
     <tr><td><li>camLiveQuality</li>     </td><td>- in SVS eingestellte Live-Stream Qualität  </td></tr>
@@ -33841,10 +33963,10 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
     <tr><td><li>Errorcode</li>          </td><td>- Fehlercode des letzten Fehlers   </td></tr>
 	<tr><td><li>HomeModeState</li>      </td><td>- HomeMode-Status (ab SVS-Version 8.1.0)   </td></tr>
 	<tr><td><li>LastLogEntry</li>       </td><td>- der neueste Eintrag des Surveillance Station Logs (nur SVS-Device und wenn Attribut pollcaminfoall gesetzt)   </td></tr>
-    <tr><td><li>LastSnapFilename</li>   </td><td>- der Filename des letzten Schnapschusses   </td></tr>
-    <tr><td><li>LastSnapId</li>         </td><td>- die ID des letzten Schnapschusses   </td></tr>
-	<tr><td><li>LastSnapTime</li>       </td><td>- Zeitstempel des letzten Schnapschusses   </td></tr>
-    <tr><td><li>LastUpdateTime</li>     </td><td>- Datum / Zeit der letzten Aktualisierung durch "caminfoall" </td></tr> 
+    <tr><td><li>LastSnapFilename[x]</li></td><td>- der Filename des/der letzten Schnapschüsse   </td></tr>
+    <tr><td><li>LastSnapId[x]</li>      </td><td>- die ID des/der letzten Schnapschüsse   </td></tr>
+	<tr><td><li>LastSnapTime[x]</li>    </td><td>- Zeitstempel des/der letzten Schnapschüsse (Format abhängig vom global Attribut "language") </td></tr>
+    <tr><td><li>LastUpdateTime</li>     </td><td>- Datum / Zeit der letzten Aktualisierung durch "caminfoall" (Format abhängig vom global Attribut "language")</td></tr> 
     <tr><td><li>LiveStreamUrl </li>     </td><td>- die LiveStream-Url wenn der Stream gestartet ist. (<a href="#SSCamattr">Attribut</a> "showStmInfoFull" muss gesetzt sein) </td></tr> 
     <tr><td><li>Patrols</li>            </td><td>- in Surveillance Station voreingestellte Überwachungstouren (bei PTZ-Kameras)  </td></tr>
     <tr><td><li>PollState</li>          </td><td>- zeigt den Status des automatischen Pollings an  </td></tr>
@@ -34177,10 +34299,8 @@ Abhängig vom Zustand des Streaming-Devices werden zum Start von Aktionen unters
 <h3>SUNRISE_EL</h3>
 <div class='langLinks'>[<a href='commandref.html#SUNRISE_EL'>EN</a> DE]</div>
 <ul>
-    <p>
-        <strong>SUNRISE_EL</strong> definiert eine Reihe von Perl-Subroutinen (<abbr>z.B.</abbr> zur Nutzung mit <a href="#at">at</a>):
-    </p>
-
+    SUNRISE_EL definiert eine Reihe von Perl-Subroutinen (z.B. zur Nutzung mit
+    <a href="#at">at</a>):
     <ul>
         <li><code>sunrise()</code> - absolute Zeit des n&auml;chsten
         Sonnenaufgangs (+ 24 h, wenn am n&auml;chsten Tag)</li>
@@ -34210,305 +34330,155 @@ Abhängig vom Zustand des Streaming-Devices werden zum Start von Aktionen unters
     </ul>
 
     <h4>Breite, L&auml;nge und H&ouml;henwinkel</h4>
-    <p>
-        Bevor du <strong>SUNRISE_EL</strong> verwendest, solltest du im <a href="#global">global-Device</a> die
-        Werte f&uuml;r <span>latitude</span> (geographische Breite) und <span>longitude</span> (geographische L&auml;nge) entsprechend
+        Bevor du SUNRISE_EL verwendest, solltest du im <a href="#global">global-Device</a> die
+        Werte f&uuml;r latitude (geographische Breite) und longitude (geographische L&auml;nge) entsprechend
         deines Standorts setzen.
-    </p>
+    
     <div>
-        <h4>Exkurs: <span>latitude</span> &amp; <span>longitude</span> ermitteln</h4>
-        <p>
-            Deine geopgragischen Koordinaten kannst du <abbr>z.B.</abbr> mit <a href="https://maps.google.com">Google Maps</a> bestimmen.
-            Dazu setzt du einen Punkt auf der Karte und findest dann im unteren Bereich der Karte die Angabe f&uuml;r beide Werte.
-            Der erste Wert ist die geographische Breite (<span>latitude</span>); der zweite Wert die geographische L&auml;nge
-            (<span>longitude</span>).
-        </p>
-        <p>
-            Der <span>Default</span>-Wert ist 50.112, 8.686 (<a href="https://goo.gl/maps/vkyedDL1DJp">Frankfurt am Main</a>).
-        </p>
+        Die Voreinstellung ist 50.112, 8.686, Frankfurt am Main).
     </div>
-    <p>
-        <strong>SUNRISE_EL</strong> geht von einem H&ouml;henwinkel der Sonne bezogen zum Horizont, <var>h</var>, von -6&deg; aus. Dieser Wert bedeutet,
-        dass die Sonne 6&deg; <strong>unter</strong> dem Horizont steht und Lesen im Freien ohne k&uuml;nstliche Beleuchtung nicht
-        mehr m&ouml;glich ist (<span>civil twilight</span>, b&uuml;rgerliche D&auml;mmerung).
-        <strong>SUNRISE_EL</strong> speichert diesen Wert in <var><code>$defaultaltit</code></var>.
-    </p>
-    <p>
-        Siehe auch <a href="http://search.cpan.org/~jforget/DateTime-Event-Sunrise-0.0505/lib/DateTime/Event/Sunrise.pm">perldoc DateTime::Event::Sunrise</a> f&uuml;r
-        weitere Hinweise.
-    </p>
+    
+    SUNRISE_EL geht von einem H&ouml;henwinkel der Sonne bezogen zum Horizont,
+    h, von -6&deg; aus. Dieser Wert bedeutet, dass die Sonne 6&deg; unter dem
+    Horizont steht und Lesen im Freien ohne k&uuml;nstliche Beleuchtung nicht
+    mehr m&ouml;glich ist (civil twilight, b&uuml;rgerliche D&auml;mmerung).
+    SUNRISE_EL speichert diesen Wert in <code>$defaultaltit</code>.
 
-    <h4>Befehlsreferenz</h4>
+    Siehe auch <a href="http://search.cpan.org/~jforget/DateTime-Event-Sunrise-0.0505/lib/DateTime/Event/Sunrise.pm">perldoc DateTime::Event::Sunrise</a> f&uuml;r
+    weitere Hinweise.
+
+
     <h5>Parameter</h5>
-    <p>
-        Jede der folgenden Funktionen akzeptiert bis zu vier (<abbr>bzw.</abbr> f&uuml;nf) Parameter in der angegebenen Reihenfolge:
-    </p>
-    <dl>
-        <dt>
-            <var>unix timestamp</var>
-        </dt>
-        <dd>
-            <p>
-                <strong>Ausschlie&szlig;lich</strong> <code>sunrise_abs_dat()</code> &amp; <code>sunset_abs_dat()</code>
-                erwarten als ersten Parameter  einen Unix-Timestamp (Unix-Epoche) in Sekunden, der ein Datum spezifiziert. Andere Subroutinen
-                erwarten diesen Parameter nicht!
-            </p>
-        </dd>
-        <dt>
-            <var>altitude</var>
-        </dt>
-        <dd>
-            <p>
-                Eine der folgenden Zeichenketten, die unterschiedliche H&ouml;henwinkel <var>h</var> definieren und den Wert
-                von <code><var>$defaultaltit</var></code> ver&auml;ndern.
-            </p>
-            <p>
-                Erlaubte Werte sind:
-            </p>
-            <ul>
-                <li>
-                    <code><var>REAL</var></code>, <var>h</var> = 0&deg;,
-                </li>
-                <li>
-                    <code><var>CIVIL</var></code>, <var>h</var> = -6&deg;,
-                </li>
-                <li>
-                    <code><var>NAUTIC</var></code>, <var>h</var> = -12&deg;,
-                </li>
-                <li>
-                    <code><var>ASTRONOMIC</var></code>, <var>h</var> = -18&deg;,
-                </li>
-                <li>
-                    oder <code><var>HORIZON=</var></code>, gefolgt von einer positiven oder negativen Zahl ohn Gradzeichen, die einen H&ouml;henwinkel
-                    angibt.
-                </li>
-            </ul>
-        </dd>
-        <dt>
-            <var>offset</var>
-        </dt>
-        <dd>
-            <p>
-                <span>Offset</span> in Sekunden, der zu dem R&uuml;ckgabewert der Funktion addiert wird.
-            </p>
-            <p>
-                <code>isday()</code>
-                ignoriert diesen Wert.
-            </p>
-        </dd>
-        <dt>
-            <var>min</var>
-        </dt>
-        <dd>
+    Jede der folgenden Funktionen akzeptiert bis zu vier (bzw. f&uuml;nf)
+    Parameter in der angegebenen Reihenfolge:
+    <ul>
+      <li>unix timestamp<br>
+        Ausschlie&szlig;lich <code>sunrise_abs_dat()</code> &amp;
+        <code>sunset_abs_dat()</code> erwarten als ersten Parameter  einen
+        Unix-Timestamp (Unix-Epoche) in Sekunden, der ein Datum spezifiziert.
+        Andere Subroutinen erwarten diesen Parameter nicht!
+        </li></br>
 
-            <p>
-                Einen Zeitstempel im Format <var>hh:mm</var>, vor dem keine Aktion ausgef&uuml;hrt werden soll.
-            </p>
-            <p>
-                <code>isday()</code> wird <var>(int) 0</var> zur&uuml;ckliefern, wenn <var>min</var> gesetzt
-                und der aktuelle Zeitstempel kleiner ist.
-            </p>
-        </dd>
-        <dt>
-            <var>max</var>
-        </dt>
-        <dd>
-            <p>
-                Einen Zeitstempel im Format <var>hh:mm</var>, nach dem keine Aktion ausgef&uuml;hrt werden soll.
-            </p>
-            <p>
-                <code>isday()</code> wird <var>(int) 0</var> zur&uuml;ckliefern, wenn <var>max</var> gesetzt
-                und der aktuelle Zeitstempel gr&ouml;&szlig;er ist.
-            </p>
-        </dd>
-    </dl>
+      <li>altitude<br>
+        Eine der folgenden Zeichenketten, die unterschiedliche H&ouml;henwinkel h definieren und den Wert
+        von <code>$defaultaltit</code> ver&auml;ndern.<br>
+        Erlaubte Werte sind:<br>
+        <ul>
+           <li><code>REAL</code>, h = 0&deg;,
+             </li>
+           <li><code>CIVIL</code>, h = -6&deg;,
+             </li>
+           <li><code>NAUTIC</code>, h = -12&deg;,
+             </li>
+           <li><code>ASTRONOMIC</code>, h = -18&deg;,
+             </li>
+           <li>oder <code>HORIZON=</code>, gefolgt von einer positiven oder
+             negativen Zahl ohn Gradzeichen, die einen H&ouml;henwinkel angibt.
+             </li>
+        </ul>
+        </li></br>
+
+      <li>offset<br>
+        Offset in Sekunden, der zu dem R&uuml;ckgabewert der Funktion addiert
+        wird.<br>
+        <code>isday()</code> ignoriert diesen Wert.
+        </li></br>
+
+      <li>min<br>
+        Einen Zeitstempel im Format hh:mm, vor dem keine Aktion ausgef&uuml;hrt
+        werden soll.  <code>isday()</code> wird (int) 0 zur&uuml;ckliefern,
+        wenn min gesetzt und der aktuelle Zeitstempel kleiner ist.
+        </li><br>
+
+      <li>max<br>
+        Einen Zeitstempel im Format hh:mm, nach dem keine Aktion
+        ausgef&uuml;hrt werden soll.  <code>isday()</code> wird (int) 0
+        zur&uuml;ckliefern, wenn max gesetzt und der aktuelle Zeitstempel
+        gr&ouml;&szlig;er ist.
+        </li>
+    </ul>
 
     <h5>Subroutinen</h5>
-    <dl>
+    <ul>
+      <li><code>sunrise(), sunset()</code><br>
+        liefern den absoluten Wert des n&auml;chsten Sonnenauf- bzw.
+        -untergangs zur&uuml;ck, wobei 24 Stunden zu diesem Wert addiert
+        werden, wenn der Zeitpunkt am n&auml;chsten Tag sein wird, im Format
+        hh:mm:ss.
+        </li><br>
 
-        <dt>
-            <p><code>sunrise(), sunset()</code></p>
-        </dt>
-        <dd>
-            liefern den absoluten Wert des n&auml;chsten Sonnenauf- <abbr>bzw.</abbr> -untergangs zur&uuml;ck, wobei 24 Stunden zu
-            diesem Wert addiert werden,
-            wenn der Zeitpunkt am n&auml;chsten Tag sein wird, im Format <var>hh:mm:ss</var>.
-        </dd>
+      <li><code>sunrise_rel(), sunset_rel()</code><br>
+        liefern die relative Zeit bis zum n&auml;chsten Sonnenauf- bzw.
+        -untergang im Format hh:mm:ss.
+        </li><br>
+        
+      <li><code>sunrise_abs(), sunset_abs()</code><br>
+        liefern den n&auml;chsten absoluten Zeitpunkt des n&auml;chsten
+        Sonnenauf- bzw. -untergangs ohne 24 Stunden zu addieren im Format
+        hh:mm:ss.
+        </li><br>
+        
+      <li><code>sunrise_abs_dat(), sunset_abs()_dat</code><br>
+        liefern den n&auml;chsten absoluten Zeitpunkt des n&auml;chsten
+        Sonnenauf- bzw. -untergangs ohne 24 Stunden zu addieren im Format
+        hh:mm:ss zu einem als ersten Parameter angegebenen Datum.
+        </li><br>
 
-        <dt>
-            <p><code>sunrise_rel(), sunset_rel()</code></p>
-        </dt>
-        <dd>
-            liefern die relative Zeit bis zum n&auml;chsten Sonnenauf- <abbr>bzw.</abbr> -untergang im Format
-            <var>hh:mm:ss</var>.
-        </dd>
+      <li><code>isday()</code><br>
+        liefert (int) 1 wenn Tag ist, (int) 0 wenn Nacht ist.
+        </li><br>
+    </ul>
 
-        <dt>
-            <p><code>sunrise_abs(), sunset_abs()</code></p>
-        </dt>
-        <dd>
-            liefern den n&auml;chsten absoluten Zeitpunkt des n&auml;chsten Sonnenauf- <abbr>bzw.</abbr> -untergangs
-            <strong>ohne</strong> 24 Stunden
-            zu addieren im Format <var>hh:mm:ss</var>.
-        </dd>
-
-        <dt>
-            <p><code>sunrise_abs_dat(), sunset_abs()_dat</code></p>
-        </dt>
-        <dd>
-            liefern den n&auml;chsten absoluten Zeitpunkt des n&auml;chsten Sonnenauf- <abbr>bzw.</abbr> -untergangs
-            <strong>ohne</strong> 24 Stunden zu addieren im Format <var>hh:mm:ss</var> zu einem als ersten Parameter angegebenen Datum.
-        </dd>
-
-
-        <dt>
-            <p><code>isday()</code></p>
-        </dt>
-        <dd>
-            liefert <var>(int) 1</var> wenn Tag ist, <var>(int) 0</var> wenn Nacht ist.
-        </dd>
-    </dl>
     <h5>Beispiele</h5>
-    <dl>
-        <dt>
-            <p>
-                <code>sunrise("CIVIL");</code>
-            </p>
-        </dt>
-        <dd>
-            <p>
-                Zeitpunkt des Sonnenaufgangs bei einem H&ouml;henwinkel der Sonne von -6&deg; unter dem Horizont (identisch zu <code>sunrise()</code>).
-            </p>
+    <ul>
+        <li><code>sunrise("CIVIL");</code><br>
+          Zeitpunkt des Sonnenaufgangs bei einem H&ouml;henwinkel der Sonne von
+          -6&deg; unter dem Horizont (identisch zu <code>sunrise()</code>).
+          </li><br>
+            
+        <li><code>sunset("HORIZON=-3");</code><br>
+          Zeitpunkt des Sonnenuntergangs bei einem H&ouml;henwinkel der Sonne
+          von 3&deg; unter dem Horizont (zwischen <code>REAL</code> und
+          <code>CIVIL</code>).
+          </li><br>
+      
+        <li><code>sunset("HORIZON=1");</code><br>
+          Zeitpunkt des Sonnenaufgangs bei einem H&ouml;henwinkel der Sonne von
+          1&deg; &uuml;ber dem Horizont.
+          </li><br>
+            
+        <li><code>defmod a15 at *{sunset("REAL",0,"18:00","21:00")} set lamp1 on</code><br>
+          Schalte lamp1 an, sobald die Sonne unter den Horizont sinkt (h &le;
+          0), jedoch nicht vor 18:00 und nicht nach 21:00.
+          </li><br>
 
-        </dd>
-
-        <dt>
-            <p>
-                <code>sunset("HORIZON=-3");</code>
-            </p>
-        </dt>
-        <dd>
-            <p>
-                Zeitpunkt des Sonnenuntergangs bei einem H&ouml;henwinkel der Sonne von 3&deg; unter dem Horizont
-                (zwischen <code><var>REAL</var></code> und <code><var>CIVIL</var></code>).
-            </p>
-
-        </dd>
-
-        <dt>
-            <p>
-                <code>sunset("HORIZON=1");</code>
-            </p>
-        </dt>
-        <dd>
-            <p>
-                Zeitpunkt des Sonnenaufgangs bei einem H&ouml;henwinkel der Sonne von 1&deg; &uuml;ber dem Horizont.
-            </p>
-        </dd>
-
-        <dt>
-            <p>
-                <code>defmod a15 at *{sunset("REAL",0,"18:00","21:00")} set lamp1 on</code>
-            </p>
-        </dt>
-        <dd>
-            <p>
-                Schalte <var>lamp1</var> an, sobald die Sonne unter den Horizont sinkt (<var>h &le; 0</var>), jedoch nicht vor 18:00 und nicht nach 21:00.
-            </p>
-        </dd>
-
-        <dt>
-            <p>
-                <code>
-                    my $date = time() + 7*86400;<br />
-                    sunrise_abs_dat($date);
-                </code>
-            </p>
-        </dt>
-        <dd>
-            <p>
-                Berechne den Sonnenaufgang von heute + sieben Tage.
-            </p>
-        </dd>
-
-        <dt>
-            <p>
-                <code>
-                    my $date = time() + 7*86400;<br />
-                    sunrise_abs_dat($date, "CIVIL");
-                </code>
-            </p>
-        </dt>
-        <dd>
-            <p>
-                Berechne den Sonnenaufgang von heute + sieben Tage mit einem H&ouml;henwinkel <var>h = -6&deg;</var>.
-            </p>
-        </dd>
-    </dl>
+        <li><code>sunrise_abs_dat(time() + 7*86400);</code><br>
+          Berechne den Sonnenaufgang von heute + sieben Tage.
+          </li></br>
+            
+        <li><code>sunrise_abs_dat(time() + 7*86400, "CIVIL");</code><br>
+          Berechne den Sonnenaufgang von heute + sieben Tage mit einem
+          H&ouml;henwinkel h = -6&deg;.
+          </li></br>
+    </ul>
 
     <h4>Define</h4>
-    <blockquote>
-        <strong>SUNRISE_EL</strong> kann nicht explizit als <span>Device</span> definiert werden,
+        SUNRISE_EL kann nicht explizit als Device definiert werden,
         sondern bietet die oben genannten Subroutinen.
-    </blockquote>
-
+    
     <h4>Set</h4>
-    <blockquote>
-        <strong>SUNRISE_EL</strong> unterst&uuml;tzt <var>set</var> nicht.
-    </blockquote>
-
+        SUNRISE_EL unterst&uuml;tzt set nicht.
+    
     <h4>Get</h4>
-    <blockquote>
-        <strong>SUNRISE_EL</strong> unterst&uuml;tzt <var>get</var> nicht.
-    </blockquote>
+        SUNRISE_EL unterst&uuml;tzt get nicht.
 
     <h4>Attribute</h4>
-    <p>
-        Diese Attribute m&uuml;ssen im <span><a href="#global">global</a>-Device</span> gesetzt werden!
-    </p>
-    <dl>
-        <dt>
-            <p>
-                <var>latitude</var>
-            </p>
-        </dt>
-        <dd>
-            <blockquote>
-                Geographische Breite in Dezimalgrad in Form eines <code>float</code>, <abbr>z.B</abbr> <code><var>49.872471</var></code>.
-            </blockquote>
-            <blockquote>
-                <span>Default</span>-Wert ist <code><var>50.112</var></code>.
-            </blockquote>
-        </dd>
-
-        <dt>
-            <p>
-                <var>longitude</var>
-            </p>
-        </dt>
-        <dd>
-            <blockquote>
-                Geographische L&auml;nge in Dezimalgrad in Form eines <code>float</code>, <abbr>z.B</abbr> <code><var>8.650991</var></code>.
-            </blockquote>
-            <blockquote>
-                <span>Default</span>-Wert ist <code><var>8.686</var></code>.
-            </blockquote>
-        </dd>
-
-        <dt>
-            <p>
-                <var>altitude</var>
-            </p>
-        </dt>
-        <dd>
-            <blockquote>
-                H&ouml;henwinkel <var>h</var> der Sonne bezogen auf den Horizont in Grad in Form einer Zahl ohne Gradzeichen.
-            </blockquote>
-            <blockquote>
-                <span>Default</span>-Wert ist <code><var>-6</var></code>.
-            </blockquote>
-        </dd>
-    </dl>
+        Diese Attribute m&uuml;ssen im <a href="#global">global</a>-Device
+        gesetzt werden!
+      <ul>
+        <li><a href="#latitude">latitude</a></li>
+        <li><a href="#longitude">longitude</a></li>
+      </ul>
 </ul>
 
 <p><a name="SVG"></a>
@@ -39791,9 +39761,11 @@ ZCode U</pre>
     Darstellung des Wetterberichtes. Die letztgenannte Funktion w&auml;hlt
     automatisch eine Ausrichtung, die abh&auml;ngig davon ist, ob ein
     Smallcreen Style ausgew&auml;hlt ist (vertikale Darstellung) oder
-    nicht (horizontale Darstellung). Alle vier Funnktionen akzeptieren
+    nicht (horizontale Darstellung). Alle vier Funktionen akzeptieren
     einen zus&auml;tzlichen optionalen Paramter um die Anzahl der
-    darzustellenden Icons anzugeben.<br><br>
+    darzustellenden Icons anzugeben.<br>
+    Zus&auml;tzlich erlauben die Funktionen 2 und 3 noch einen dritten Parameter (d oder h) welcher die Forecast-Art (h-Hourly oder d-Daily) mit an gibt.<br>
+    Wird der dritte Parameter verwendet muss auch der zweite Parameter f&uuml;r die Anzahl der darzustellenden Icons gesetzt werden.<br><br>
     Beispiel:
     <pre>
       define MyWeatherWeblink weblink htmlCode { WeatherAsHtmlH("MyWeather") }
@@ -39845,6 +39817,8 @@ ZCode U</pre>
     <tr><td>validity</td><td>stale, wenn der Ver&ouml;ffentlichungszeitpunkt auf dem entfernten Server vor dem Zeitpunkt der aktuellen Daten (readings) liegt</td></tr>
     </table>
     <br>
+    Der Wochentag der Prognose wird in der Sprache Ihres FHEM-Systems angezeigt. Geben Sie zur Überprüfung {$ ENV {LANG}} in die Befehlszeile von FHEM ein. Wenn nichts angezeigt wird oder eine unerwartete Spracheinstellung angezeigt wird, fügen Sie export LANG = de_DE.UTF-8 oder etwas Ähnliches zu Ihrem FHEM-Startskript hinzu. Starten Sie FHEM erneut und überprüfen Sie es erneut. Wenn Sie beim Starten von FHEM eine Ländereinstellung erhalten, fehlt möglicherweise das erforderliche Sprachpaket. Sie kann abhängig von Ihrem Betriebssystem und Ihren Präferenzen installiert werden (z. B. Gebietsschemas dpkg-reconfigure, apt-get install language-pack-de oder ähnliches).
+    <br>
     Je nach verwendeter API ist es durchaus m&ouml;glich, dass weitere
     Readings geschrieben werden. Die Bedeutung dieser Readings kann man
     der API-Beschreibung des Anbieters entnehmen.
@@ -39858,6 +39832,8 @@ ZCode U</pre>
     gem&auml;&szlig Plan doch es werden keine Daten vom
     API angefordert.</li>
     <li><a href="#readingFnAttributes">readingFnAttributes</a></li>
+    <li>forecast - every/hourly/daily/off, Anzeige von forecast Daten. Alle, nur Stundenforecast, nur Tageforecast, keine.</li>
+    <li>forecastLimit - Anzahl der Forecast-Datens&auml;tze welche als Reading geschrieben werden sollen.</li>
   </ul>
   <br>
 </ul>
@@ -42760,7 +42736,11 @@ attr Office room Light
 		<ul>
 		<li><a name="inactive">inactive</a>: deaktiviert das Device (identisch zum Attribut "disable", aber ohne die Notwendigkeit su "saven".</li>
 		<li><a name="active">active</a>: reaktiviert das Device nachdem es auf inactive gesetzt wurde</li>
-		<li><a name="clear">clear</a>: Löscht alle readings (inklusive der Liste der letzten 20 Freezes).</li>
+		<li><a name="clear">clear</a>: 
+					<ul><li>statistics_all: löscht die Statistik (d.h. löscht alle readings die für die statistics erzeugt wurden)</li>
+					<li>statistics_low: löscht Statistiken mit geringer Bedeutung (siehe Attribut fm_statistics_low)</li>
+					<li>all: Löscht alle readings (inklusive der Liste der letzten 20 Freezes).</li>
+			</ul></li>
 	</ul>
 
   </ul>	
@@ -42783,6 +42763,9 @@ attr Office room Light
 			<li>ftDay: kumulierte Dauer der Freezes pro Tag </li>
 			<li>fcDayLast: speichert die kumulierte Anzahl der Freezes des vergangenen Tages (um tageweise plots zu erstellen)</li>
 			<li>fcDayLast: speichert die kumulierte Dauer der Freezes des vergangenen Tages (um tageweise plots zu erstellen)</li>
+			<li>fs_.*_c: freeze Statistik - Anzahl der freezes bei denen das Device möglicherweise beteiligt war</li>
+			<li>fs_.*_t: freeze Statistik - kumulierte Dauer der freezes bei denen das Device möglicherweise beteiligt war</li>
+
 			<li>state: s:&lt;StartZeit&gt; e:&lt;EndeZeit&gt; f:&lt;Dauer&gt; d:&lt;Devices&gt;</li>
 		</ul>
   </ul>
@@ -42806,7 +42789,10 @@ attr Office room Light
 			<li><a name="fm_logFile">fm_logFile</a>: ist ein gültiger Filename (wie z.B. ./log/freeze-%Y%m%d-%H%M%S.log). Wenn gesetzt, werdn Meldungen auf Loglevel 5 (auch wenn global Loglevel < 5 ist) vor einem Freeze in einem seperaten File geloggt.</li>
 			<li><a name="fm_logExtraSeconds">fm_logExtraSeconds</a>: dobsoletes Attribut, wird nicht mehr genutzt und sollte gelöscht werden</li>
 			<li><a name="fm_logKeep">fm_logKeep</a>: Eine Zahl, die angibt wieviele Logfiles behalten werden sollen. Wenn gesetzt, werden alle Logfiles ausser den letzten n Freezemon Logfiles regelmäßig gelöscht.</li>
+			<li><a name="fm_statistics">fm_statistics</a>: EXPERIMENTELL! Erstellt ein reading für jedes Device, das "probably" einen Freeze verursacht hat und zählt, wie oft es möglicherweise an einem Freeze beteiligt war.</li>
 			<li><a name="fm_whitelistSub">fm_whitelistSub</a>: Komma-getrennte Liste von Subroutinen wo du sicher bist, dass sie keinen Freeze verursachen. Whitelisted Subs erscheinen nicht in der "possibly caused by" Liste. Typischerweise listet man hier Subroutinen,  die regelmäßig in der "possibly caused by" Liste auftauchen, wo du aber wirklich sicher bist, dass sie nicht die Ursache sind. Anmerkung: Die Subroutine ist der initiale Teil (vor dem devicename in Klammern) in Freezemon Logmeldungen.</li>
+			<li><a name="fm_statistics">fm_statistics</a>: aktivieren/deaktivieren der Freeze Statistik. Erzeugt Readings für jedes Device, das möglicherweise an einem Freeze beteiligt war und Summiert die Häufigkeit und Dauer dieser Freezes</li>
+			<li><a name="fm_statistics_low">fm_statistics_low</a>: Parametrisierung des clear statistics_low set Kommandos, im Format c:t. Bei clear statistics_low werden alle Statistics-Readings gelöscht deren Count kleiner oder gleich "c" ist UND deren kumulierte Dauer kleiner oder gleich "t" ist</li>
 			<li><a name="disable">disable</a>: aktivieren/deaktivieren der Freeze-Erkennung</li>
 		</ul>
   </ul>
@@ -46033,7 +46019,13 @@ sub rssFeedPrep($$)
   
 </ul>
 
-<p><a name="unmark"></a>
+<p><a name="todoist"></a>
+<h3>todoist</h3>
+<ul>
+  Leider keine deutsche Dokumentation vorhanden. Die englische Version gibt es
+  hier: <a href='commandref.html#todoist'>todoist</a><br/>
+</ul>
+<a name="unmark"></a>
 <h3>unmark</h3>
 <ul>
   Leider keine deutsche Dokumentation vorhanden. Die englische Version gibt es

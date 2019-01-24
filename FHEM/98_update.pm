@@ -1,5 +1,5 @@
 ################################################################
-# $Id: 98_update.pm 16551 2018-04-04 18:50:38Z rudolfkoenig $
+# $Id: 98_update.pm 18328 2019-01-18 22:35:57Z rudolfkoenig $
 
 package main;
 use strict;
@@ -335,8 +335,10 @@ doUpdate($$$$)
     } else {
    
       my $isExcl;
-      foreach my $ex (@excl) {
-        $isExcl = 1 if($fName =~ m/$ex/ || "$src:$fName" =~ m/$ex/);
+      if(!$isCheck) { # Forum #95944
+        foreach my $ex (@excl) {
+          $isExcl = 1 if($fName =~ m/$ex/ || "$src:$fName" =~ m/$ex/);
+        }
       }
       my $fPath = "$root/$fName";
       $fPath = $0 if($fPath =~ m/$mainPgm/);

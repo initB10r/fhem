@@ -1,5 +1,5 @@
 ##############################################
-# $Id: 98_livetracking.pm 18240 2019-01-13 15:45:54Z moises $$$ 2018-11-01
+# $Id: 98_livetracking.pm 18315 2019-01-18 15:44:06Z moises $$$ 2018-11-01
 #
 #  98_livetracking.pm
 #
@@ -605,7 +605,7 @@ sub livetracking_ParseLife360($$) {
 
   my $updated = 0;
 
-  my $lastreading = ReadingsVal($name,".lastLife360",time()-300);
+  my $lastreading = ReadingsVal($name,".lastLife360",time()-24*60*60);
 
   Log3 ($name, 5, "$name Life360 data: /n".Dumper($json));
 
@@ -651,11 +651,11 @@ sub livetracking_ParseLife360($$) {
 
     if(defined($dataset->{speed}) and $dataset->{speed} >= 0 and $accurate)
     {
-      readingsBulkUpdate($hash, "velocity", $dataset->{speed});
+      readingsBulkUpdate($hash, "velocity", int($dataset->{speed}));
       $hash->{CHANGETIME}[$changeindex++] = FmtDateTime($dataset->{endTimestamp});
     }
 
-    readingsBulkUpdate($hash, "accuracy", $dataset->{accuracy});
+    readingsBulkUpdate($hash, "accuracy", int($dataset->{accuracy}));
     $hash->{CHANGETIME}[$changeindex++] = FmtDateTime($dataset->{endTimestamp});
 
 
@@ -993,12 +993,12 @@ sub livetracking_ParseOwnTracks
   }
   if(defined($dataset->{acc}) and $dataset->{acc} > 0)# and $accurate)
   {
-    readingsBulkUpdate($hash, "accuracy", $dataset->{acc});
+    readingsBulkUpdate($hash, "accuracy", int($dataset->{acc}));
     $hash->{CHANGETIME}[$changeindex++] = FmtDateTime($dataset->{tst});
   }
   if(defined($dataset->{vel}) and $dataset->{vel} >= 0 and $accurate)
   {
-    readingsBulkUpdate($hash, "velocity", $dataset->{vel});
+    readingsBulkUpdate($hash, "velocity", int($dataset->{vel}));
     $hash->{CHANGETIME}[$changeindex++] = FmtDateTime($dataset->{tst});
   }
   #else
@@ -1009,7 +1009,7 @@ sub livetracking_ParseOwnTracks
   #}
   if(defined($dataset->{cog}) and $dataset->{cog} >= 0 and $accurate)
   {
-    readingsBulkUpdate($hash, "heading", $dataset->{cog});
+    readingsBulkUpdate($hash, "heading", int($dataset->{cog}));
     $hash->{CHANGETIME}[$changeindex++] = FmtDateTime($dataset->{tst});
   }
   #else
@@ -1542,7 +1542,8 @@ sub livetracking_Webcall() {
     $request =~ s/\/osmand\/&//g;
     Log3 $name, 4, "OwnTracks HTTP request:\n".$request;
     livetracking_ParseOwnTracks($hash,$request) if(($request =~ /_type":[ ]?"location/ || $request =~ /_type":[ ]?"position/ || $request =~ /_type":[ ]?"transition/ || $request =~ /_type":[ ]?"steps/ || $request =~ /_type":[ ]?"beacon/ ));
-    return undef;
+    return ( "text/plain; charset=utf-8",
+        "[]" );
   }
 
 
@@ -1587,12 +1588,12 @@ sub livetracking_Webcall() {
 
   if($accurate && defined($speed) && $speed >= 0)
   {
-    readingsBulkUpdate($hash, "velocity", $speed);
+    readingsBulkUpdate($hash, "velocity", int($speed));
     $hash->{CHANGETIME}[$changeindex++] = FmtDateTime($tst);
   }
   if($accurate && defined($bearing) && $bearing >= 0)
   {
-    readingsBulkUpdate($hash, "heading", $bearing);
+    readingsBulkUpdate($hash, "heading", int($bearing));
     $hash->{CHANGETIME}[$changeindex++] = FmtDateTime($tst);
   }
   if($accurate && defined($altitude) and $altitude != 0)
@@ -1604,7 +1605,7 @@ sub livetracking_Webcall() {
   }
   if(defined($hdop) && $hdop > 0)
   {
-    readingsBulkUpdate($hash, "accuracy", $hdop);
+    readingsBulkUpdate($hash, "accuracy", int($hdop));
     $hash->{CHANGETIME}[$changeindex++] = FmtDateTime($tst);
   }
   if(defined($battery))
@@ -1634,7 +1635,8 @@ sub livetracking_Webcall() {
         "no data" );
   }
 
-  return undef;
+  return ( "text/plain; charset=utf-8",
+      "undefined" );
 }
 
 

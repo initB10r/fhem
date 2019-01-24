@@ -5,9 +5,9 @@ use Net::SMTP::SSL;
 use MIME::Base64;
 
 my $user = 'smtp@bauschlicher.de';
-my $pass = 'sm4|8Qtp12z';
+my $pass = 'sMtP1m4|8<QTp2z!';
 my $sender = 'fhem@bauschlicher.de'; 
-my $provider = '81.169.145.133';
+my $provider = 'smtp.strato.de';
 my $charSet = 'utf-8';
  
 sub

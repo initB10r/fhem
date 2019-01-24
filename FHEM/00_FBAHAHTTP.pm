@@ -1,5 +1,5 @@
 ##############################################
-# $Id: 00_FBAHAHTTP.pm 17700 2018-11-07 11:35:48Z rudolfkoenig $
+# $Id: 00_FBAHAHTTP.pm 18318 2019-01-18 17:16:55Z rudolfkoenig $
 package main;
 
 # Documentation: AHA-HTTP-Interface.pdf, AVM_Technical_Note_-_Session_ID.pdf
@@ -282,6 +282,7 @@ FBAHAHTTP_Write($$$)
     return $ret if($ret);
     $sid = $hash->{".SID"};
   }
+  $fn =~ s/ //g;
   push(@{$hash->{CmdStack}}, "ain=$fn&switchcmd=$msg");
   FBAHAHTTP_ProcessStack($hash) if(@{$hash->{CmdStack}} == 1);
 }

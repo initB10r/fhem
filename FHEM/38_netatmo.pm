@@ -1,5 +1,5 @@
 ##############################################################################
-# $Id: 38_netatmo.pm 18217 2019-01-11 21:34:24Z moises $
+# $Id: 38_netatmo.pm 18321 2019-01-18 18:30:11Z moises $
 #
 #  38_netatmo.pm
 #
@@ -1703,6 +1703,10 @@ netatmo_getDeviceDetail($$)
   foreach my $device (@{$hash->{helper}{homecoachs}}) {
     return $device if( $device->{_id} eq $id );
   }
+
+  Log3 $name, 4, "$name getDeviceDetail not found";
+  netatmo_getDevices($hash,1);
+  netatmo_getHomecoachs($hash,1);
 
   return undef;
 }
@@ -5489,7 +5493,7 @@ netatmo_parseAddress($$)
   Log3 $name, 4, "$name: parseAddress";
   
   if( $json ) {
-    Log3 $name, 2, "$name: ".Dumper($json);
+    Log3 $name, 5, "$name: ".Dumper($json);
     #$hash->{status} = $json->{status};
     #$hash->{status} = $json->{error}{message} if( $json->{error} );
     if( defined($json) ) {

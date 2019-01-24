@@ -1,5 +1,5 @@
 ########################################################################################################################
-# $Id: 49_SSCam.pm 18216 2019-01-11 14:20:30Z DS_Starter $
+# $Id: 49_SSCam.pm 18367 2019-01-21 22:58:18Z DS_Starter $
 #########################################################################################################################
 #       49_SSCam.pm
 #
@@ -47,6 +47,11 @@ use Encode;
 
 # Versions History intern
 our %SSCam_vNotesIntern = (
+  "8.6.1"  => "21.01.2019  time format in readings and galleries depends from global language attribute, minor bug fixes ",
+  "8.6.0"  => "20.01.2019  new attribute snapReadingRotate ",
+  "8.5.0"  => "17.01.2019  SVS device has \"snapCams\" command ",
+  "8.4.5"  => "15.01.2019  fix event generation after request snapshots ",
+  "8.4.4"  => "14.01.2019  change: generate event of every snapfile,id etc. if snap was called with arguments, Forum:#45671 #msg887484  ",
   "8.4.3"  => "11.01.2019  fix blocking Active-Token if snap was done with arguments and snapEmailTxt not set, Forum:#45671 #msg885475 ",
   "8.4.2"  => "10.01.2019  snapEmailTxt can use placeholders \$DATE, \$TIME ",
   "8.4.1"  => "09.01.2019  Transaction of snap and getsnapinfo implemented, debugactive token verbose level changed ",
@@ -115,6 +120,10 @@ our %SSCam_vNotesIntern = (
 
 # Versions History extern
 our %SSCam_vNotesExtern = (
+  "8.6.1"  => "21.01.2019 new attribute \"snapReadingRotate\" to activate versioning of snap data, ".
+              "time format in readings and galleries depends from global language attribute ",
+  "8.5.0"  => "17.01.2019 SVS device has \"snapCams\" command. Now are able to take snapshots of all defined cameras and may ".
+              "optionally send them alltogether by Email.",
   "8.4.0"  => "07.01.2019 Command snap is extended to syntax \"snap [number] [lag] [snapEmailTxt:\"subject => &lt;Betreff-Text&gt;, body => ".
               "&lt;Mitteilung-Text&gt;\"]\". Now you are able to trigger several number of ".
               "snapshots by only one snap-command. The triggered snapshots can be shipped alltogether with the internal email client. ",
@@ -212,42 +221,6 @@ our %SSCam_vNotesExtern = (
   "1.0.0"  => "12.12.2015 initial, changed completly to HttpUtils_NonblockingGet "
 );
 
-# Hint Hash en
-our %SSCam_vHintsExt_en = (
-  "6" => "There are some Icons in directory www/images/sscam available for SSCam. Thereby the system can use the icons please do: <br>".
-         "- in FHEMWEB device attribute <b>iconPath</b> complete with \"sscam\", e.g.: attr WEB iconPath default:fhemSVG:openautomation:sscam <br>".
-		 "After that execute \"rereadicons\" or restart FHEM. ",
-  "5" => "Find more Informations about manage users and the appropriate privilege profiles in ".
-         "<a href=\"https://www.synology.com/en-global/knowledgebase/Surveillance/help/SurveillanceStation/user\">Surveillance Station online help</a> ",
-  "4" => "The message Meldung \"WARNING - The current/simulated SVS-version ... may be incompatible with SSCam version...\" means that ".
-         "the used SSCam version was currently not tested with the installed version of Synology Surveillance Station (Reading \"SVSversion\"). ".
-         "The compatible SVS-Version is printed out in the Internal COMPATIBILITY.\n".
-         "<b>Actions:</b> At first please update your SSCam version. If the message does appear furthermore, please inform the SSCam Maintainer. ".
-         "To ignore this message temporary, you may reduce the verbose level of your SSCam device. ",
-  "3" => "Link to SSCam <a href=\"https://fhem.de/commandref.html#SSCam\">english commandRef</a> ",
-  "2" => "You can create own PTZ-control icons with a template available in SVN which can be downloaded here: <a href=\"https://svn.fhem.de/trac/browser/trunk/fhem/contrib/sscam\">contrib/sscam/black_btn_CAM_Template.pdn</a>.\n". 
-         "This template can be edited with Paint.Net for example. ",
-  "1" => "Some helpful <a href=\"https://wiki.fhem.de/wiki/SSCAM_-_Steuerung_von_Kameras_in_Synology_Surveillance_Station\">FHEM-Wiki</a> notes"
-);
-
-# Hint Hash de
-our %SSCam_vHintsExt_de = (
-  "6" => "Für SSCam wird ein Satz Icons im Verzeichnis www/images/sscam zur Verfügung gestellt. Damit das System sie findet bitte setzen: <br>".
-         "- im FHEMWEB Device Attribut <b>iconPath</b> um \"sscam\" ergänzen, z.B.: attr WEB iconPath default:fhemSVG:openautomation:sscam <br>".
-		 "Danach ein \"rereadicons\" bzw. einen FHEM restart ausführen. ",
-  "5" => "Informationen zum Management von Usern und entsprechenden Rechte-Profilen sind in der ".
-         "<a href=\"https://www.synology.com/de-de/knowledgebase/Surveillance/help/SurveillanceStation/user\">Surveillance Station Online-Hilfe</a> zu finden.",
-  "4" => "Die Meldung \"WARNING - The current/simulated SVS-version ... may be incompatible with SSCam version...\" ist ein Hinweis darauf, dass ".
-         "die eingesetzte SSCam Version noch nicht mit der verwendeten Version von Synology Surveillance Station (Reading \"SVSversion\") getestet ".
-         "wurde. Die kompatible SVS-Version ist im Internal COMPATIBILITY ersichtlich.\n".
-         "<b>Maßnahmen:</b> Bitte SSCam zunächst updaten. Sollte die Meldung weiterhin auftreten, bitte den SSCam Maintainer informieren. Zur ".
-         "vorübergehenden Ignorierung kann der verbose Level des SSCam-Devices entsprechend reduziert werden. ",
-  "3" => "Link zur deutschen SSCam <a href=\"https://fhem.de/commandref_DE.html#SSCam\">commandRef</a> ",
-  "2" => "Zur Erstellung eigener PTZ-Steuericons gibt es eine Vorlage im SVN die hier <a href=\"https://svn.fhem.de/trac/browser/trunk/fhem/contrib/sscam\">contrib/sscam/black_btn_CAM_Template.pdn</a> heruntergeladen werden kann.\n".
-          "Diese Vorlage kann zum Beispiel mit Paint.Net bearbeitet werden. ",
-  "1" => "Hilfreiche Hinweise zu SSCam im <a href=\"https://wiki.fhem.de/wiki/SSCAM_-_Steuerung_von_Kameras_in_Synology_Surveillance_Station\">FHEM-Wiki</a>"
-);
-
 # getestete SVS-Version
 my $compstat     = "8.2";
 
@@ -331,7 +304,7 @@ our %SSCam_ttips_de = (
     ttlsnaprun  => "Wiedergabe des letzten Schnappschusses von Kamera &quot;§NAME§&quot;.",
 );
 
-# Standardvariablen
+# Standardvariablen und Forward-Deklaration
 my $SSCam_slim = 3;                          # default Anzahl der abzurufenden Schnappschüsse mit snapGallery
 my $SSCAM_snum = "1,2,3,4,5,6,7,8,9,10";     # mögliche Anzahl der abzurufenden Schnappschüsse mit snapGallery                
 
@@ -341,6 +314,9 @@ use vars qw($FW_room);    # currently selected room
 use vars qw($FW_detail);  # currently selected device for detail view
 use vars qw($FW_wname);   # Web instance
 sub FW_pH(@);             # add href
+use vars qw(%SSCam_vHintsExt_en);
+use vars qw(%SSCam_vHintsExt_de);
+
 
 ################################################################
 sub SSCam_Initialize($) {
@@ -381,6 +357,7 @@ sub SSCam_Initialize($) {
 		 "snapGalleryNumber:$SSCAM_snum ".
 		 "snapGalleryColumns ".
 		 "snapGalleryHtmlAttr ".
+         "snapReadingRotate:0,1,2,3,4,5,6,7,8,9,10 ".
          "pollnologging:1,0 ".
          "debugactivetoken:1,0 ".
          "rectime ".
@@ -531,6 +508,10 @@ sub SSCam_Attr($$$$) {
         return " The attribute \"$aName\" is only valid for devices of type \"SVS\"! Please set this attribute in a device of this type.";
     }
     
+    if ($aName =~ /snapReadingRotate/ && !SSCam_IsModelCam($hash)) {            
+        return " The attribute \"$aName\" is not valid for devices of type \"SVS\"!.";
+    }
+    
     # dynamisch PTZ-Attribute setzen (wichtig beim Start wenn Reading "DeviceType" nicht gesetzt ist)
     if ($cmd eq "set" && ($aName =~ m/ptzPanel_.*/)) {
         foreach my $n (0..9) { 
@@ -641,6 +622,21 @@ sub SSCam_Attr($$$$) {
 		InternalTimer(gettimeofday()+0.7, "SSCam_getsnapinfo", "$name:$slim:$ssize", 0);
 	}
     
+    if ($aName eq "snapReadingRotate") {
+        if($cmd eq "set") {
+            $do = ($aVal) ? 1 : 0;
+        }
+        $do = 0 if($cmd eq "del");
+        if(!$do) {$aVal = 0}
+        for my $i (1..10) { 
+            if($i>$aVal) {
+                readingsDelete($hash, "LastSnapFilename$i");
+                readingsDelete($hash, "LastSnapId$i");
+                readingsDelete($hash, "LastSnapTime$i");  
+            }
+        }
+    }
+    
     if ($aName eq "simu_SVSversion") {
 	    delete $hash->{HELPER}{APIPARSET};
 	    delete $hash->{HELPER}{SID};
@@ -716,14 +712,14 @@ sub SSCam_Set($@) {
                  "motdetsc:disable,camera,SVS ".
                  "snap ".
 	     		 (AttrVal($name, "snapGalleryBoost",0)?(AttrVal($name,"snapGalleryNumber",undef) || AttrVal($name,"snapGalleryBoost",0))?"snapGallery:noArg ":"snapGallery:$SSCAM_snum ":" ").
-	     		 "createSnapGallery:noArg ".
+	     		 "createReadingsGroup ".
+                 "createSnapGallery:noArg ".
                  "createStreamDev:generic,hls,mjpeg,switched ".
                  ((ReadingsVal("$name", "CapPTZPan", "false") ne "false") ? "createPTZcontrol:noArg ": "").
                  "enable:noArg ".
                  "disable:noArg ".
 				 "optimizeParams ".
                  ((ReadingsVal("$name", "CapPIR", "false") ne "false") ? "pirSensor:activate,deactivate ": "").
-                 "createReadingsGroup ".
                  "runView:live_fw".$hlslfw."live_link,live_open,lastrec_fw,lastrec_fw_MJPEG,lastrec_fw_MPEG4/H.264,lastrec_open,lastsnap_fw ".
                  ((ReadingsVal("$name", "CapPTZPan", "false") ne "false") ? "setPreset ": "").
                  ((ReadingsVal("$name", "CapPTZPan", "false") ne "false") ? "setHome:---currentPosition---,".ReadingsVal("$name","Presets","")." " : "").
@@ -740,9 +736,11 @@ sub SSCam_Set($@) {
       $setlist = "Unknown argument $opt, choose one of ".
                  "autocreateCams:noArg ".
 	             "credentials ".
+                 "smtpcredentials ".
 				 "createReadingsGroup ".
 				 "extevent:1,2,3,4,5,6,7,8,9,10 ".
-		     	 ($hash->{HELPER}{APIHMMAXVER}?"homeMode:on,off ": "");
+		     	 ($hash->{HELPER}{APIHMMAXVER}?"homeMode:on,off ": "").
+                 "snapCams ";
   }  
 
   if ($opt eq "credentials") {
@@ -794,14 +792,15 @@ sub SSCam_Set($@) {
       
       my ($num,$lag,$ncount) = (1,2,1);
       my $emtxt = "";      
-      if($prop && $prop =~ /[\d+]/) {                                  # Anzahl der Schnappschüsse zu triggern (default: 1)
+      if($prop && $prop =~ /^\d+$/) {                                  # Anzahl der Schnappschüsse zu triggern (default: 1)
           $num    = $prop;
           $ncount = $prop;
       }
-      if($prop1 && $prop1 =~ /[\d+]/) {                                # Zeit zwischen zwei Schnappschüssen (default: 2 Sekunden)
+      if($prop1 && $prop1 =~ /^\d+$/) {                                # Zeit zwischen zwei Schnappschüssen (default: 2 Sekunden)
           $lag = $prop1;
       }
-                                          
+      
+      Log3($name, 4, "$name - Trigger snapshots - Number: $num, Lag: $lag");      
       $hash->{HELPER}{SNAPBYSTRMDEV} = 1 if ($prop2 && $prop2 =~ /STRM/);   # $prop wird mitgegeben durch Snap by SSCamSTRM-Device
       
       my $at = join(" ",@a);
@@ -816,6 +815,62 @@ sub SSCam_Set($@) {
           if (!$hash->{SMTPCREDENTIALS}) {return "Due to attribute \"snapEmailTxt\" is set, you want to send snapshots by email but SMTP credentials are not set - make sure you've set credentials with \"set $name smtpcredentials username password\"";}
       }
       SSCam_camsnap("$name:$num:$lag:$ncount:$emtxt");
+              
+  } elsif ($opt eq "snapCams" && !SSCam_IsModelCam($hash)) {
+	  if (!$hash->{CREDENTIALS}) {return "Credentials of $name are not set - make sure you've set it with \"set $name credentials username password\"";}
+      
+      my ($num,$lag,$ncount) = (1,2,1);
+      my $cams  = "all";
+      my $emtxt = '';
+      if($prop && $prop =~ /^\d+$/) {                                  # Anzahl der Schnappschüsse zu triggern (default: 1)
+          $num    = $prop;
+          $ncount = $prop;
+      }
+      if($prop1 && $prop1 =~ /^\d+$/) {                                # Zeit zwischen zwei Schnappschüssen (default: 2 Sekunden)
+          $lag = $prop1;
+      }      
+      
+      my $at = join(" ",@a);
+      if($at =~ /CAM:/i) {
+          $at =~ m/.*CAM:"(.*)".*/i;
+          $cams = $1;
+          $cams =~ s/\s//g;
+      }
+      
+      my @camdvs;
+      my %snapac = ();                                                      # Schnappschuss Hash für alle Cams -> Schnappschudaten sollen hinein  
+      if($cams eq "all") {                                                  # alle nicht disabled Kameras auslösen, sonst nur die gewählten
+          @camdvs = devspec2array("TYPE=SSCam:FILTER=MODEL!=SVS");
+          foreach (@camdvs) {
+              if($defs{$_} && !IsDisabled($_)) {           
+                  $snapac{$_} = "";
+              }
+          }
+      } else {
+          @camdvs = split(",",$cams);
+          foreach (@camdvs) {
+              if($defs{$_} && !IsDisabled($_)) {           
+                  $snapac{$_} = "";
+              }              
+          }
+      }
+      
+      return "No valid camera devices are specified for trigger snapshots" if(!%snapac);
+      
+      my $asref = \%snapac;
+      $hash->{HELPER}{ALLSNAPREF} = $asref;
+      my ($csnap,$cmail) = ("","");
+      foreach my $key (keys%{$asref}) {
+          if(!AttrVal($key, "snapEmailTxt", "")) {
+              delete $asref->{$key};                                       # Snap dieser Kamera auslösen aber nicht senden
+              $csnap .= $csnap?", $key":$key;
+          } else {
+              $cmail .= $cmail?", $key":$key;
+          }
+          SSCam_camsnap("$key:$num:$lag:$ncount:$emtxt");
+      }
+      Log3($name, 4, "$name - Trigger snapshots by SVS - Number: $num, Lag: $lag, Snap only: \"$csnap\", Snap and send: \"$cmail\" ");
+      
               
   } elsif ($opt eq "startTracking" && SSCam_IsModelCam($hash)) {
 	  if (!$hash->{CREDENTIALS}) {return "Credentials of $name are not set - make sure you've set it with \"set $name credentials username password\"";}
@@ -845,6 +900,7 @@ sub SSCam_Set($@) {
 		
       } else {
 		  # Snaphash ist vorhanden und wird zur Ausgabe aufbereitet (Polling ist aktiv)
+          $hash->{HELPER}{SNAPLIMIT} = AttrVal($name,"snapGalleryNumber",$SSCam_slim);
 		  my $htmlCode = SSCam_composegallery($name);
 		  for (my $k=1; (defined($hash->{HELPER}{CL}{$k})); $k++ ) {
 		      if ($hash->{HELPER}{CL}{$k}->{COMP}) {
@@ -1376,6 +1432,7 @@ sub SSCam_Get($@) {
 		
 		} else {
 		    # Snaphash ist vorhanden und wird zur Ausgabe aufbereitet
+            $hash->{HELPER}{SNAPLIMIT} = AttrVal($name,"snapGalleryNumber",$SSCam_slim);
 			my $htmlCode = SSCam_composegallery($name);
 		    for (my $k=1; (defined($hash->{HELPER}{CL}{$k})); $k++ ) {
 		        if ($hash->{HELPER}{CL}{$k}->{COMP}) {
@@ -1887,6 +1944,7 @@ sub SSCam_wdpollcaminfo ($) {
     my $pcia     = AttrVal($name,"pollcaminfoall",0); 
     my $pnl      = AttrVal($name,"pollnologging",0); 
     my $watchdogtimer = 90;
+    my $lang     = AttrVal("global","language","EN");
     
     RemoveInternalTimer($hash, "SSCam_wdpollcaminfo");
 
@@ -1910,12 +1968,15 @@ sub SSCam_wdpollcaminfo ($) {
             SSCam_getcaminfoall($hash,0);  
         }
         
-        my $lupd = ReadingsVal($name, "LastUpdateTime", 0);
-        if ($lupd) {
-            my ($year, $month, $mday, $hour, $min, $sec) = ($lupd =~ /(\d+)\.(\d+)\.(\d+) \/ (\d+):(\d+):(\d+)/);
-            $lupd = fhemTimeGm($sec, $min, $hour, $mday, $month, $year);
+        my $lupd = ReadingsVal($name, "LastUpdateTime", "1970-01-01 / 01:00:00");
+        my ($year,$month,$mday,$hour,$min,$sec);
+        if ($lupd =~ /(\d+)\.(\d+)\.(\d+).*/) {
+            ($mday, $month, $year, $hour, $min, $sec) = ($lupd =~ /(\d+)\.(\d+)\.(\d+) \/ (\d+):(\d+):(\d+)/);
+        } else {
+            ($year, $month, $mday, $hour, $min, $sec) = ($lupd =~ /(\d+)-(\d+)-(\d+) \/ (\d+):(\d+):(\d+)/);        
         }
-        if( gettimeofday() < ($lupd + $pcia + 20) ) {
+        $lupd = fhemTimeLocal($sec, $min, $hour, $mday, $month-=1, $year-=1900);
+        if( gettimeofday() > ($lupd + $pcia + 20) ) {
             SSCam_getcaminfoall($hash,0);  
         }
         
@@ -4206,7 +4267,7 @@ sub SSCam_camop ($) {
       # ein Schnappschuß wird ausgelöst
       $url = "$proto://$serveraddr:$serverport/webapi/$apitakesnappath?api=\"$apitakesnap\"&dsId=\"0\"&method=\"TakeSnapshot\"&version=\"$apitakesnapmaxver\"&camId=\"$camid\"&blSave=\"true\"&_sid=\"$sid\"";
       readingsSingleUpdate($hash,"state", "snap", 1); 
-      readingsSingleUpdate($hash, "LastSnapId", "", 0);
+      #readingsSingleUpdate($hash, "LastSnapId", "", 0);
    
    } elsif ($OpMode eq "SaveRec") {
       # eine Aufnahme soll in lokalem File (.mp4) gespeichert werden
@@ -4235,7 +4296,7 @@ sub SSCam_camop ($) {
       
    } elsif ($OpMode eq "getsnapfilename") {
       # der Filename der aktuellen Schnappschuß-ID wird ermittelt
-      $snapid = ReadingsVal("$name", "LastSnapId", " ");
+      $snapid = ReadingsVal("$name", "LastSnapId", "");
       Log3($name, 4, "$name - Get filename of present Snap-ID $snapid");
       $url = "$proto://$serveraddr:$serverport/webapi/$apitakesnappath?api=\"$apitakesnap\"&method=\"List\"&version=\"$apitakesnapmaxver\"&imgSize=\"0\"&idList=\"$snapid\"&_sid=\"$sid\"";
    
@@ -4584,6 +4645,8 @@ sub SSCam_camop_parse ($) {
    my ($percentage_camCap,$percentage_value,$percentage_ssCap);
    my ($objectSize_camCap,$objectSize_value,$objectSize_ssCap);
    
+   my $lang = AttrVal("global","language","EN");
+   
    # Einstellung für Logausgabe Pollinginfos
    # wenn "pollnologging" = 1 -> logging nur bei Verbose=4, sonst 3 
    if (AttrVal($name, "pollnologging", 0) == 1) {
@@ -4734,10 +4797,18 @@ sub SSCam_camop_parse ($) {
             
 			} elsif ($OpMode eq "gethomemodestate") {  
                 my $hmst = $data->{'data'}{'on'}; 
-                my $hmststr = ($hmst == 1)?"on":"off";				
+                my $hmststr = ($hmst == 1)?"on":"off";
+
+                ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime;
+                if($lang eq "DE") {
+                    $update_time = sprintf "%02d.%02d.%04d / %02d:%02d:%02d" , $mday , $mon+=1 ,$year+=1900 , $hour , $min , $sec ;
+                } else {
+                    $update_time = sprintf "%04d-%02d-%02d / %02d:%02d:%02d" , $year+=1900 , $mon+=1 , $mday , $hour , $min , $sec ;
+                }				
 
                 readingsBeginUpdate($hash);
 				readingsBulkUpdate($hash,"HomeModeState",$hmststr);
+                readingsBulkUpdate($hash,"LastUpdateTime",$update_time);
                 readingsBulkUpdate($hash,"Errorcode","none");
                 readingsBulkUpdate($hash,"Error","none");
                 readingsEndUpdate($hash, 1);
@@ -4916,15 +4987,17 @@ sub SSCam_camop_parse ($) {
                 }
                 
                 $snapid = $data->{data}{'id'};
-                readingsSingleUpdate($hash,"LastSnapId",$snapid, 0) if($snapid);
                 
                 readingsBeginUpdate($hash);
                 readingsBulkUpdate($hash,"Errorcode","none");
                 readingsBulkUpdate($hash,"Error","none");
                 readingsEndUpdate($hash, 1);
                                 
-                # Logausgabe
-                Log3($name, 3, "$name - Snapshot of Camera $camname has been done successfully");
+                if ($snapid) {
+                    Log3($name, 3, "$name - Snapshot of Camera $camname created. ID: $snapid");
+                } else {
+                    Log3($name, 1, "$name - Snapshot of Camera $camname probably not created. No ID was delivered.");
+                }
                 
                 
                 my $num = $hash->{HELPER}{SNAPNUM};                                # Gesamtzahl der auszulösenden Schnappschüsse
@@ -4956,30 +5029,50 @@ sub SSCam_camop_parse ($) {
                      $OpMode eq "getsnapgallery" || 
                      ($OpMode eq "runliveview" && $hash->{HELPER}{RUNVIEW} =~ /snap/)
                     ) {
-                # Informationen zu einem oder mehreren Schnapschüssen wurde abgerufen bzw. Lifeanzeige Schappschuß              			
-				my $lsid   = exists($data->{data}{data}[0]{id})?$data->{data}{data}[0]{id}:"n.a.";
-				my $lfname = exists($data->{data}{data}[0]{fileName})?$data->{data}{data}[0]{fileName}:"n.a.";
 				
-				my $lstime;
-				if(exists($data->{data}{data}[0]{createdTm})) {
-				    $lstime = $data->{data}{data}[0]{createdTm};
-				    my @t = split(" ", FmtDateTime($lstime));
-					my @d = split("-", $t[0]);
-					$lstime = "$d[2].$d[1].$d[0] / $t[1]";
-				} else {
-				    $lstime = "n.a.";	
-				}
-				
-				Log3($name, $verbose, "$name - Snapinfos of camera $camname retrieved");
-	            Log3($name,4, "$name - Snap [0]: ID => $lsid, File => $lfname, Created => $lstime");
-				 
-                readingsBeginUpdate($hash);
-                readingsBulkUpdate($hash,"Errorcode","none");
-                readingsBulkUpdate($hash,"Error","none");
-                readingsBulkUpdate($hash,"LastSnapId",$lsid);
-				readingsBulkUpdate($hash,"LastSnapFilename", $lfname);
-				readingsBulkUpdate($hash,"LastSnapTime", $lstime);
-                readingsEndUpdate($hash, 1);
+	            Log3($name, $verbose, "$name - Snapinfos of camera $camname retrieved");
+                
+                my %snaps  = ( 0 => {'createdTm' => 'n.a.', 'fileName' => 'n.a.','snapid' => 'n.a.'} );  # Hilfshash 
+                my ($k,$l) = (0,0);              
+				if(exists($data->{data}{data}[0]{createdTm})) {                    
+                    while ($data->{'data'}{'data'}[$k]) {
+                        if($data->{'data'}{'data'}[$k]{'camName'} ne $camname) {
+                            $k += 1;
+                            next;
+                        }
+                        my @t = split(" ", FmtDateTime($data->{data}{data}[$k]{createdTm}));
+                        my @d = split("-", $t[0]);
+                        my $createdTm;
+                        if($lang eq "DE") {
+                            $createdTm = "$d[2].$d[1].$d[0] / $t[1]";
+                        } else {
+                            $createdTm = "$d[0]-$d[1]-$d[2] / $t[1]";
+                        }
+                        $snaps{$l}{createdTm} = $createdTm;
+                        $snaps{$l}{fileName}  = $data->{data}{data}[$k]{fileName};
+                        $snaps{$l}{snapid}    = $data->{data}{data}[$k]{id};
+                        Log3($name,4, "$name - Snap [$l]: ID => $data->{data}{data}[$k]{id}, File => $data->{data}{data}[$k]{fileName}, Created => $createdTm");
+                        $l += 1;
+                        $k += 1;
+                    }
+                }
+                
+                my @as;
+                my $rotnum = AttrVal($name,"snapReadingRotate",0);
+                my $o      = ReadingsVal($name,"LastSnapId","n.a."); 
+                if($rotnum && "$o" ne "$snaps{0}{snapid}") {
+                    @as = sort{$b<=>$a}keys%snaps;
+                    foreach my $key (@as) {
+                        SSCam_rotateReading($hash,"LastSnapId",$snaps{$key}{snapid},$rotnum,1);
+                        SSCam_rotateReading($hash,"LastSnapFilename",$snaps{$key}{fileName},$rotnum,1);
+                        SSCam_rotateReading($hash,"LastSnapTime",$snaps{$key}{createdTm},$rotnum,1);                    
+                    }
+                } else {
+                    @as = sort{$a<=>$b}keys%snaps;
+                    SSCam_rotateReading($hash,"LastSnapId",$snaps{$as[0]}{snapid},$rotnum,1);
+                    SSCam_rotateReading($hash,"LastSnapFilename",$snaps{$as[0]}{fileName},$rotnum,1);
+                    SSCam_rotateReading($hash,"LastSnapTime",$snaps{$as[0]}{createdTm},$rotnum,1);                  
+                }
 					
 				#####  ein Schnapschuss soll als liveView angezeigt werden  #####
 				Log3($name, 3, "$name - There is no snapshot of camera $camname to display ! Take one snapshot before.") 
@@ -5004,26 +5097,28 @@ sub SSCam_camop_parse ($) {
 								next;
 							}
 							$snapid = $data->{data}{data}[$i]{id};
-							my $createdTm = $data->{data}{data}[$i]{createdTm};
+                            my @t = split(" ", FmtDateTime($data->{data}{data}[$i]{createdTm}));
+                            my @d = split("-", $t[0]);
+                            my $createdTm;
+                            if($lang eq "DE") {
+                                $createdTm = "$d[2].$d[1].$d[0] / $t[1]";
+                            } else {
+                                $createdTm = "$d[0]-$d[1]-$d[2] / $t[1]";
+                            }
 							my $fileName  = $data->{data}{data}[$i]{fileName};
 							my $imageData = $data->{data}{data}[$i]{imageData};  # Image data of snapshot in base64 format 
 						
-							$sendsnaps{$sn}{snapid} = $snapid;
-							my @t = split(" ", FmtDateTime($createdTm));
-							my @d = split("-", $t[0]);
-							$createdTm = "$d[2].$d[1].$d[0] / $t[1]";
-							$sendsnaps{$sn}{createdTm}  = $createdTm;
-							$sendsnaps{$sn}{fileName}   = $fileName;
-							$sendsnaps{$sn}{imageData}  = $imageData;
+							$sendsnaps{$sn}{snapid}       = $snapid;
+							$sendsnaps{$sn}{createdTm}    = $createdTm;
+							$sendsnaps{$sn}{fileName}     = $fileName;
+							$sendsnaps{$sn}{".imageData"} = $imageData;
 							Log3($name,4, "$name - Snap '$sn' added to send gallery hash: ID => $sendsnaps{$sn}{snapid}, File => $sendsnaps{$sn}{fileName}, Created => $sendsnaps{$sn}{createdTm}");
 							$sn += 1;
 							$i += 1;
 						}						
 
-					    # Schnappschuß soll als Email versendet werden
-						if(AttrVal($name, "snapEmailTxt", "")) {
-							SSCam_prepareSendEmail ($hash, $OpMode, \%sendsnaps);
-						}
+					    # prüfen ob Schnappschuß als Email versendet werden soll
+				        SSCam_prepareSendEmail ($hash, $OpMode, \%sendsnaps);
 						
 					} else {
 				        # es soll eine Schnappschußgalerie bereitgestellt (Attr snapGalleryBoost=1) bzw. gleich angezeigt 
@@ -5045,9 +5140,13 @@ sub SSCam_camop_parse ($) {
 							my $imageData = $data->{data}{data}[$i]{imageData};  # Image data of snapshot in base64 format 
 						
 							$allsnaps{$sn}{snapid} = $snapid;
-							my @t = split(" ", FmtDateTime($createdTm));
-							my @d = split("-", $t[0]);
-							$createdTm = "$d[2].$d[1].$d[0] / $t[1]";
+                            my @t = split(" ", FmtDateTime($data->{data}{data}[$i]{createdTm}));
+                            my @d = split("-", $t[0]);
+                            if($lang eq "DE") {
+                                $createdTm = "$d[2].$d[1].$d[0] / $t[1]";
+                            } else {
+                                $createdTm = "$d[0]-$d[1]-$d[2] / $t[1]";
+                            }
 							$allsnaps{$sn}{createdTm}  = $createdTm;
 							$allsnaps{$sn}{fileName}   = $fileName;
 							$allsnaps{$sn}{imageData}  = $imageData;
@@ -5071,6 +5170,11 @@ sub SSCam_camop_parse ($) {
 						}
 				    } 
                 }
+                
+                readingsBeginUpdate($hash);
+                readingsBulkUpdate($hash,"Errorcode","none");
+                readingsBulkUpdate($hash,"Error","none");
+                readingsEndUpdate($hash, 1);                
                 
                 SSCam_closeTrans($hash);                                        # Transaktion beenden
 				delete($hash->{HELPER}{GETSNAPGALLERY});                        # Steuerbit getsnapgallery statt getsnapinfo				
@@ -5130,8 +5234,13 @@ sub SSCam_camop_parse ($) {
                                 
             } elsif ($OpMode eq "getsnapfilename") {
                 # den Filenamen eines Schnapschusses ermitteln
-                $snapid = ReadingsVal("$name", "LastSnapId", " ");
-                           
+                $snapid = ReadingsVal("$name", "LastSnapId", "");
+
+                if(!$snapid) {
+                   Log3($name, 2, "$name - Snap-ID \"LastSnapId\" isn't set. Filename can't be retrieved"); 
+                   return;
+                }               
+                
                 readingsBeginUpdate($hash);
                 readingsBulkUpdate($hash,"Errorcode","none");
                 readingsBulkUpdate($hash,"Error","none");
@@ -5416,7 +5525,11 @@ sub SSCam_camop_parse ($) {
                 if ($camLiveMode eq "0") {$camLiveMode = "Liveview from DS";}elsif ($camLiveMode eq "1") {$camLiveMode = "Liveview from Camera";}
                 
                 ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime;
-                $update_time = sprintf "%02d.%02d.%04d / %02d:%02d:%02d" , $mday , $mon+=1 ,$year+=1900 , $hour , $min , $sec ;
+                if($lang eq "DE") {
+                    $update_time = sprintf "%02d.%02d.%04d / %02d:%02d:%02d" , $mday , $mon+=1 ,$year+=1900 , $hour , $min , $sec ;
+                } else {
+                    $update_time = sprintf "%04d-%02d-%02d / %02d:%02d:%02d" , $year+=1900 , $mon+=1 , $mday , $hour , $min , $sec ;
+                }
                 
                 $deviceType = $data->{'data'}->{'cameras'}->[0]->{'deviceType'};
                 if ($deviceType eq "1") {
@@ -5569,8 +5682,11 @@ sub SSCam_camop_parse ($) {
                 if ($eventnum > 0) {
                     $lastrecstarttime = $data->{'data'}{'events'}[0]{startTime};
                     ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($lastrecstarttime);
-                    $lastrecstarttime = sprintf "%02d.%02d.%04d / %02d:%02d:%02d" , $mday , $mon+=1 ,$year+=1900 , $hour , $min , $sec ;
-                
+                    if($lang eq "DE") {
+                        $lastrecstarttime = sprintf "%02d.%02d.%04d / %02d:%02d:%02d" , $mday , $mon+=1 ,$year+=1900 , $hour , $min , $sec ;
+                    } else {
+                        $lastrecstarttime = sprintf "%04d-%02d-%02d / %02d:%02d:%02d" , $year+=1900 , $mon+=1 , $mday , $hour , $min , $sec ;
+                    }
                     $lastrecstoptime = $data->{'data'}{'events'}[0]{stopTime};
                     ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($lastrecstoptime);
                     $lastrecstoptime = sprintf "%02d:%02d:%02d" , $hour , $min , $sec ;
@@ -6253,7 +6369,7 @@ return($m);
 }
 
 ###############################################################################
-#               JSON Boolean Test und Mapping
+#                       JSON Boolean Test und Mapping
 ###############################################################################
 sub SSCam_jboolmap($){ 
   my ($bool)= @_;
@@ -6266,7 +6382,7 @@ return $bool;
 }
 
 ###############################################################################
-# Schnappschußgalerie abrufen (snapGalleryBoost) o. nur Info des letzten Snaps
+#      Ermittlung Anzahl und Größe der abzurufenden Schnappschußdaten
 ###############################################################################
 sub SSCam_snaplimsize ($) {      
   my ($hash)= @_;
@@ -6278,19 +6394,21 @@ sub SSCam_snaplimsize ($) {
       $ssize = 0;
   } else {
       $hash->{HELPER}{GETSNAPGALLERY} = 1;
-	  $slim = AttrVal($name,"snapGalleryNumber",$SSCam_slim);    # Anzahl der abzurufenden Snaps
-	  my $sg = AttrVal($name,"snapGallerySize","Icon");          # Auflösung Image
+	  $slim = AttrVal($name,"snapGalleryNumber",$SSCam_slim);               # Anzahl der abzurufenden Snaps
+	  my $sg = AttrVal($name,"snapGallerySize","Icon");                     # Auflösung Image
 	  $ssize = ($sg eq "Icon")?1:2;
   }
 
   if($hash->{HELPER}{CANSENDSNAP}) {
-      # Versand Schnappschuß darf erfolgen falls gewünscht
-      # Galerie über "$hash->{HELPER}{SNAPNUM}" Snaps zum Versand abrufen 
-      $hash->{HELPER}{GETSNAPGALLERY} = 1;                       # Steuerbit für Snap-Galerie
-	  $slim  = $hash->{HELPER}{SNAPNUM};                         # enthält die Anzahl der zu versendenden Images
-      $ssize = 2;                                                # Full Size für EMail-Versand
+      # Versand Schnappschuß darf erfolgen falls gewünscht 
+      $ssize = 2;                                                           # Full Size für EMail-Versand
   }
-
+  
+  if($hash->{HELPER}{SNAPNUM}) {
+      $slim = delete $hash->{HELPER}{SNAPNUM};                              # enthält die Anzahl der ausgelösten Schnappschüsse
+      $hash->{HELPER}{GETSNAPGALLERY} = 1;                                  # Steuerbit für Snap-Galerie bzw. Daten mehrerer Schnappschüsse abrufen
+  }
+  
 return ($slim,$ssize);
 }
 
@@ -7047,7 +7165,7 @@ sub SSCam_composegallery ($;$$) {
   my $camname  = $hash->{CAMNAME};
   my $allsnaps = $hash->{HELPER}{".SNAPHASH"};                   # = \%allsnaps
   my $sgc      = AttrVal($name,"snapGalleryColumns",3);          # Anzahl der Images in einer Tabellenzeile
-  my $lss      = ReadingsVal($name, "LastSnapTime", " ");        # Zeitpunkt neueste Aufnahme
+  my $lss      = ReadingsVal($name, "LastSnapTime", "");         # Zeitpunkt neueste Aufnahme
   my $lang     = AttrVal("global","language","EN");              # Systemsprache       
   my $limit    = $hash->{HELPER}{SNAPLIMIT};                     # abgerufene Anzahl Snaps
   my $totalcnt = $hash->{HELPER}{TOTALCNT};                      # totale Anzahl Snaps
@@ -7167,7 +7285,7 @@ return ($error);
 
 ##############################################################################
 #  Auflösung Errorcodes SVS API
-
+##############################################################################
 sub SSCam_experror ($$) {
   # Übernahmewerte sind $hash, $errorcode
   my ($hash,$errorcode) = @_;
@@ -7182,6 +7300,41 @@ sub SSCam_experror ($$) {
 return ($error);
 }
 
+##############################################################################
+# Zusätzliche Redings in Rotation erstellen
+# Sub ($hash,<readingName>,<Wert>,<Rotationszahl>,<Trigger[0|1]>)
+##############################################################################
+sub SSCam_rotateReading ($$$$$) {
+  my ($hash,$readingName,$val,$rotnum,$do_trigger) = @_;
+  my $name = $hash->{NAME};
+
+  readingsBeginUpdate($hash);
+  
+  my $o = ReadingsVal($name,$readingName,"n.a."); 
+  if($val ne "n.a." && $rotnum >= 1) {
+      if("$o" ne "$val") {     
+          for (my $i=$rotnum;$i>0;$i--) {
+              my $l = $i-1;
+              my $g = ReadingsVal($name,$readingName.$i,"n.a.");
+              if($l) {
+                  $l = ReadingsVal($name,$readingName.$l,"n.a.");
+              } else {
+                  $l = ReadingsVal($name,$readingName,"n.a.");
+              }
+              if("$l" ne "$g") {
+                  readingsBulkUpdate($hash,$readingName.$i,$l);
+                  Log3($name, 4, "$name - Rotate \"$readingName.$i\" to value: $l");
+              }
+          }
+      }      
+  
+  }
+  readingsBulkUpdate($hash,$readingName,$val);
+  readingsEndUpdate($hash, $do_trigger);
+  
+return;
+}
+
 #############################################################################################
 #                              Vorbereitung  SMTP EMail-Versand
 #       $OpMode = aktueller Operation Mode zur Unterscheidung was versendet werden soll
@@ -7190,74 +7343,112 @@ return ($error);
 sub SSCam_prepareSendEmail ($$;$) { 
    my ($hash, $OpMode, $data) = @_;
    my $name   = $hash->{NAME};
-   my $calias = AttrVal($name,"alias",$hash->{CAMNAME});           # Alias der Kamera wenn gesetzt oder Originalname aus SVS
-   my ($ret,$sdat,$fname,$snapid,$lsnaptime) = ('','','','','');
-   my $snapnum = 1;
-     
-   my $sp       = AttrVal($name, "smtpPort", 25); 
-   my $nousessl = AttrVal($name, "smtpNoUseSSL", 0); 
-   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime;
-   my $date = sprintf "%02d.%02d.%04d" , $mday , $mon+=1 ,$year+=1900; 
-   my $time = sprintf "%02d:%02d:%02d" , $hour , $min , $sec;   
-     
-   # Extraktion EMail-Texte
-   # Attribut snapEmailTxt kann übersteuert werden mit: $hash->{HELPER}{SMTPMSG}
-   # Format in $hash->{HELPER}{SMTPMSG} muss sein: subject => <Betreff-Text>, body => <Mitteilung-Text>
-   my $mth = delete $hash->{HELPER}{SMTPMSG};
-   my $mt  = $mth?$mth:AttrVal($name, "snapEmailTxt", "");
-   $mt     =~ s/['"]//g;   
+   my $calias = AttrVal($name,"alias",$hash->{CAMNAME});              # Alias der Kamera wenn gesetzt oder Originalname aus SVS
+   my ($ret,$sdat,$fname,$snapid,$lsnaptime,$tac) = ('','','','','','');
    
-   my($subj,$body)   = split(",", $mt, 2);
-   my($subjk,$subjt) = split("=>", $subj);
-   my($bodyk,$bodyt) = split("=>", $body);
-   $subjk = SSCam_trim($subjk);
-   $subjt = SSCam_trim($subjt);
-   $subjt =~ s/\$CAM/$calias/g;
-   $subjt =~ s/\$DATE/$date/g;
-   $subjt =~ s/\$TIME/$time/g;
-   $bodyk = SSCam_trim($bodyk);
-   $bodyt = SSCam_trim($bodyt);
-   $bodyt =~ s/\$CAM/$calias/g;
-   $bodyt =~ s/\$DATE/$date/g;
-   $bodyt =~ s/\$TIME/$time/g;
-   my %smtpmsg = ();
-   $smtpmsg{$subjk} = "$subjt";
-   $smtpmsg{$bodyk} = "$bodyt";
-   
-   my $sslfrominit = 0;
-   my $smtpsslport = 465;
-   if(AttrVal($name,"smtpSSLPort",0)) {
-       $sslfrominit = 1;
-       $smtpsslport = AttrVal($name,"smtpSSLPort",0);
+   ### prüfen ob Schnappschnüsse aller Kameras durch ein SVS-Device angefordert wurde,
+   ### Bilddaten werden erst zum Versand weitergeleitet wenn Schnappshußhash komplett gefüllt ist
+   my $asref;
+   my @allsvs = devspec2array("TYPE=SSCam:FILTER=MODEL=SVS");
+   foreach (@allsvs) {
+       next if(!AttrVal($_, "snapEmailTxt", ""));                      # Schnappschüsse senden NICHT durch SVS ausgelöst -> Snaps der Cams NICHT gemeinsam versenden
+       my $svshash = $defs{$_};
+       if($svshash->{HELPER}{ALLSNAPREF}) { 
+           $asref = $svshash->{HELPER}{ALLSNAPREF};                    # Hashreferenz zum summarischen Snaphash
+           foreach my $key (keys%{$asref}) {
+               if($key eq $name) {                                     # Kamera Key im Bildhash matcht -> Bilddaten übernehmen
+                    foreach my $pkey (keys%{$data}) {
+                        my $nkey = time()+int(rand(1000));
+                        $asref->{$nkey.$pkey}{createdTm}    = $data->{$pkey}{createdTm};     # Aufnahmezeit der Kamera werden im summarischen Snaphash eingefügt
+                        $asref->{$nkey.$pkey}{".imageData"} = $data->{$pkey}{".imageData"};  # Bilddaten der Kamera werden im summarischen Snaphash eingefügt
+                        $asref->{$nkey.$pkey}{fileName}     = $data->{$pkey}{fileName};      # Filenamen der Kamera werden im summarischen Snaphash eingefügt
+                    }
+                    delete $hash->{HELPER}{CANSENDSNAP};               
+                    delete $asref->{$key};                             # ursprünglichen Key (Kameranamen) löschen
+               }
+           }
+           $asref = $svshash->{HELPER}{ALLSNAPREF};                    # Hashreferenz zum summarischen Snaphash
+           foreach my $key (keys%{$asref}) {                           # prüfen ob Bildhash komplett ?
+               if(!$asref->{$key}) {
+                   return;                                             # Bildhash noch nicht komplett                                 
+               }
+           }
+           my %rs  = %{$asref};
+           my $rsref = \%rs;
+           delete $svshash->{HELPER}{ALLSNAPREF};                      # ALLSNAPREF löschen -> gemeinsamer Versand beendet
+           $hash   = $svshash;                                         # Hash durch SVS-Hash ersetzt
+           $name   = $svshash->{NAME};                                 # Name des auslösenden SVS-Devices wird eingesetzt
+           $data   = $rsref;                                           # Referenz zum summarischen Hash einsetzen
+           $calias = AttrVal($name,"alias",$hash->{NAME});             # Alias des SVS-Devices 
+           $hash->{HELPER}{TRANSACTION} = "multiple_ta";               # fake Transaction im SVS Device setzen 
+           last;                                                       # Schleife verlassen und mit Senden weiter
+       }
    }
    
-   my $tac = $hash->{HELPER}{TRANSACTION};               # Code der laufenden Transaktion
-   
-   if($OpMode =~ /^getsnap/) {
-       $fname     = ReadingsVal($name,"LastSnapFilename","");
-       $snapid    = ReadingsVal($name,"LastSnapId","");
-       $lsnaptime = ReadingsVal($name,"LastSnapTime","");
-       $sdat      = $data;
-       delete $hash->{HELPER}{CANSENDSNAP};
-       delete $hash->{HELPER}{SMTPMSG};
-    
-   $ret = SSCam_sendEmail($hash, {'subject'      => $smtpmsg{subject},   
-                                  'part1txt'     => $smtpmsg{body}, 
-                                  'part2type'    => 'image/jpeg', 
-                                  'fname'        => $fname,
-                                  'smtpport'     => $sp,
-                                  'sdat'         => $sdat,
-                                  'lsnaptime'    => $lsnaptime,
-                                  'opmode'       => $OpMode,
-                                  'smtpnousessl' => $nousessl,
-                                  'sslfrominit'  => $sslfrominit,
-                                  'smtpsslport'  => $smtpsslport, 
-                                  'tac'          => $tac,                                  
-                                 }
-                         );
+   ### Bilddaten als Email versenden wenn Attribut "snapEmailTxt" definiert ist
+   if(AttrVal($name, "snapEmailTxt", "")) { 
+       my $sp       = AttrVal($name, "smtpPort", 25); 
+       my $nousessl = AttrVal($name, "smtpNoUseSSL", 0); 
+       my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime;
+       my $date = sprintf "%02d.%02d.%04d" , $mday , $mon+=1 ,$year+=1900; 
+       my $time = sprintf "%02d:%02d:%02d" , $hour , $min , $sec;   
+         
+       # Extraktion EMail-Texte
+       # Attribut snapEmailTxt kann übersteuert werden mit: $hash->{HELPER}{SMTPMSG}
+       # Format in $hash->{HELPER}{SMTPMSG} muss sein: subject => <Betreff-Text>, body => <Mitteilung-Text>
+       my $mth = delete $hash->{HELPER}{SMTPMSG};
+       my $mt  = $mth?$mth:AttrVal($name, "snapEmailTxt", "");
+       $mt     =~ s/['"]//g;   
+       
+       my($subj,$body)   = split(",", $mt, 2);
+       my($subjk,$subjt) = split("=>", $subj);
+       my($bodyk,$bodyt) = split("=>", $body);
+       $subjk = SSCam_trim($subjk);
+       $subjt = SSCam_trim($subjt);
+       $subjt =~ s/\$CAM/$calias/g;
+       $subjt =~ s/\$DATE/$date/g;
+       $subjt =~ s/\$TIME/$time/g;
+       $bodyk = SSCam_trim($bodyk);
+       $bodyt = SSCam_trim($bodyt);
+       $bodyt =~ s/\$CAM/$calias/g;
+       $bodyt =~ s/\$DATE/$date/g;
+       $bodyt =~ s/\$TIME/$time/g;
+       my %smtpmsg = ();
+       $smtpmsg{$subjk} = "$subjt";
+       $smtpmsg{$bodyk} = "$bodyt";
+       
+       my $sslfrominit = 0;
+       my $smtpsslport = 465;
+       if(AttrVal($name,"smtpSSLPort",0)) {
+           $sslfrominit = 1;
+           $smtpsslport = AttrVal($name,"smtpSSLPort",0);
+       }
+       
+       $tac = $hash->{HELPER}{TRANSACTION};               # Code der laufenden Transaktion
+       
+       if($OpMode =~ /^getsnap/) {
+           $sdat      = $data;
+           delete $hash->{HELPER}{CANSENDSNAP};
+           delete $hash->{HELPER}{SMTPMSG};
+        
+       $ret = SSCam_sendEmail($hash, {'subject'      => $smtpmsg{subject},   
+                                      'part1txt'     => $smtpmsg{body}, 
+                                      'part2type'    => 'image/jpeg',
+                                      'smtpport'     => $sp,
+                                      'sdat'         => $sdat,
+                                      'opmode'       => $OpMode,
+                                      'smtpnousessl' => $nousessl,
+                                      'sslfrominit'  => $sslfrominit,
+                                      'smtpsslport'  => $smtpsslport, 
+                                      'tac'          => $tac,                                  
+                                     }
+                             );
+       }
+                             
+       return $ret;
    }
-                         
-return $ret;
+
+return;
 }
 
 #############################################################################################
@@ -7333,7 +7524,7 @@ sub SSCam_sendEmail ($$) {
        'sdat'         => {                       'default'=>'',                          'required'=>0, 'set'=>1},  # (Hash)Daten base64 codiert, wenn gesetzt muss 'part2' auf 'image/jpeg' gesetzt werden
        'image'        => {                       'default'=>'',                          'required'=>0, 'set'=>1},  # Daten als File, wenn gesetzt muss 'part2' auf 'image/jpeg' gesetzt werden
        'fname'        => {                       'default'=>'image.jpg',                 'required'=>0, 'set'=>1},  # Filename für "image" oder "sdat"
-       'lsnaptime'    => {                       'default'=>'',                          'required'=>0, 'set'=>1},  # Zeitstempel des letzten Schnappschusses
+       'lsnaptime'    => {                       'default'=>'',                          'required'=>0, 'set'=>1},  # Zeitstempel der Bilddaten
        'opmode'       => {                       'default'=>'',                          'required'=>1, 'set'=>1},  # OpMode muss gesetzt sein
        'sslfb'        => {                       'default'=>$sslfb,                      'required'=>0, 'set'=>1},  # Flag für Verwendung altes Net::SMTP::SSL   
        'sslfrominit'  => {                       'default'=>'',                          'required'=>0, 'set'=>1},  # SSL soll sofort ! aufgebaut werden  
@@ -7392,9 +7583,9 @@ sub SSCam_sendEmailblocking($) {
   my $to           = $paref->{smtpTo};
   my $msgtext      = $paref->{msgtext}; 
   my $smtpdebug    = $paref->{smtpdebug}; 
-  my $sdat         = $paref->{sdat};                     # Image Daten als Hash base64 codiert
+  my $sdat         = $paref->{sdat};                     # Hash von Imagedaten base64 codiert
   my $image        = $paref->{image};                    # Image, wenn gesetzt muss 'part2' auf 'image/jpeg' gesetzt sein
-  my $fname        = $paref->{fname};                    # Filename von "image"
+  my $fname        = $paref->{fname};                    # Filename -> verwendet wenn $image ist gesetzt
   my $lsnaptime    = $paref->{lsnaptime};                # Zeit des letzten Schnappschusses wenn gesetzt
   my $opmode       = $paref->{opmode};                   # aktueller Operation Mode
   my $sslfb        = $paref->{sslfb};                    # Flag für Verwendung altes Net::SMTP::SSL
@@ -7448,7 +7639,7 @@ sub SSCam_sendEmailblocking($) {
       @as = sort{$a<=>$b}keys%{$sdat};
       foreach my $key (@as) {
 		  $ct      = $sdat->{$key}{createdTm};
-		  $img     = $sdat->{$key}{imageData};
+		  $img     = $sdat->{$key}{".imageData"};
 		  $fname   = $sdat->{$key}{fileName};
 		  $fh      = '$fh'.$key;
 		  $decoded = MIME::Base64::decode_base64($img); 
@@ -7723,6 +7914,124 @@ sub SSCam_trim ($) {
 return ($str);
 }
 
+#############################################################################################
+#                                       Hint Hash EN           
+#############################################################################################
+%SSCam_vHintsExt_en = (
+  "7" => "<b>Setup Email Shipping <br>".
+         "==================== </b> <br><br>".
+         "Snapshots can be sent by <b>Email</b> alltogether after creation. For this purpose the module contains<br>". 
+         "its own Email client.<br>". 
+         "Before you can use this function you have to install the Perl-module <b>MIME::Lite</b>. On debian systems it can be ". 
+         "installed with command:".  
+         "<ul>". 
+         "<b>sudo apt-get install libmime-lite-perl</b>". 
+         "</ul>". 
+         "There are some attributes must be set or can be used optionally.<br>". 
+         "At first the Credentials for access the Email outgoing server must be set by command <b>\"set &lt;name&gt; smtpcredentials &lt;user&gt; &lt;password&gt;\"</b><br>". 
+         "The connection to the server is initially established unencrypted and switches to an encrypted connection if SSL<br>". 
+         "encryption is available. In that case the transmission of User/Password takes place encrypted too.<br>". 
+         "If attribute \"smtpSSLPort\" is defined, the established connection to the Email server will be encrypted immediately.<br><br>". 
+         "Attributes which are optional are marked: <br><br>".
+         "<ul>".         
+		 "<li><b>snapEmailTxt</b> - <b>Activates the Email shipping.</b> This attribute has the format: <br>". 
+		 "<ul><b>subject => &lt;subject text&gt;, body => &lt;message text&gt;</b></ul>". 
+		 "The placeholder \$CAM, \$DATE and \$TIME can be used. <br>".  
+		 "\$CAM is replaced by the device name, device alias or the name of camera in SVS if alias is not defined.<br>".  
+		 "\$DATE and \$TIME are replaced with the current date and time.</li>". 
+		 "<li><b>smtpHost</b> - Hostname or IP-address of outgoing Email server (e.g. securesmtp.t-online.de)</li>". 
+		 "<li><b>smtpFrom</b> - Return address (&lt;name&gt@&lt;domain&gt)</li>". 
+		 "<li><b>smtpTo</b> - Receiving address(es) (&lt;name&gt@&lt;domain&gt)</li>". 
+		 "<li><b>smtpPort</b> - (optional) Port of outgoing Email server (default: 25)</li>". 
+		 "<li><b>smtpCc</b> - (optional) carbon-copy receiving address(es) (&lt;name&gt@&lt;domain&gt)</li>". 
+		 "<li><b>smtpNoUseSSL</b> - (optional) \"1\" if no SSL encryption should be used for Email shipping (default: 0)</li>". 
+		 "<li><b>smtpSSLPort</b> - (optional) Port for SSL encrypted connection (default: 465)</li>". 
+		 "<li><b>smtpDebug</b> - (optional) switch on the debugging of SMTP connection</li>". 
+         "</ul>".          
+         "For further information please see description of the <a href=\"https://fhem.de/commandref.html#SSCamattr\">attributes</a>.".
+         "<br><br>",
+  "6" => "There are some Icons in directory www/images/sscam available for SSCam. Thereby the system can use the icons please do: <br>".
+         "<ul><li> in FHEMWEB device attribute <b>iconPath</b> complete with \"sscam\". e.g.: attr WEB iconPath default:fhemSVG:openautomation:sscam </li></ul>".
+		 "After that execute \"rereadicons\" or restart FHEM. ".
+         "<br><br>",
+  "5" => "Find more Informations about manage users and the appropriate privilege profiles in ".
+         "<a href=\"https://www.synology.com/en-global/knowledgebase/Surveillance/help/SurveillanceStation/user\">Surveillance Station online help</a> ".
+         "<br><br>",
+  "4" => "The message Meldung \"WARNING - The current/simulated SVS-version ... may be incompatible with SSCam version...\" means that ".
+         "the used SSCam version was currently not tested with the installed version of Synology Surveillance Station (Reading \"SVSversion\"). ".
+         "The compatible SVS-Version is printed out in the Internal COMPATIBILITY.\n".
+         "<b>Actions:</b> At first please update your SSCam version. If the message does appear furthermore, please inform the SSCam Maintainer. ".
+         "To ignore this message temporary, you may reduce the verbose level of your SSCam device. ".
+         "<br><br>",
+  "3" => "Link to SSCam <a href=\"https://fhem.de/commandref.html#SSCam\">english commandRef</a> ".
+         "<br><br>",
+  "2" => "You can create own PTZ-control icons with a template available in SVN which can be downloaded here: <a href=\"https://svn.fhem.de/trac/browser/trunk/fhem/contrib/sscam\">contrib/sscam/black_btn_CAM_Template.pdn</a>.\n". 
+         "This template can be edited with Paint.Net for example. ".
+         "<br><br>",
+  "1" => "Some helpful <a href=\"https://wiki.fhem.de/wiki/SSCAM_-_Steuerung_von_Kameras_in_Synology_Surveillance_Station\">FHEM-Wiki</a> notes".
+         "<br><br>",
+);
+
+#############################################################################################
+#                                       Hint Hash DE           
+#############################################################################################
+%SSCam_vHintsExt_de = (
+  "7" => "<b>Einstellung Email-Versand <br>".
+         "========================= </b> <br><br>".
+         "Schnappschüsse können nach der Erstellung per <b>Email</b> gemeinsam versendet werden. Dazu enthält das Modul einen<br>". 
+         "eigenen Email-Client.<br>". 
+         "Zur Verwendung dieser Funktion muss das Perl-Modul <b>MIME::Lite</b> installiert sein. Auf Debian-Systemen kann ". 
+         "es mit".  
+         "<ul>". 
+         "<b>sudo apt-get install libmime-lite-perl</b>". 
+         "</ul>". 
+         "installiert werden. <br><br>". 
+         "Für die Verwendung des Email-Versands müssen einige Attribute gesetzt oder können optional genutzt werden.<br>". 
+         "Die Credentials für den Zugang zum Email-Server müssen mit dem Befehl <b>\"set &lt;name&gt; smtpcredentials &lt;user&gt; &lt;password&gt;\"</b><br>". 
+         "gesetzt werden. Der Verbindungsaufbau zum Postausgangsserver erfolgt initial unverschüsselt und wechselt zu einer verschlüsselten<br>". 
+         "Verbindung wenn SSL zur Verfügung steht. In diesem Fall erfolgt auch die Übermittlung von User/Password verschlüsselt.<br>". 
+         "Ist das Attribut \"smtpSSLPort\" definiert, erfolgt der Verbindungsaufbau zum Email-Server sofort verschlüsselt.<br><br>". 
+         "Optionale Attribute sind gekennzeichnet: <br><br>".
+         "<ul>".         
+		 "<li><b>snapEmailTxt</b> - <b>Aktiviert den Email-Versand</b>. Das Attribut hat das Format:<br>". 
+		 "<ul><b>subject => &lt;Betreff-Text&gt;, body => &lt;Mitteilung-Text&gt;</b></ul>". 
+		 "Es können die Platzhalter \$CAM, \$DATE und \$TIME verwendet werden. <br>".  
+		 "\$CAM wird durch den Device-Namen, Device-Alias bzw. den Namen der Kamera in der SVS ersetzt falls der<br>". 
+		 "Device-Alias nicht gesetzt ist. <br>".  
+		 "\$DATE und \$TIME werden durch das aktuelle Datum und Zeit ersetzt.</li>". 
+		 "<li><b>smtpHost</b> - Hostname oder IP-Adresse des Postausgangsservers (z.B. securesmtp.t-online.de)</li>". 
+		 "<li><b>smtpFrom</b> - Absenderadresse (&lt;name&gt\@&lt;domain&gt)</li>". 
+		 "<li><b>smtpTo</b> - Empfängeradresse(n) (&lt;name&gt\@&lt;domain&gt)</li>". 
+		 "<li><b>smtpPort</b> - (optional) Port des Postausgangsservers (default: 25)</li>". 
+		 "<li><b>smtpCc</b> - (optional) Carbon-Copy Empfängeradresse(n) (&lt;name&gt\@&lt;domain&gt)</li>". 
+		 "<li><b>smtpNoUseSSL</b> - (optional) \"1\" wenn kein SSL beim Email-Versand verwendet werden soll (default: 0)</li>". 
+		 "<li><b>smtpSSLPort</b> - (optional) SSL-Port des Postausgangsservers (default: 465)</li>". 
+		 "<li><b>smtpDebug</b> - (optional) zum Debugging der SMTP-Verbindung setzen</li>". 
+         "</ul>".          
+         "Zur näheren Erläuterung siehe Beschreibung der <a href=\"https://fhem.de/commandref_DE.html#SSCamattr\">Attribute</a>.".
+         "<br><br>",
+  "6" => "Für SSCam wird ein Satz Icons im Verzeichnis www/images/sscam zur Verfügung gestellt. Damit das System sie findet bitte setzen: <br>".
+         "<ul><li> im FHEMWEB Device Attribut <b>iconPath</b> um \"sscam\" ergänzen. z.B.: attr WEB iconPath default:fhemSVG:openautomation:sscam </li></ul>".
+		 "Danach ein \"rereadicons\" bzw. einen FHEM restart ausführen.".
+         "<br><br>",
+  "5" => "Informationen zum Management von Usern und entsprechenden Rechte-Profilen sind in der ".
+         "<a href=\"https://www.synology.com/de-de/knowledgebase/Surveillance/help/SurveillanceStation/user\">Surveillance Station Online-Hilfe</a> zu finden.".
+         "<br><br>",
+  "4" => "Die Meldung \"WARNING - The current/simulated SVS-version ... may be incompatible with SSCam version...\" ist ein Hinweis darauf, dass ".
+         "die eingesetzte SSCam Version noch nicht mit der verwendeten Version von Synology Surveillance Station (Reading \"SVSversion\") getestet ".
+         "wurde. Die kompatible SVS-Version ist im Internal COMPATIBILITY ersichtlich.\n".
+         "<b>Maßnahmen:</b> Bitte SSCam zunächst updaten. Sollte die Meldung weiterhin auftreten, bitte den SSCam Maintainer informieren. Zur ".
+         "vorübergehenden Ignorierung kann der verbose Level des SSCam-Devices entsprechend reduziert werden. ".
+         "<br><br>",
+  "3" => "Link zur deutschen SSCam <a href=\"https://fhem.de/commandref_DE.html#SSCam\">commandRef</a> ".
+         "<br><br>",
+  "2" => "Zur Erstellung eigener PTZ-Steuericons gibt es eine Vorlage im SVN die hier <a href=\"https://svn.fhem.de/trac/browser/trunk/fhem/contrib/sscam\">contrib/sscam/black_btn_CAM_Template.pdn</a> heruntergeladen werden kann.\n".
+         "Diese Vorlage kann zum Beispiel mit Paint.Net bearbeitet werden. ".
+         "<br><br>",
+  "1" => "Hilfreiche Hinweise zu SSCam im <a href=\"https://wiki.fhem.de/wiki/SSCAM_-_Steuerung_von_Kameras_in_Synology_Surveillance_Station\">FHEM-Wiki</a>".
+         "<br><br>",
+);
+
 1;
 
 =pod
@@ -7742,6 +8051,7 @@ return ($str);
        <li>Start a Recording</li>
        <li>Stop a Recording (using command or automatically after the &lt;RecordTime&gt; period</li>
        <li>Trigger of snapshots and optionally send them alltogether by Email using the integrated Email client </li>
+       <li>Trigger snapshots of all defined cams and optionally send them alltogether by Email using the integrated Email client </li>
        <li>Deaktivate a Camera in Synology Surveillance Station</li>
        <li>Activate a Camera in Synology Surveillance Station</li>
        <li>Control of the exposure modes day, night and automatic </li>
@@ -8503,52 +8813,49 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
   <li><b> set &lt;name&gt; snap [&lt;number&gt;] [&lt;time difference&gt;] [snapEmailTxt:"subject => &lt;subject text&gt;, body => &lt;message text&gt;"]</b> &nbsp;&nbsp;&nbsp;&nbsp;(valid for CAM)</li> <br>
   
   One or multiple snapshots are triggered. The number of snapshots to trigger and the time difference (in seconds) between
-  each snapshots can be optionally specified. Without any specification only one snapshot is triggered.
-  The ID and the filename of the last snapshot will be displayed in Reading "LastSnapId" respectively "LastSnapFilename" of the
-  device. <br>
-  The snapshot Email shipping is activated by setting the <a href="#SSCamattr">attribute</a> "snapEmailTxt". If you want 
-  temporary overwrite the message text set in "snapEmailTxt", you can optionally specify the "snapEmailTxt:"-tag as shown
-  above. <br><br>
+  each snapshot can be optionally specified. Without any specification only one snapshot is triggered. <br>
+  The ID and the filename of the last snapshot will be displayed in Reading "LastSnapId" respectively 
+  "LastSnapFilename". <br>
+  To get data of the last 1-10 snapshots in various versions, the <a href="#SSCamattr">attribute</a> "snapReadingRotate"
+  can be used.
+  <br><br>
   
-  <b>Email shipping preparation</b> <br><br>
+  The snapshot <b>Email shipping</b> can be activated by setting <a href="#SSCamattr">attribute</a> "snapEmailTxt". 
+  Before you have to prepare the Email shipping as described in section <a href="#SSCamEmail">Setup Email shipping</a>. 
+  (for further information execute "<b>get &lt;name&gt; versionNotes 7</b>") <br>
+  If you want temporary overwrite the message text set in attribute "snapEmailTxt", you can optionally specify the 
+  "snapEmailTxt:"-tag as shown above. <br><br>
   
-  The snapshots can be sent by <b>Email</b> alltogether after creation. For this purpose the module contains its own Email client. 
-  Before you can use this function you have to install the Perl-module <b>MIME::Lite</b>. On debian systems it can be 
-  installed with command: <br><br>
-   
-   <ul>
-    sudo apt-get install libmime-lite-perl
-   </ul>
-   <br>
+  <b>Examples:</b>
+  <pre>
+    set &lt;name&gt; snap 4 
+    set &lt;name&gt; snap 3 3 snapEmailTxt:"subject => Movement alarm $CAM, body => A movement was recognised at Carport"
+  </pre>
+  </ul>
+  <br><br>
   
-  There are some attributes must be set or can be used optionally. <br>
-  At first the Credentials for access the Email outgoing server must be set by command <b>"set &lt;name&gt; smtpcredentials &lt;user&gt; &lt;password&gt;"</b>.
-  The connection establishment to the server is initially done unencrypted and switches to an encrypted connection if SSL 
-  encryption is available. In that case the transmission of User/Password takes place encrypted too. 
-  If attribute "smtpSSLPort" is defined, the established connection to the Email server will be encrypted immediately.
-  Attributes which are optional are marked: <br><br>
+  <ul>
+  <li><b> set &lt;name&gt; snapCams [&lt;number&gt;] [&lt;time difference&gt;] [CAM:"&lt;camera&gt;, &lt;camera&gt, ..."]</b> &nbsp;&nbsp;&nbsp;&nbsp;(valid for SVS)</li> <br>
   
-  <ul>   
-    <table>  
-    <colgroup> <col width=12%> <col width=88%> </colgroup>
-      <tr><td style="vertical-align:top"> <b>snapEmailTxt</b> <td>- Activates the Email shipping. Has the form: <br>
-                                                                  <code>subject => &lt;subject text&gt;, body => &lt;message text&gt; </code><br> 
-                                                                  The placeholder variables $CAM, $DATE and $TIME can be used. $CAM is 
-                                                                  replaced by the device alias or the name of camera in SVS if alias is not 
-                                                                  defined. $DATE and $TIME are replaced with the current date and time. </td></tr>
-      <tr><td>                            <b>smtpHost</b>     </td><td>- Hostname of outgoing Email server (e.g. securesmtp.t-online.de) </td></tr>
-      <tr><td>                            <b>smtpFrom</b>     </td><td>- Return address (&lt;name&gt@&lt;domain&gt) </td></tr>
-      <tr><td>                            <b>smtpTo</b>       </td><td>- Receiving address(es) (&lt;name&gt@&lt;domain&gt) </td></tr>
-      <tr><td>                            <b>smtpPort</b>     </td><td>- (optional) Port of outgoing Email server (default: 25) </td></tr>
-	  <tr><td>                            <b>smtpCc</b>       </td><td>- (optional) carbon-copy receiving address(es) (&lt;name&gt@&lt;domain&gt) </td></tr>
-	  <tr><td>                            <b>smtpNoUseSSL</b> </td><td>- (optional) "1" if no SSL encryption should be used for Email shipping (default: 0) </td></tr>
-      <tr><td>                            <b>smtpSSLPort</b>  </td><td>- (optional) Port for SSL encrypted connection (default: 465) </td></tr>
-	  <tr><td>                            <b>smtpDebug</b>    </td><td>- (optional) switch on the debugging of SMTP connection </td></tr>
-    </table>
-   </ul>     
-   <br>
-   
-  For further information please see description of the <a href="#SSCamattr">attributes</a>. <br>
+  One or multiple snapshots of denoted cameras are triggered. If no cameras are denoted, the snapshots are triggered in all 
+  of the defined cameras in FHEM.
+  Optionally the number of snapshots to trigger (default: 1) and the time difference (in seconds) between
+  each snapshot (default: 2) can be specified. <br>
+  The ID and the filename of the last snapshot will be displayed in Reading "LastSnapId" respectively "LastSnapFilename" of
+  the appropriate camera device. <br><br>
+  
+  The snapshot <b>Email shipping</b> can be activated by setting <a href="#SSCamattr">attribute</a> "snapEmailTxt" in the 
+  SVS device <b>AND</b> in the camera devices whose snapshots should be shipped. 
+  Before you have to prepare the Email shipping as described in section <a href="#SSCamEmail">Setup Email shipping</a>. 
+  (for further information execute "<b>get &lt;name&gt; versionNotes 7</b>") <br>
+  Only the message text set in attribute "snapEmailTxt" of the SVS device is used in the created Email. The settings of 
+  those attribute in the camera devices is ignored !! <br><br>
+  
+  <b>Examples:</b>
+  <pre>
+    set &lt;name&gt; snapCams 4 
+    set &lt;name&gt; snapCams 3 3 CAM:"CamHE1, CamCarport"
+  </pre>
   </ul>
   <br><br>
   
@@ -8783,7 +9090,51 @@ http(s)://&lt;hostname&gt;&lt;port&gt;/webapi/entry.cgi?api=SYNO.SurveillanceSta
   If no options are specified, both release informations and hints will be shown. "rel" shows only release informations and
   "hints" shows only hints. By the &lt;key&gt;-specification only the hint with the specified number is shown.
   </ul>
-  <br><br>   
+  <br><br> 
+
+  <a name="SSCamEmail"></a>
+  <b>Setup Email shipping</b> <br><br>
+  
+  <ul>
+  Snapshots can be sent by <b>Email</b> alltogether after creation. For this purpose the module contains its own Email client. 
+  Before you can use this function you have to install the Perl-module <b>MIME::Lite</b>. On debian systems it can be 
+  installed with command: <br><br>
+   
+   <ul>
+    sudo apt-get install libmime-lite-perl
+   </ul>
+   <br>
+  
+  There are some attributes must be set or can be used optionally. <br>
+  At first the Credentials for access the Email outgoing server must be set by command <b>"set &lt;name&gt; smtpcredentials &lt;user&gt; &lt;password&gt;"</b>.
+  The connection establishment to the server is initially done unencrypted and switches to an encrypted connection if SSL 
+  encryption is available. In that case the transmission of User/Password takes place encrypted too. 
+  If attribute "smtpSSLPort" is defined, the established connection to the Email server will be encrypted immediately.
+  Attributes which are optional are marked: <br><br>
+  
+  <ul>   
+    <table>  
+    <colgroup> <col width=12%> <col width=88%> </colgroup>
+      <tr><td style="vertical-align:top"> <b>snapEmailTxt</b> <td>- <b>Activates the Email shipping.</b> This attribute has the format: <br>
+                                                                  <b>subject => &lt;subject text&gt;, body => &lt;message text&gt; </b><br> 
+                                                                  The placeholder $CAM, $DATE and $TIME can be used. $CAM is 
+                                                                  replaced by the device name, device alias or the name of camera in SVS if alias is not 
+                                                                  defined. $DATE and $TIME are replaced with the current date and time. </td></tr>
+      <tr><td>                            <b>smtpHost</b>     </td><td>- Hostname of outgoing Email server (e.g. securesmtp.t-online.de) </td></tr>
+      <tr><td>                            <b>smtpFrom</b>     </td><td>- Return address (&lt;name&gt@&lt;domain&gt) </td></tr>
+      <tr><td>                            <b>smtpTo</b>       </td><td>- Receiving address(es) (&lt;name&gt@&lt;domain&gt) </td></tr>
+      <tr><td>                            <b>smtpPort</b>     </td><td>- (optional) Port of outgoing Email server (default: 25) </td></tr>
+	  <tr><td>                            <b>smtpCc</b>       </td><td>- (optional) carbon-copy receiving address(es) (&lt;name&gt@&lt;domain&gt) </td></tr>
+	  <tr><td>                            <b>smtpNoUseSSL</b> </td><td>- (optional) "1" if no SSL encryption should be used for Email shipping (default: 0) </td></tr>
+      <tr><td>                            <b>smtpSSLPort</b>  </td><td>- (optional) Port for SSL encrypted connection (default: 465) </td></tr>
+	  <tr><td>                            <b>smtpDebug</b>    </td><td>- (optional) switch on the debugging of SMTP connection </td></tr>
+    </table>
+   </ul>     
+   <br>
+   
+  For further information please see description of the <a href="#SSCamattr">attributes</a>. <br>
+  </ul>
+  <br><br>  
   
   
   <a name="SSCamPolling"></a>
@@ -9131,6 +9482,12 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
 	 If mode "Full" is set, the images are retrieved with their original available resolution. That requires more ressources 
 	 and may slow down the display. By setting attribute "snapGalleryBoost=1" the display may accelerated, because in that case
 	 the images will be retrieved by continuous polling and need only bring to display. </li><br>
+     
+  <a name="snapReadingRotate"></a>
+  <li><b>snapReadingRotate 0...10</b><br>
+    Activates the version control of snapshot readings (default: 0). A consecutive number of readings "LastSnapFilename", 
+    "LastSnapId" and "LastSnapTime" until to the specified value of snapReadingRotate will be created and contain the data
+    of the last X snapshots. </li><br>
   
   <a name="showStmInfoFull"></a>
   <li><b>showStmInfoFull</b><br>
@@ -9187,7 +9544,7 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
     <tr><td><li>CamIP</li>              </td><td>- IP-Address of Camera  </td></tr>
     <tr><td><li>CamLastRec</li>         </td><td>- Path / name of last recording   </td></tr>
     <tr><td><li>CamLastRecId</li>       </td><td>- the ID of last recording   </td></tr>
-    <tr><td><li>CamLastRecTime</li>     </td><td>- date / starttime / endtime of the last recording   </td></tr>
+    <tr><td><li>CamLastRecTime</li>     </td><td>- date / starttime - endtime of the last recording (format depends of global attribute "language")  </td></tr>
     <tr><td><li>CamLiveFps</li>         </td><td>- Frames per second of Live-Stream  </td></tr>
     <tr><td><li>CamLiveMode</li>        </td><td>- Source of Live-View (DS, Camera)  </td></tr>
     <tr><td><li>camLiveQuality</li>     </td><td>- Live-Stream quality set in SVS  </td></tr>
@@ -9226,10 +9583,10 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
     <tr><td><li>Errorcode</li>          </td><td>- error code of last error  </td></tr>
 	<tr><td><li>HomeModeState</li>      </td><td>- HomeMode-state (SVS-version 8.1.0 and above)   </td></tr>
 	<tr><td><li>LastLogEntry</li>       </td><td>- the neweset entry of Surveillance Station Log (only if SVS-device and if attribute pollcaminfoall is set)   </td></tr>
-    <tr><td><li>LastSnapFilename</li>   </td><td>- the filename of the last snapshot   </td></tr>
-    <tr><td><li>LastSnapId</li>         </td><td>- the ID of the last snapshot   </td></tr>    
-    <tr><td><li>LastSnapTime</li>       </td><td>- timestamp of the last snapshot   </td></tr> 
-    <tr><td><li>LastUpdateTime</li>     </td><td>- date / time the last update of readings by "caminfoall"  </td></tr> 
+    <tr><td><li>LastSnapFilename[x]</li></td><td>- the filename of the last snapshot or snapshots   </td></tr>
+    <tr><td><li>LastSnapId[x]</li>      </td><td>- the ID of the last snapshot or snapshots   </td></tr>    
+    <tr><td><li>LastSnapTime[x]</li>    </td><td>- timestamp of the last snapshot or snapshots (format depends of global attribute "language")  </td></tr> 
+    <tr><td><li>LastUpdateTime</li>     </td><td>- date / time the last update of readings by "caminfoall" (format depends of global attribute "language") </td></tr> 
     <tr><td><li>LiveStreamUrl </li>     </td><td>- the livestream URL if stream is started (is shown if <a href="#SSCamattr">attribute</a> "showStmInfoFull" is set) </td></tr> 
     <tr><td><li>Patrols</li>            </td><td>- in Synology Surveillance Station predefined patrols (at PTZ-Cameras)  </td></tr>
     <tr><td><li>PollState</li>          </td><td>- shows the state of automatic polling  </td></tr>    
@@ -9269,6 +9626,7 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
       <li>Start einer Aufnahme</li>
       <li>Stop einer Aufnahme (per Befehl bzw. automatisch nach Ablauf der Aufnahmedauer) </li>
       <li>Auslösen von Schnappschnüssen und optionaler Email-Versand mittels integrierten Email-Client </li>
+      <li>Auslösen von Schnappschnüssen aller definierten Kameras und optionaler gemeinsamer Email-Versand mittels integrierten Email-Client </li>
       <li>Deaktivieren einer Kamera in Synology Surveillance Station</li>
       <li>Aktivieren einer Kamera in Synology Surveillance Station</li>
       <li>Steuerung der Belichtungsmodi Tag, Nacht bzw. Automatisch </li>
@@ -9848,7 +10206,7 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
   <br><br>
   
   <ul>
-  <li><b> set &lt;name&gt; [on [&lt;rectime&gt;] | off] </b> &nbsp;&nbsp;&nbsp;&nbsp;(gilt für CAM)</li><br>
+  <li><b> set &lt;name&gt; [ on [&lt;rectime&gt;] | off ] </b> &nbsp;&nbsp;&nbsp;&nbsp;(gilt für CAM)</li><br>
 
   Der Befehl "set &lt;name&gt; on" startet eine Aufnahme. Die Standardaufnahmedauer beträgt 15 Sekunden. Sie kann mit dem 
   Attribut "rectime" individuell festgelegt werden. 
@@ -10050,55 +10408,49 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
   <li><b> set &lt;name&gt; snap [&lt;Anzahl&gt;] [&lt;Zeitabstand&gt;] [snapEmailTxt:"subject => &lt;Betreff-Text&gt;, body => &lt;Mitteilung-Text&gt;"]</b> &nbsp;&nbsp;&nbsp;&nbsp;(gilt für CAM)</li> <br>
   
   Ein oder mehrere Schnappschüsse werden ausgelöst. Es kann die Anzahl der auszulösenden Schnappschüsse und deren zeitlicher
-  Abstand in Sekunden optional angegeben werden. Ohne Angabe wird ein Schnappschuß getriggert.
-  Es wird die ID und der Filename des letzten Snapshots als Wert der Variable "LastSnapId" bzw. "LastSnapFilename" in den 
-  Readings der Kamera gespeichert. <br>
-  Der Email-Versand wird durch das Setzen des <a href="#SSCamattr">Attributs</a> "snapEmailTxt" eingeschaltet. Der Text
-  im Attribut "snapEmailTxt" kann durch die Spezifikation des optionalen "snapEmailTxt:"-Tags, wie oben gezeigt, temporär
-  überschrieben bzw. geändert werden. <br><br>
+  Abstand in Sekunden optional angegeben werden. Ohne Angabe wird ein Schnappschuß getriggert. <br>
+  Es wird die ID und der Filename des letzten Snapshots als Wert der Readings "LastSnapId" bzw. "LastSnapFilename" in  
+  der Kamera gespeichert. <br>
+  Um die Daten der letzen 1-10 Schnappschüsse zu versionieren, kann das <a href="#SSCamattr">Attribut</a> "snapReadingRotate"
+  verwendet werden.
+  <br><br>
+  Ein <b>Email-Versand</b> der Schnappschüsse kann durch Setzen des <a href="#SSCamattr">Attributs</a> "snapEmailTxt" aktiviert
+  werden. Zuvor ist der Email-Versand, wie im Abschnitt <a href="#SSCamEmail">Einstellung Email-Versand</a> beschrieben,
+  einzustellen. (Für weitere Informationen "<b>get &lt;name&gt; versionNotes 7</b>" ausführen) <br>
+  Der Text im Attribut "snapEmailTxt" kann durch die Spezifikation des optionalen "snapEmailTxt:"-Tags, wie oben 
+  gezeigt, temporär überschrieben bzw. geändert werden. <br><br>
   
-  <b>Email-Versand </b> <br><br>
-  Die Schnappschüsse können nach der Erstellung per <b>Email</b> gemeinsam versendet werden. Dazu enthält das Modul einen 
-  eigenen Email-Client. 
-  Zur Verwendung dieser Funktion muss das Perl-Modul <b>MIME::Lite</b> installiert sein. Auf Debian-System kann 
-  es mit <br><br>
-   
-   <ul>
-    sudo apt-get install libmime-lite-perl
-   </ul>
-   <br>
-   
-  installiert werden. <br><br>
+  <b>Beispiele:</b>
+  <pre>
+    set &lt;name&gt; snap 4 
+    set &lt;name&gt; snap 3 3 snapEmailTxt:"subject => Bewegungsalarm $CAM, body => Eine Bewegung wurde am Carport registriert"
+  </pre>
+  </ul>
+  <br><br>
   
-  Für die Verwendung des Email-Versands müssen einige Attribute gesetzt oder können optional genutzt werden. <br>
-  Die Credentials für den Zugang zum Email-Server müssen mit dem Befehl <b>"set &lt;name&gt; smtpcredentials &lt;user&gt; &lt;password&gt;"</b>
-  gesetzt werden. Der Verbindungsaufbau zum Postausgangsserver erfolgt initial unverschüsselt und wechselt zu einer verschlüsselten
-  Verbindung wenn SSL zur Verfügung steht. In diesem Fall erfolgt auch die Übermittlung von User/Password verschlüsselt.
-  Ist das Attribut "smtpSSLPort" definiert, erfolgt der Verbindungsaufbau zum Email-Server sofort verschlüsselt.
-  Optionale Attribute sind gekennzeichnet: <br><br>
+  <ul>
+  <li><b> set &lt;name&gt; snapCams [&lt;Anzahl&gt;] [&lt;Zeitabstand&gt;] [CAM:"&lt;Kamera&gt;, &lt;Kamera&gt, ..."]</b> &nbsp;&nbsp;&nbsp;&nbsp;(gilt für SVS)</li> <br>
   
-  <ul>   
-    <table>  
-    <colgroup> <col width=12%> <col width=88%> </colgroup>
-      <tr><td style="vertical-align:top"> <b>snapEmailTxt</b> <td>- Aktiviert den Email-Versand. Die Eingabe hat die Form: <br>
-                                                                  <code>subject => &lt;Betreff-Text&gt;, body => &lt;Mitteilung-Text&gt;</code><br>
-                                                                  Es können die Platzhalter $CAM, $DATE und $TIME verwendet werden. $CAM wird 
-                                                                  durch den Device-Alias bzw. den Namen der Kamera in der SVS
-                                                                  ersetzt falls der Device-Alias nicht gesetzt ist. 
-                                                                  $DATE und $TIME werden durch das aktuelle Datum und Zeit ersetzt.</td></tr>
-      <tr><td>                            <b>smtpHost</b>     </td><td>- Hostname oder IP-Adresse des Postausgangsservers (z.B. securesmtp.t-online.de) </td></tr>
-      <tr><td>                            <b>smtpFrom</b>     </td><td>- Absenderadresse (&lt;name&gt@&lt;domain&gt) </td></tr>
-      <tr><td>                            <b>smtpTo</b>       </td><td>- Empfängeradresse(n) (&lt;name&gt@&lt;domain&gt) </td></tr>
-      <tr><td>                            <b>smtpPort</b>     </td><td>- (optional) Port des Postausgangsservers (default: 25) </td></tr>
-	  <tr><td>                            <b>smtpCc</b>       </td><td>- (optional) Carbon-Copy Empfängeradresse(n) (&lt;name&gt@&lt;domain&gt) </td></tr>
-	  <tr><td>                            <b>smtpNoUseSSL</b> </td><td>- (optional) "1" wenn kein SSL beim Email-Versand verwendet werden soll (default: 0) </td></tr>
-	  <tr><td>                            <b>smtpSSLPort</b>  </td><td>- (optional) SSL-Port des Postausgangsservers (default: 465) </td></tr>
-	  <tr><td>                            <b>smtpDebug</b>    </td><td>- (optional) zum Debugging der SMTP-Verbindung setzen </td></tr>
-    </table>
-   </ul>     
-   <br>
-   
-  Zur näheren Erläuterung siehe Beschreibung der <a href="#SSCamattr">Attribute</a>. <br>
+  Ein oder mehrere Schnappschüsse der angegebenen Kamera-Devices werden ausgelöst. Sind keine Kamera-Devices angegeben, 
+  werden die Schnappschüsse bei allen in FHEM definierten Kamera-Devices getriggert.  
+  Optional kann die Anzahl der auszulösenden Schnappschüsse (default: 1) und deren zeitlicher Abstand in Sekunden
+  (default: 2) angegeben werden. <br>
+  Es wird die ID und der Filename des letzten Snapshots als Wert der Readings "LastSnapId" bzw. "LastSnapFilename"  
+  der entsprechenden Kamera gespeichert. <br><br>
+  Ein <b>Email-Versand</b> der Schnappschüsse kann durch Setzen des <a href="#SSCamattr">Attributs</a> <b>"snapEmailTxt"</b> im 
+  SVS-Device <b>UND</b> in den Kamera-Devices, deren Schnappschüsse versendet werden sollen, aktiviert werden. 
+  Bei Kamera-Devices die kein Attribut "snapEmailTxt" gesetzt haben, werden die Schnappschüsse ausgelöst, aber nicht versendet.
+  Zuvor ist der Email-Versand, wie im Abschnitt <a href="#SSCamEmail">Einstellung Email-Versand</a> beschrieben,
+  einzustellen. (Für weitere Informationen "<b>get &lt;name&gt; versionNotes 7</b>" ausführen) <br>
+  Es wird ausschließlich der im Attribut "snapEmailTxt" des SVS-Devices hinterlegte Email-Text in der erstellten Email 
+  verwendet. Der Text im Attribut "snapEmailTxt" der einzelnen Kameras wird ignoriert !! <br><br>
+  
+  <b>Beispiele:</b>
+  <pre>
+    set &lt;name&gt; snapCams 4 
+    set &lt;name&gt; snapCams 3 3 CAM:"CamHE1, CamCarport"
+  </pre>
+  
   </ul>
   <br><br>
   
@@ -10349,10 +10701,61 @@ http(s)://&lt;hostname&gt;&lt;port&gt;/webapi/entry.cgi?api=SYNO.SurveillanceSta
   
   </ul>
   <br><br>
-
+  
+  <a name="SSCamEmail"></a>
+  <b>Einstellung Email-Versand </b> <br><br>
+  <ul>
+  Schnappschüsse können nach der Erstellung per <b>Email</b> gemeinsam versendet werden. Dazu enthält das Modul einen 
+  eigenen Email-Client. 
+  Zur Verwendung dieser Funktion muss das Perl-Modul <b>MIME::Lite</b> installiert sein. Auf Debian-Systemen kann 
+  es mit <br><br>
+   
+   <ul>
+    sudo apt-get install libmime-lite-perl
+   </ul>
+   <br>
+   
+  installiert werden. <br><br>
+  
+  Für die Verwendung des Email-Versands müssen einige Attribute gesetzt oder können optional genutzt werden. <br>
+  Die Credentials für den Zugang zum Email-Server müssen mit dem Befehl <b>"set &lt;name&gt; smtpcredentials &lt;user&gt; &lt;password&gt;"</b>
+  hinterlegt werden. Der Verbindungsaufbau zum Postausgangsserver erfolgt initial unverschüsselt und wechselt zu einer verschlüsselten
+  Verbindung wenn SSL zur Verfügung steht. In diesem Fall erfolgt auch die Übermittlung von User/Password verschlüsselt.
+  Ist das Attribut "smtpSSLPort" definiert, erfolgt der Verbindungsaufbau zum Email-Server sofort verschlüsselt. 
+  <br><br>
+  
+  Optionale Attribute sind gekennzeichnet: <br><br>
+  
+  <ul>   
+    <table>  
+    <colgroup> <col width=12%> <col width=88%> </colgroup>
+      <tr><td style="vertical-align:top"> <b>snapEmailTxt</b> <td>- <b>Aktiviert den Email-Versand</b>. Das Attribut hat das Format: <br>
+                                                                  <ul>
+                                                                  <code>subject => &lt;Betreff-Text&gt;, body => &lt;Mitteilung-Text&gt;</code><br>
+                                                                  </ul>
+                                                                  Es können die Platzhalter $CAM, $DATE und $TIME verwendet werden. $CAM wird 
+                                                                  durch den Device-Namen, Device-Alias bzw. den Namen der Kamera in der SVS
+                                                                  ersetzt falls der Device-Alias nicht gesetzt ist. 
+                                                                  $DATE und $TIME werden durch das aktuelle Datum und Zeit ersetzt.</td></tr>
+      <tr><td>                            <b>smtpHost</b>     </td><td>- Hostname oder IP-Adresse des Postausgangsservers (z.B. securesmtp.t-online.de) </td></tr>
+      <tr><td>                            <b>smtpFrom</b>     </td><td>- Absenderadresse (&lt;name&gt@&lt;domain&gt) </td></tr>
+      <tr><td>                            <b>smtpTo</b>       </td><td>- Empfängeradresse(n) (&lt;name&gt@&lt;domain&gt) </td></tr>
+      <tr><td>                            <b>smtpPort</b>     </td><td>- (optional) Port des Postausgangsservers (default: 25) </td></tr>
+	  <tr><td>                            <b>smtpCc</b>       </td><td>- (optional) Carbon-Copy Empfängeradresse(n) (&lt;name&gt@&lt;domain&gt) </td></tr>
+	  <tr><td>                            <b>smtpNoUseSSL</b> </td><td>- (optional) "1" wenn kein SSL beim Email-Versand verwendet werden soll (default: 0) </td></tr>
+	  <tr><td>                            <b>smtpSSLPort</b>  </td><td>- (optional) SSL-Port des Postausgangsservers (default: 465) </td></tr>
+	  <tr><td>                            <b>smtpDebug</b>    </td><td>- (optional) zum Debugging der SMTP-Verbindung setzen </td></tr>
+    </table>
+   </ul>     
+   <br>
+   
+  Zur näheren Erläuterung siehe Beschreibung der <a href="#SSCamattr">Attribute</a>. <br>
+  </ul>
+  <br><br>
+  
   <a name="SSCamPolling"></a>
   <b>Polling der Kamera/SVS-Eigenschaften:</b><br><br>
-
+  <ul>
   Die Abfrage der Kameraeigenschaften erfolgt automatisch, wenn das Attribut "pollcaminfoall" (siehe Attribute) mit einem Wert &gt; 10 gesetzt wird. <br>
   Per Default ist das Attribut "pollcaminfoall" nicht gesetzt und das automatische Polling nicht aktiv. <br>
   Der Wert dieses Attributes legt das Intervall der Abfrage in Sekunden fest. Ist das Attribut nicht gesetzt oder &lt; 10 wird kein automatisches Polling <br>
@@ -10386,8 +10789,9 @@ http(s)://&lt;hostname&gt;&lt;port&gt;/webapi/entry.cgi?api=SYNO.SurveillanceSta
 
   Sind mehrere Kameras in SSCam definiert, sollte "pollcaminfoall" nicht bei allen Kameras auf exakt den gleichen Wert gesetzt werden um Verarbeitungsengpässe <br>
   und dadurch versursachte potentielle Fehlerquellen bei der Abfrage der Synology Surveillance Station zu vermeiden. <br>
-  Ein geringfügiger Unterschied zwischen den Pollingintervallen der definierten Kameras von z.B. 1s kann bereits als ausreichend angesehen werden. <br><br> 
-
+  Ein geringfügiger Unterschied zwischen den Pollingintervallen der definierten Kameras von z.B. 1s kann bereits als ausreichend angesehen werden. 
+  </ul>
+  <br><br> 
 
 <a name="SSCaminternals"></a>
 <b>Internals</b> <br><br>
@@ -10702,7 +11106,13 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
 	 Im Modus "Full" wird die original vorhandene Auflösung der Images abgerufen. Dies erfordert mehr Ressourcen und kann die 
 	 Anzeige verlangsamen. Mit "snapGalleryBoost=1" kann die Ausgabe beschleunigt werden, da in diesem Fall die Aufnahmen über 
 	 Polling abgerufen und nur noch zur Anzeige gebracht werden. </li><br>
-	
+
+  <a name="snapReadingRotate"></a>
+  <li><b>snapReadingRotate 0...10</b><br>
+    Aktiviert die Versionierung von Schnappschußreadings (default: 0). Es wird eine fortlaufende Nummer der Readings 
+    "LastSnapFilename", "LastSnapId" und "LastSnapTime" bis zum eingestellten Wert von snapReadingRotate erzeugt und enthält 
+    die Daten der letzten X Schnappschüsse. </li><br>
+    
   <a name="showStmInfoFull"></a>
   <li><b>showStmInfoFull</b><br>
     zusaätzliche Streaminformationen wie LiveStreamUrl, StmKeyUnicst, StmKeymjpegHttp werden 
@@ -10758,7 +11168,7 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
     <tr><td><li>CamIP</li>              </td><td>- IP-Adresse der Kamera  </td></tr>
     <tr><td><li>CamLastRec</li>         </td><td>- Pfad / Name der letzten Aufnahme   </td></tr>
     <tr><td><li>CamLastRecId</li>       </td><td>- die ID der letzten Aufnahme   </td></tr>
-    <tr><td><li>CamLastRecTime</li>     </td><td>- Datum / Startzeit - Stopzeit der letzten Aufnahme   </td></tr>
+    <tr><td><li>CamLastRecTime</li>     </td><td>- Datum / Startzeit - Stopzeit der letzten Aufnahme (Format abhängig vom global Attribut "language")  </td></tr>
     <tr><td><li>CamLiveFps</li>         </td><td>- Frames pro Sekunde des Live-Streams  </td></tr>    
     <tr><td><li>CamLiveMode</li>        </td><td>- Quelle für Live-Ansicht (DS, Camera)  </td></tr>
     <tr><td><li>camLiveQuality</li>     </td><td>- in SVS eingestellte Live-Stream Qualität  </td></tr>
@@ -10797,10 +11207,10 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
     <tr><td><li>Errorcode</li>          </td><td>- Fehlercode des letzten Fehlers   </td></tr>
 	<tr><td><li>HomeModeState</li>      </td><td>- HomeMode-Status (ab SVS-Version 8.1.0)   </td></tr>
 	<tr><td><li>LastLogEntry</li>       </td><td>- der neueste Eintrag des Surveillance Station Logs (nur SVS-Device und wenn Attribut pollcaminfoall gesetzt)   </td></tr>
-    <tr><td><li>LastSnapFilename</li>   </td><td>- der Filename des letzten Schnapschusses   </td></tr>
-    <tr><td><li>LastSnapId</li>         </td><td>- die ID des letzten Schnapschusses   </td></tr>
-	<tr><td><li>LastSnapTime</li>       </td><td>- Zeitstempel des letzten Schnapschusses   </td></tr>
-    <tr><td><li>LastUpdateTime</li>     </td><td>- Datum / Zeit der letzten Aktualisierung durch "caminfoall" </td></tr> 
+    <tr><td><li>LastSnapFilename[x]</li></td><td>- der Filename des/der letzten Schnapschüsse   </td></tr>
+    <tr><td><li>LastSnapId[x]</li>      </td><td>- die ID des/der letzten Schnapschüsse   </td></tr>
+	<tr><td><li>LastSnapTime[x]</li>    </td><td>- Zeitstempel des/der letzten Schnapschüsse (Format abhängig vom global Attribut "language") </td></tr>
+    <tr><td><li>LastUpdateTime</li>     </td><td>- Datum / Zeit der letzten Aktualisierung durch "caminfoall" (Format abhängig vom global Attribut "language")</td></tr> 
     <tr><td><li>LiveStreamUrl </li>     </td><td>- die LiveStream-Url wenn der Stream gestartet ist. (<a href="#SSCamattr">Attribut</a> "showStmInfoFull" muss gesetzt sein) </td></tr> 
     <tr><td><li>Patrols</li>            </td><td>- in Surveillance Station voreingestellte Überwachungstouren (bei PTZ-Kameras)  </td></tr>
     <tr><td><li>PollState</li>          </td><td>- zeigt den Status des automatischen Pollings an  </td></tr>

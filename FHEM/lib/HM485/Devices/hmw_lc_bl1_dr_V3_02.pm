@@ -191,10 +191,11 @@ our %definition = (
 				"channel_field" => 10,
 				"direction" => "to_device",
 				"parameter" => {
-					"index" => 11.0,
-					"param" => "level",
-					"size" => 1.0,
-					"type" => "integer"
+					"11.0" => {
+						"param" => "level",
+						"size" => 1.0,
+						"type" => "integer"
+					}
 				},
 				"type" => 0x78
 			},
@@ -202,10 +203,11 @@ our %definition = (
 				"channel_field" => 11,
 				"direction" => "to_device",
 				"parameter" => {
-					"index" => 12.0,
-					"param" => "inhibit",
-					"size" => 1.0,
-					"type" => "integer"
+					"12.0" => {
+						"param" => "inhibit",
+						"size" => 1.0,
+						"type" => "integer"
+					}
 				},
 				"type" => 0x6C
 			},
@@ -213,10 +215,11 @@ our %definition = (
 				"channel_field" => 10,
 				"direction" => "to_device",
 				"parameter" => {
-					"const_value" => 201,
-					"index" => 11.0,
-					"size" => 1.0,
-					"type" => "integer"
+					"11.0" => {
+						"const_value" => 201,
+						"size" => 1.0,
+						"type" => "integer"
+					}
 				},
 				"type" => 0x78
 			}

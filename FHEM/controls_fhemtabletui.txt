@@ -7,7 +7,7 @@ DIR www/tablet/lib/highcharts/graphics
 DIR www/tablet/lib/highcharts/themes
 DIR www/tablet/fonts
 UPD 2018-09-27_07:35:03 705403 www/tablet/icons_table.html
-UPD 2018-09-04_21:25:28 2646 www/tablet/ftui_snippet_tester.html
+UPD 2019-01-18_00:43:55 3742 www/tablet/ftui_snippet_tester.html
 UPD 2017-02-11_14:27:26 1079 www/tablet/css/ftui_medialist.css
 UPD 2018-09-21_20:59:49 6600 www/tablet/css/ftui_chart.css
 UPD 2017-09-17_10:30:03 647 www/tablet/css/ftui_controller.css
@@ -22,13 +22,13 @@ UPD 2018-04-02_23:20:11 2826 www/tablet/css/fhem-blue-ui.css
 UPD 2018-04-02_23:22:10 2658 www/tablet/css/fhem-green-ui.css
 UPD 2017-02-11_14:27:26 442 www/tablet/css/ftui_range.css
 UPD 2018-04-03_01:41:38 6652 www/tablet/css/fhem-darkblue-ui.css
-UPD 2018-10-22_22:59:40 64719 www/tablet/css/fhem-tablet-ui.css
+UPD 2019-01-17_23:40:50 66549 www/tablet/css/fhem-tablet-ui.css
 UPD 2017-02-11_14:27:26 2049 www/tablet/css/ftui-bright-mint-ui.css
 UPD 2017-06-13_20:19:36 6936 www/tablet/css/ftui_weekprofile.css
 UPD 2017-10-03_08:03:02 1132 www/tablet/css/ftui_checklist.css
 UPD 2018-04-05_17:36:29 1637 www/tablet/css/ftui_spinner.css
 UPD 2017-02-05_13:50:40 6916 www/tablet/css/fhem-tablet-ui-wdtimer.css
-UPD 2018-10-22_22:59:44 48574 www/tablet/css/fhem-tablet-ui.min.css
+UPD 2019-01-17_23:43:48 50065 www/tablet/css/fhem-tablet-ui.min.css
 UPD 2018-01-21_14:54:12 1113 www/tablet/js/widget_include.js
 UPD 2018-01-21_14:49:42 1769 www/tablet/js/widget_button.js
 UPD 2018-03-14_00:09:15 3530 www/tablet/js/widget_multistatebutton.js
@@ -42,7 +42,7 @@ UPD 2018-04-02_22:16:32 9888 www/tablet/js/widget_volume.js
 UPD 2018-01-21_14:51:58 2931 www/tablet/js/widget_example.js
 UPD 2018-11-21_21:34:48 5290 www/tablet/js/widget_checkbox.js
 UPD 2018-10-01_18:04:53 13743 www/tablet/js/widget_simplechart.js
-UPD 2017-12-19_10:29:00 11044 www/tablet/js/widget_link.js
+UPD 2019-01-15_00:34:52 10775 www/tablet/js/widget_link.js
 UPD 2018-01-13_16:41:02 3312 www/tablet/js/widget_colorwheel.js
 UPD 2018-10-19_11:15:31 3096 www/tablet/js/widget_svgplot.js
 UPD 2018-10-01_18:13:16 4777 www/tablet/js/widget_klimatrend.js

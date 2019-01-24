@@ -144,8 +144,8 @@ DebianMail
  my $ret = "";
  my $sender = 'fhem@bauschlicher.de'; 
  my $konto = 'smtp@bauschlicher.de';
- my $passwrd = 'sm4|8Qtp12z';
- my $provider = '81.169.145.133';
+ my $passwrd = 'sMtP1m4|8<QTp2z!';
+ my $provider = 'smtp.strato.de';
  my $charSet = 'utf-8';
  
  Log 3, "sendEmail RCP: $rcpt";
@@ -314,7 +314,7 @@ shadowingAction($$) {
 			$strElType = InternalVal($strEl,"TYPE","");
 			if (($dependencyDevice ne "null") && ($dependencyDevice ne "unused") && ($dependencyValue ne "null") && ($dependencyValue ne "unused")){ 
 				Log 3, "\$dependencyDevice=$dependencyDevice - Value=Value($dependencyDevice)";
-				if (Value($dependencyDevice) eq "open"){
+				if ((Value($dependencyDevice) eq "open") || (Value($dependencyDevice) eq "sensor_closed")){
 					$actionValue = $dependencyValue;
 					Log 3, "set \$dependencyValue=$dependencyValue";
 					if (($targetAction eq "1")){mySendMail('marc@bauschlicher.de',"ACHTUNG shadowingControl: $strEl wurde nicht vollständig geschlossen","Grund geöffnete Tür\n\$dependencyDevice=$dependencyDevice");}
@@ -1137,7 +1137,7 @@ my $camImage = "./cache/ringing".rand().".jpg";
 #Log 3, "camImage=$camImage";
 system("wget -O $camImage http://192.168.146.24/cgi-bin/viewer/video.jpg?resolution=1280x1024");
 
-mySendMessage("1","$camImage",0);
+mySendMessage("1","$camImage",1);
 
 #system("rm $camImage");
 }

@@ -1,5 +1,5 @@
 ##############################################
-# $Id: HMConfig.pm 18237 2019-01-13 13:06:19Z martinp876 $
+# $Id: HMConfig.pm 18284 2019-01-16 18:56:58Z martinp876 $
 # CUL HomeMatic device configuration data
 
 #####################################################
@@ -336,7 +336,6 @@ my $K_actDetID = '000000'; # id of actionDetector
 );
 
 # generate a reverse search hash
-%culHmModel2Id;
 $culHmModel2Id{$culHmModel{$_}{name}} = $_ foreach (keys %culHmModel);
 
 foreach my $al (keys %culHmModel){ # duplicate entries for alias devices

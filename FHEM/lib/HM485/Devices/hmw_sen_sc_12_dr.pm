@@ -84,10 +84,11 @@ our %definition = (
 				"direction" => "from_device",
 				"event" => true,
 				"parameter" => {
-					"index" => 11.0,
-					"param" => "state",
-					"size" => 1.0,
-					"type" => "integer"
+					"11.0" => {
+						"param" => "state",
+						"size" => 1.0,
+						"type" => "integer"
+					}
 				},
 				"type" => 0x69
 			},

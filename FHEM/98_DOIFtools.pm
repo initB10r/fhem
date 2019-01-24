@@ -1,5 +1,5 @@
 #############################################
-# $Id: 98_DOIFtools.pm 18206 2019-01-10 18:18:10Z Ellert $
+# $Id: 98_DOIFtools.pm 18333 2019-01-19 09:13:38Z Ellert $
 # 
 # This file is part of fhem.
 # 
@@ -791,8 +791,6 @@ sub DOIFtoolsNextTimer {
   }
   my $tdays = "";
   $tdays = $tn ? DOIF_weekdays($defs{$tn},$weekd) : $weekd;
-  Log 1, "$tn $tdays";
-  Log 1, "$tn ".join("",@DOIFtools_we);
   $tdays =~/([0-9])/;
   return $tstr if (length($1) == 0); 
   my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($timer);

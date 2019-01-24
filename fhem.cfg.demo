@@ -7,7 +7,7 @@ attr global sendStatistics never
 attr global statefile ./demolog/fhem.save
 attr global verbose 3
 
-define WEB FHEMWEB 8083 global
+define WEB FHEMWEB 8093 global
 attr WEB JavaScripts codemirror/fhem_codemirror.js
 attr WEB defaultRoom Light
 attr WEB iconPath openautomation:fhemSVG:default

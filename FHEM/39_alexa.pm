@@ -1,5 +1,5 @@
 
-# $Id: 39_alexa.pm 18239 2019-01-13 14:11:13Z justme1968 $
+# $Id: 39_alexa.pm 18283 2019-01-16 16:58:23Z justme1968 $
 
 package main;
 
@@ -9,6 +9,10 @@ use warnings;
 use JSON;
 use Data::Dumper;
 
+use POSIX;
+use Socket;
+
+use vars qw(%selectlist);
 use vars qw(%modules);
 use vars qw(%defs);
 use vars qw(%attr);
@@ -28,6 +32,7 @@ alexa_Initialize($)
   $hash->{DefFn}    = "alexa_Define";
   $hash->{NotifyFn} = "alexa_Notify";
   $hash->{UndefFn}  = "alexa_Undefine";
+  $hash->{DelayedShutdownFn} = "alexa_DelayedShutdownFn";
   $hash->{ShutdownFn} = "alexa_Shutdown";
   $hash->{SetFn}    = "alexa_Set";
   $hash->{GetFn}    = "alexa_Get";
@@ -168,12 +173,27 @@ alexa_Undefine($$)
 
   if( $hash->{PID} ) {
     $hash->{undefine} = 1;
+    $hash->{undefine} = $hash->{CL} if( $hash->{CL} );
     alexa_stopAlexaFHEM($hash);
 
     return "$name will be deleted after alexa-fhem has stopped or after 5 seconds. whatever comes first.";
   }
 
   delete $modules{$hash->{TYPE}}{defptr};
+
+  return undef;
+}
+sub
+alexa_DelayedShutdownFn($)
+{
+  my ($hash) = @_;
+
+  if( $hash->{PID} ) {
+    $hash->{shutdown} = 1;
+    alexa_stopAlexaFHEM($hash);
+
+    return 1;
+  }
 
   return undef;
 }
@@ -272,7 +292,7 @@ alexa_Read($)
 
   if( $hash->{log} ) {
     my @t = localtime(gettimeofday());
-    my $logfile = ResolveDateWildcards(AttrVal($name, 'alexaFHEM-log', 'FHEM' ), @t);
+    my $logfile = ResolveDateWildcards($hash->{logfile}, @t);
     alexa_openLogfile($hash, $logfile) if( $hash->{currentlogfile} ne $logfile );
    }
 
@@ -281,6 +301,21 @@ alexa_Read($)
   } else {
     $buf =~ s/\n$//s;
     Log3 $name, 3, "$name: $buf";
+  }
+
+  if( $buf =~ m/^\*\*\* ([^\s]+) (.+)/ ) {
+    my $service = $1;
+    my $message = $2;
+
+    if( $service eq 'FHEM:' ) {
+      if( $message =~ m/^connection failed(: (.*))?/ ) {
+        my $code = $2;
+
+        $hash->{reason} = 'failed to connect to fhem';
+        $hash->{reason} .= ": $code" if( $code );
+        alexa_stopAlexaFHEM($hash);
+      }
+    }
   }
 
   return undef;
@@ -437,9 +472,22 @@ alexa_configDefault($;$)
     $conf->{connections}[0]->{filter} = 'alexaName=..*' if( !$conf->{connections}[0]->{filter} );
     $conf->{connections}[0]->{uid} = $< if( $conf->{sshproxy} );
 
-    if( my $web = $defs{WEB} ) {
-      $conf->{connections}[0]->{port} = $web->{PORT};
-      $conf->{connections}[0]->{webname} = AttrVal( 'WEB', 'webname', 'fhem' );
+    my $web = $defs{WEB};
+    if( !$web ) {
+      if( my @names = devspec2array('TYPE=FHEMWEB:FILTER=TEMPORARY!=1') ) {
+        $web = $defs{$names[0]} if( defined($defs{$names[0]}) );
+
+        Log3 $name, 4, "$name: using $names[0] as FHEMWEB device." if( $web );
+      }
+    } else {
+      Log3 $name, 4, "$name: using WEB as FHEMWEB device." if( $web );
+    }
+
+    if( $web ) {
+      $conf->{connections}[0]->{port} = $web->{PORT} if( !$conf->{connections}[0]->{port} );
+      $conf->{connections}[0]->{webname} = AttrVal( 'WEB', 'webname', 'fhem' ) if( !$conf->{connections}[0]->{webname} );
+    } else {
+      Log3 $name, 2, "$name: no FHEMWEB device found. please adjust config file manualy.";
     }
 
     $json = JSON->new->pretty->utf8->encode($conf);
@@ -470,6 +518,8 @@ alexa_startAlexaFHEM($)
   my ($hash) = @_;
   my $name = $hash->{NAME};
 
+  return undef if( !$init_done );
+
   my $key = ReadingsVal($name, 'alexaFHEM.skillRegKey', undef);
   if( !$key ) {
     my $key = getKeyValue('alexaFHEM.skillRegKey');
@@ -493,11 +543,11 @@ alexa_startAlexaFHEM($)
   #return undef if( ReadingsVal($name, 'alexaFHEM', 'unknown') =~ m/^running/ );
 
   if( $hash->{PID} ) {
-    $hash->{start} = 1;
+    $hash->{restart} = 1;
     alexa_stopAlexaFHEM($hash);
     return undef;
   }
-  delete $hash->{start};
+  delete $hash->{restart};
 
   my $ssh_cmd;
   if( my $host = AttrVal($name, 'alexaFHEM-host', undef ) ) {
@@ -536,9 +586,8 @@ alexa_startAlexaFHEM($)
       close $parent;
       close $child;
 
-      my $msg = "$name: Cannot fork: $!";
-      Log 1, $msg;
-      return $msg;
+      Log3 $name, 1, "$name: Cannot fork: $!";
+      return;
     }
 
     if( $pid ) {
@@ -606,7 +655,13 @@ alexa_startAlexaFHEM($)
         $cmd .= " $params";
       }
 
-      Log3 $name, 2, "$name: starting alexa-fhem: $cmd";
+      if( AttrVal( $name, 'verbose', 3 ) == 5 ) {
+        Log3 $name, 2, "$name: starting alexa-fhem: $cmd";
+      } else {
+        my $msg = $cmd;
+        $msg =~ s/-a\s+[^:]+:[^\s]+/-a xx:xx/g;
+        Log3 $name, 2, "$name: starting alexa-fhem: $msg";
+      }
 
       exec split( ' ', $cmd ) or Log3 $name, 1, "exec failed";
 
@@ -666,17 +721,36 @@ alexa_stoppedAlexaFHEM($)
   delete($hash->{FD});
   delete($selectlist{$name});
 
+  alexa_closeLogfile($hash) if( $hash->{log} );
+
   Log3 $name, 3, "$name: alexaFHEM stopped";
   $hash->{LAST_STOP} = FmtDateTime( gettimeofday() );
-  readingsSingleUpdate($hash, 'alexaFHEM', 'stopped', 1 );
+
+  if( $hash->{reason} ) {
+    readingsSingleUpdate($hash, 'alexaFHEM', "stopped; $hash->{reason}", 1 );
+    delete $hash->{reason};
+  } else {
+    readingsSingleUpdate($hash, 'alexaFHEM', 'stopped', 1 );
+  }
 
   if( $hash->{undefine} ) {
+    my $cl = $hash->{undefine};
+
     delete $hash->{undefine};
     CommandDelete(undef, $name);
     Log3 $name, 2, "$name: alexaFHEM deleted";
 
-   } elsif( $hash->{start} ) {
+    if( ref($cl) eq 'HASH' && $cl->{canAsyncOutput} ) {
+      asyncOutput( $cl, "$name: alexaFHEM deleted\n" );
+    }
+
+  } elsif( $hash->{shutdown} ) {
+    delete $hash->{shutdown};
+    CancelDelayedShutdown($name);
+
+  } elsif( $hash->{restart} ) {
     alexa_startAlexaFHEM($hash)
+
   }
 }
 
@@ -685,7 +759,7 @@ alexa_Set($$@)
 {
   my ($hash, $name, $cmd, @args) = @_;
 
-  my $list = "add:noArg createDefaultConfig:noArg reload:noArg restart:noArg skillId start:noArg stop:noArg";
+  my $list = "add createDefaultConfig:noArg reload:noArg restart:noArg skillId start:noArg stop:noArg";
 
   if( $cmd eq 'reload' ) {
     $hash->{".triggerUsed"} = 1;
@@ -767,6 +841,8 @@ alexa_Set($$@)
     return "usage: set $name $cmd <key>" if( !@args );
     my $key = $args[0];
 
+    $hash->{".triggerUsed"} = 1;
+
     $key = alexa_encrypt($key);
     setKeyValue('alexaFHEM.skillRegKey', $key );
     readingsSingleUpdate($hash, 'alexaFHEM.skillRegKey', $key, 1 );
@@ -779,9 +855,37 @@ alexa_Set($$@)
     return "usage: set $name $cmd <key>" if( !@args );
     my $token = $args[0];
 
+    $hash->{".triggerUsed"} = 1;
+
     $token = alexa_encrypt($token);
     setKeyValue('alexaFHEM.bearerToken', $token );
     readingsSingleUpdate($hash, 'alexaFHEM.bearerToken', $token, 1 );
+
+    CommandSave(undef,undef) if( AttrVal( "autocreate", "autosave", 1 ) );
+
+    return undef;
+
+  } elsif( $cmd eq 'clearProxyCredentials' ) {
+    setKeyValue('alexaFHEM.skillRegKey', undef );
+    setKeyValue('alexaFHEM.bearerToken', undef );
+
+    readingsBeginUpdate($hash);
+    readingsBulkUpdate($hash, 'alexaFHEM.skillRegKey', '', 1 );
+    readingsBulkUpdate($hash, 'alexaFHEM.bearerToken', '', 1 );
+    readingsEndUpdate($hash,1);
+
+    CommandSave(undef,undef) if( AttrVal( "autocreate", "autosave", 1 ) );
+
+    FW_directNotify($name, 'clearProxyCredentials');
+
+    return undef;
+
+  } elsif( $cmd eq 'unregister' ) {
+    FW_directNotify($name, 'unregister');
+
+    fhem( "set $name clearProxyCredentials" );
+
+    CommandAttr( undef, '$name disable 1' );
 
     CommandSave(undef,undef) if( AttrVal( "autocreate", "autosave", 1 ) );
 
@@ -1291,6 +1395,10 @@ alexa_Attr($$$)
   } elsif( $attrName eq 'alexaFHEM-log' ) {
     if( $cmd eq "set" && $attrVal && $attrVal ne 'FHEM' ) {
       fhem( "defmod -temporary alexaFHEMlog FileLog $attrVal fakelog" );
+      CommandAttr( undef, 'alexaFHEMlog room hidden' );
+      #if( my $room = AttrVal($name, "room", undef ) ) {
+      #  CommandAttr( undef,"alexaFHEMlog room $room" );
+      #}
     } else {
       fhem( "delete alexaFHEMlog" );
     }
@@ -1357,8 +1465,8 @@ alexa_Attr($$$)
   Notes:
   <ul>
     <li>JSON has to be installed on the FHEM host.</li>
-    <li>HOWTO for public FHEM Connector skill: <a href='https://wiki.fhem.de/wiki/FHEM_Connector'>FHEM_Connector</li>
-    <li>HOWTO for privte skills: <a href='https://wiki.fhem.de/wiki/Alexa-Fhem'>alexa-fhem</li>
+    <li>HOWTO for public FHEM Connector skill: <a href='https://wiki.fhem.de/wiki/FHEM_Connector'>FHEM_Connector</a></li>
+    <li>HOWTO for privte skills: <a href='https://wiki.fhem.de/wiki/Alexa-Fhem'>alexa-fhem</a></li>
   </ul>
 
   <a name="alexa_Set"></a>
@@ -1379,6 +1487,9 @@ alexa_Attr($$$)
     <li>createDefaultConfig<br>
     adds the default config for the sshproxy to the existing config file or creates a new config file. sets the
     alexaFHEM-config attribut if not already set.</li>
+
+    <li>clearProxyCredentials<br>
+    clears all stored sshproxy credentials</li>
     <br>
   </ul>
 

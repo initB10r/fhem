@@ -8,7 +8,11 @@ attr d_rpcBidCos_Wired eventMap /rpcserver on:on/rpcserver off:off/
 attr d_rpcBidCos_Wired group HMCCU
 attr d_rpcBidCos_Wired room HMCCU,System
 attr d_rpcBidCos_Wired stateFormat rpcstate/state
-attr d_rpcBidCos_Wired verbose 2
+attr d_rpcBidCos_Wired verbose 1
+
+# rpcinterfaces neu definieren mit BidCos-Wired
+attr d_ccu rpcinterfaces BidCos-RF,BidCos-Wired,HmIP-RF
+attr d_ccu rpcport 2001,2000,2010
 
 #################################################################################
 # HMW_NSK1_Nebensicherungskasten_IO_12_Sw7
@@ -103,6 +107,10 @@ attr HMW_NSK1_Toroeffner statevals on:true,off:false
 attr HMW_NSK1_Toroeffner substitute STATE!(1|true):on,(0|false):off
 attr HMW_NSK1_Toroeffner webCmd control
 attr HMW_NSK1_Toroeffner widgetOverride control:uzsuToggle,off,on
+define FileLog_HMW_NSK1_Toroeffner FileLog ./log/HMW_NSK1_Toroeffner-%Y.log HMW_NSK1_Toroeffner
+attr FileLog_HMW_NSK1_Toroeffner logtype text
+attr FileLog_HMW_NSK1_Toroeffner room FileLog
+
 
 #Unused
 #define HMW_NSK1_Taster_Unused_01 HMCCUCHN JEQ0311021:1
@@ -258,7 +266,7 @@ attr HMW_VRT1_KlingelTor statedatapoint 8.SENSOR
 attr HMW_VRT1_KlingelTor substitute 8.SENSOR!(1|true):off,(0|false):on
 define FileLog_HMW_VRT1_KlingelTor FileLog ./log/HMW_VRT1_KlingelTor-%Y.log HMW_VRT1_KlingelTor
 attr FileLog_HMW_VRT1_KlingelTor logtype text
-attr FileLog_HMW_VRT1_KlingelTor room FileLog,HMCCU
+attr FileLog_HMW_VRT1_KlingelTor room FileLog
 
 #Unused
 #define HMW_VRT1_Verschluss_Unused_07 HMCCUCHN JEQ0645890:7
@@ -296,6 +304,8 @@ define HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 HMCCUCHN LEQ1286184:0
 attr HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 IODev d_ccu
 attr HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 group HMW_HSK1_Hauptsicherungskasten
 attr HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 room HMCCU
+define FileLog_HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 FileLog ./log/HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0-%Y.log HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0
+attr FileLog_HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 room FileLog
 
 #CHN 1-n
 define HMW_HSK1_KlingelHaus HMCCUCHN LEQ1286184:1
@@ -306,7 +316,7 @@ attr HMW_HSK1_KlingelHaus room HMCCU
 attr HMW_HSK1_KlingelHaus substitute PRESS_SHORT,PRESS_LONG!(1|true):pressed
 define FileLog_HMW_HSK1_KlingelHaus FileLog ./log/HMW_HSK1_KlingelHaus-%Y.log HMW_HSK1_KlingelHaus
 attr FileLog_HMW_HSK1_KlingelHaus logtype text
-attr FileLog_HMW_HSK1_KlingelHaus room FileLog,HMCCU
+attr FileLog_HMW_HSK1_KlingelHaus room FileLog
 
 define HMW_HSK1_BM_Kueche HMCCUCHN LEQ1286184:2
 attr HMW_HSK1_BM_Kueche IODev d_ccu
@@ -320,7 +330,7 @@ attr HMW_HSK1_BM_Kueche room Garten,HMCCU
 attr HMW_HSK1_BM_Kueche stateFormat { ReadingsTimestamp ("HMW_HSK1_BM_Kueche", "pressed", "n/a") }
 attr HMW_HSK1_BM_Kueche substitute PRESS_SHORT,PRESS_LONG!(1|true):pressed
 define FileLog_HMW_HSK1_BM_Kueche FileLog ./log/HMW_HSK1_BM_Kueche-%Y.log HMW_HSK1_BM_Kueche
-attr FileLog_HMW_HSK1_BM_Kueche room FileLog,Garten,HMCCU
+attr FileLog_HMW_HSK1_BM_Kueche room FileLog
 
 define HMW_HSK1_BM_Esszimmer HMCCUCHN LEQ1286184:3
 attr HMW_HSK1_BM_Esszimmer IODev d_ccu
@@ -334,7 +344,7 @@ attr HMW_HSK1_BM_Esszimmer room Garten,HMCCU
 attr HMW_HSK1_BM_Esszimmer stateFormat { ReadingsTimestamp ("HMW_HSK1_BM_Esszimmer", "pressed", "n/a") }
 attr HMW_HSK1_BM_Esszimmer substitute PRESS_SHORT,PRESS_LONG!(1|true):pressed
 define FileLog_HMW_HSK1_BM_Esszimmer FileLog ./log/HMW_HSK1_BM_Esszimmer-%Y.log HMW_HSK1_BM_Esszimmer
-attr FileLog_HMW_HSK1_BM_Esszimmer room FileLog,Garten,HMCCU
+attr FileLog_HMW_HSK1_BM_Esszimmer room FileLog
 
 define HMW_HSK1_BM_Wohnzimmer HMCCUCHN LEQ1286184:4
 attr HMW_HSK1_BM_Wohnzimmer IODev d_ccu
@@ -348,7 +358,7 @@ attr HMW_HSK1_BM_Wohnzimmer room Garten,HMCCU
 attr HMW_HSK1_BM_Wohnzimmer stateFormat { ReadingsTimestamp ("HMW_HSK1_BM_Wohnzimmer", "pressed", "n/a") }
 attr HMW_HSK1_BM_Wohnzimmer substitute PRESS_SHORT,PRESS_LONG!(1|true):pressed
 define FileLog_HMW_HSK1_BM_Wohnzimmer FileLog ./log/HMW_HSK1_BM_Wohnzimmer-%Y.log HMW_HSK1_BM_Wohnzimmer
-attr FileLog_HMW_HSK1_BM_Wohnzimmer room FileLog,Garten,HMCCU
+attr FileLog_HMW_HSK1_BM_Wohnzimmer room FileLog
 
 define HMW_HSK1_BM_Bauerngarten HMCCUCHN LEQ1286184:5
 attr HMW_HSK1_BM_Bauerngarten IODev d_ccu
@@ -362,7 +372,7 @@ attr HMW_HSK1_BM_Bauerngarten room Garten,HMCCU
 attr HMW_HSK1_BM_Bauerngarten stateFormat { ReadingsTimestamp ("HMW_HSK1_BM_Bauerngarten", "pressed", "n/a") }
 attr HMW_HSK1_BM_Bauerngarten substitute PRESS_SHORT,PRESS_LONG!(1|true):pressed
 define FileLog_HMW_HSK1_BM_Bauerngarten FileLog ./log/HMW_HSK1_BM_Bauerngarten-%Y.log HMW_HSK1_BM_Bauerngarten
-attr FileLog_HMW_HSK1_BM_Bauerngarten room FileLog,Garten,HMCCU
+attr FileLog_HMW_HSK1_BM_Bauerngarten room FileLog
 
 define HMW_HSK1_Strahler_Nebeneingang HMCCUCHN LEQ1286184:13
 attr HMW_HSK1_Strahler_Nebeneingang IODev d_ccu
@@ -486,7 +496,7 @@ define HMW_HSK1_BM_Kueche_Notif notify HMW_HSK1_BM_Kueche {\
 attr HMW_HSK1_BM_Kueche_Notif room Garten,HMCCU
 
 define HMW_VRT1_KlingelTor_Notify notify HMW_VRT1_KlingelTor {\
-	if ("$EVENT" eq "on") {;;\
+	if (("$EVENT" eq "on") || ("$EVENT" eq "closed")) {;;\
 		doorBell();;\
 		};;\
 	}

@@ -1,5 +1,5 @@
 ##############################################
-# $Id: 10_MQTT2_DEVICE.pm 18057 2018-12-26 11:06:41Z rudolfkoenig $
+# $Id: 10_MQTT2_DEVICE.pm 18381 2019-01-22 18:29:59Z rudolfkoenig $
 package main;
 
 use strict;
@@ -179,17 +179,21 @@ MQTT2_DEVICE_Parse($$)
       if(!$add) {
         $topic =~ m,.*/([^/]+),;
         $add = ($1 ? $1 : $topic);
+        $add = makeReadingName($add); # Convert non-valid characters to _
       }
+
+      $topic =~ s,([\^\$\[\]()\.\\]),\\$1,g;
 
       for my $ch (@{$cidArr}) {
         my $nn = $ch->{NAME};
         next if(!AttrVal($nn, "autocreate", 1));
         my $rl = AttrVal($nn, "readingList", "");
         $rl .= "\n" if($rl);
-        my $regexpCid = ($cid eq $newCid ? "$cid:" : "");
-        CommandAttr(undef, "$nn readingList $rl${regexpCid}$topic:.* $add");
+        my $regex = ($cid eq $newCid ? "$cid:" : "").$topic.":.*";
+        CommandAttr(undef, "$nn readingList $rl$regex $add")
+                if(index($rl, $regex) == -1);   # Forum #84372
         setReadingsVal($defs{$nn}, "associatedWith", $parentBridge, TimeNow())
-                if($parentBridge);
+                if($parentBridge && $defs{$nn});
       }
       MQTT2_DEVICE_Parse($iodev, $msg);
     }, undef);
@@ -203,7 +207,9 @@ MQTT2_DEVICE_Parse($$)
     return "";
   }
 
-  return keys %fnd;
+  my @ret = keys %fnd;
+  unshift(@ret, "[NEXT]"); # for MQTT_GENERIC_BRIDGE
+  return @ret;
 }
 
 # compatibility: the first version was implemented as MQTT2_JSON and published.
@@ -500,6 +506,8 @@ JSEND
   }
 }
 
+#########################
+# Used for the graphical representation in Bridge devices. See Fn above.
 sub
 MQTT2_DEVICE_nlData($)
 {
@@ -617,7 +625,7 @@ zigbee2mqtt_devStateIcon255($)
 {
   my ($name) = @_;
   return ".*:off:toggle" if(lc(ReadingsVal($name,"state","ON")) eq "off" );
-  my $pct = ReadingsVal($name,"brightness","255");
+  my $pct = ReadingsNum($name,"brightness","255");
   my $s = $pct > 253 ? "on" : sprintf("dim%02d%%",int((1+int($pct/18))*6.25));
   return ".*:$s:off";
 }

@@ -20,9 +20,10 @@
 
 # HMW Lan Gateway
 define HM485_LAN HM485_LAN 192.168.146.14:1000
+setuuid HM485_LAN 5c4868da-f33f-b82c-bc94-749df5ccae457da0
+attr HM485_LAN group System
 attr HM485_LAN hmwId 00000001
 attr HM485_LAN room HMWired,System
-attr HM485_LAN group System
 
 
 #################################################################################
@@ -30,103 +31,127 @@ attr HM485_LAN group System
 #	JEQ0311021
 #
 define HMW_NSK1_Nebensicherungskasten_IO_12_Sw7_0 HM485 00009067
+setuuid HMW_NSK1_Nebensicherungskasten_IO_12_Sw7_0 5c4868da-f33f-b82c-065e-740d76ec67c92198
 attr HMW_NSK1_Nebensicherungskasten_IO_12_Sw7_0 IODev HM485_LAN
-attr HMW_NSK1_Nebensicherungskasten_IO_12_Sw7_0 room HMWired
 attr HMW_NSK1_Nebensicherungskasten_IO_12_Sw7_0 group HMW_NSK1_Nebensicherungskasten
+attr HMW_NSK1_Nebensicherungskasten_IO_12_Sw7_0 room HMWired
 define FileLog_HMW_NSK1_Nebensicherungskasten_IO_12_Sw7_0 FileLog ./log/HMW_NSK1_Nebensicherungskasten_IO_12_Sw7_0-%Y.log HMW_NSK1_Nebensicherungskasten_IO_12_Sw7_0
+setuuid FileLog_HMW_NSK1_Nebensicherungskasten_IO_12_Sw7_0 5c4868da-f33f-b82c-5817-ff94c7e1504988a3
 attr FileLog_HMW_NSK1_Nebensicherungskasten_IO_12_Sw7_0 logtype text
-attr FileLog_HMW_NSK1_Nebensicherungskasten_IO_12_Sw7_0 room HMWired,FileLog
-attr FileLog_HMW_NSK1_Nebensicherungskasten_IO_12_Sw7_0 group FileLog
+attr FileLog_HMW_NSK1_Nebensicherungskasten_IO_12_Sw7_0 room FileLog
 
 define HMW_NSK1_Bewaesserung_Zuweg HM485 00009067_13
+setuuid HMW_NSK1_Bewaesserung_Zuweg 5c4868da-f33f-b82c-d3c9-0c0e0e1de8456dc3
 attr HMW_NSK1_Bewaesserung_Zuweg fm_type smarttogglebutton
+attr HMW_NSK1_Bewaesserung_Zuweg group HMW_NSK1_Nebensicherungskasten,Schalter
 attr HMW_NSK1_Bewaesserung_Zuweg room HMWired,Watering,Garten,Favourites
 attr HMW_NSK1_Bewaesserung_Zuweg subType switch
 attr HMW_NSK1_Bewaesserung_Zuweg wateringOddDays 1
 attr HMW_NSK1_Bewaesserung_Zuweg wateringWhileRaining 0
-attr HMW_NSK1_Bewaesserung_Zuweg group HMW_NSK1_Nebensicherungskasten,Schalter
 
 define HMW_NSK1_Bewaesserung_Hecke_rundherum HM485 00009067_14
+setuuid HMW_NSK1_Bewaesserung_Hecke_rundherum 5c4868da-f33f-b82c-97ee-c89dcf82ca38ca2d
 attr HMW_NSK1_Bewaesserung_Hecke_rundherum fm_type smarttogglebutton
+attr HMW_NSK1_Bewaesserung_Hecke_rundherum group HMW_NSK1_Nebensicherungskasten,Schalter
 attr HMW_NSK1_Bewaesserung_Hecke_rundherum room HMWired,Watering,Garten,Favourites
 attr HMW_NSK1_Bewaesserung_Hecke_rundherum subType switch
 attr HMW_NSK1_Bewaesserung_Hecke_rundherum wateringOddDays 1
 attr HMW_NSK1_Bewaesserung_Hecke_rundherum wateringWhileRaining 0
-attr HMW_NSK1_Bewaesserung_Hecke_rundherum group HMW_NSK1_Nebensicherungskasten,Schalter
 
 define HMW_NSK1_Bewaesserung_Rasen_Terrasse HM485 00009067_15
+setuuid HMW_NSK1_Bewaesserung_Rasen_Terrasse 5c4868da-f33f-b82c-16ff-9d31d5d373e21cad
 attr HMW_NSK1_Bewaesserung_Rasen_Terrasse fm_type smarttogglebutton
+attr HMW_NSK1_Bewaesserung_Rasen_Terrasse group HMW_NSK1_Nebensicherungskasten,Schalter
 attr HMW_NSK1_Bewaesserung_Rasen_Terrasse room HMWired,Watering,Garten,Favourites
 attr HMW_NSK1_Bewaesserung_Rasen_Terrasse subType switch
 attr HMW_NSK1_Bewaesserung_Rasen_Terrasse wateringOddDays 1
 attr HMW_NSK1_Bewaesserung_Rasen_Terrasse wateringWhileRaining 0
-attr HMW_NSK1_Bewaesserung_Rasen_Terrasse group HMW_NSK1_Nebensicherungskasten,Schalter
 
 define HMW_NSK1_Bewaesserung_Bauerngarten HM485 00009067_16
+setuuid HMW_NSK1_Bewaesserung_Bauerngarten 5c4868da-f33f-b82c-92a3-6e18019619f69416
 attr HMW_NSK1_Bewaesserung_Bauerngarten fm_type smarttogglebutton
+attr HMW_NSK1_Bewaesserung_Bauerngarten group HMW_NSK1_Nebensicherungskasten,Schalter
 attr HMW_NSK1_Bewaesserung_Bauerngarten room HMWired,Watering,Garten,Favourites
 attr HMW_NSK1_Bewaesserung_Bauerngarten subType switch
 attr HMW_NSK1_Bewaesserung_Bauerngarten wateringOddDays 1
 attr HMW_NSK1_Bewaesserung_Bauerngarten wateringWhileRaining 0
-attr HMW_NSK1_Bewaesserung_Bauerngarten group HMW_NSK1_Nebensicherungskasten,Schalter
 
 define HMW_NSK1_Bewaesserung_Rasen_Kinder HM485 00009067_17
+setuuid HMW_NSK1_Bewaesserung_Rasen_Kinder 5c4868da-f33f-b82c-afa4-547435933d770ecf
 attr HMW_NSK1_Bewaesserung_Rasen_Kinder fm_type smarttogglebutton
+attr HMW_NSK1_Bewaesserung_Rasen_Kinder group HMW_NSK1_Nebensicherungskasten,Schalter
 attr HMW_NSK1_Bewaesserung_Rasen_Kinder room HMWired,Watering,Garten,Favourites
 attr HMW_NSK1_Bewaesserung_Rasen_Kinder subType switch
 attr HMW_NSK1_Bewaesserung_Rasen_Kinder wateringOddDays 1
 attr HMW_NSK1_Bewaesserung_Rasen_Kinder wateringWhileRaining 0
-attr HMW_NSK1_Bewaesserung_Rasen_Kinder group HMW_NSK1_Nebensicherungskasten,Schalter
 
 define HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus HM485 00009067_18
+setuuid HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus 5c4868da-f33f-b82c-acba-96bb5452966ce918
 attr HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus fm_type smarttogglebutton
+attr HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus group HMW_NSK1_Nebensicherungskasten,Schalter
 attr HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus room HMWired,Watering,Garten,Favourites
 attr HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus subType switch
 attr HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus wateringOddDays 1
 attr HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus wateringWhileRaining 0
-attr HMW_NSK1_Bewaesserung_Beete_rund_ums_Haus group HMW_NSK1_Nebensicherungskasten,Schalter
 
 define HMW_NSK1_Toroeffner HM485 00009067_19
+setuuid HMW_NSK1_Toroeffner 5c4868da-f33f-b82c-824f-c57d35f949632823
 attr HMW_NSK1_Toroeffner alias Toröffner
 attr HMW_NSK1_Toroeffner fm_type smarttogglebutton
+attr HMW_NSK1_Toroeffner group HMW_NSK1_Nebensicherungskasten,Schalter
 attr HMW_NSK1_Toroeffner room HMWired,Favourites
 attr HMW_NSK1_Toroeffner subType switch
-attr HMW_NSK1_Toroeffner group HMW_NSK1_Nebensicherungskasten,Schalter
+define FileLog_HMW_NSK1_Toroeffner FileLog ./log/HMW_NSK1_Toroeffner-%Y.log HMW_NSK1_Toroeffner
+setuuid FileLog_HMW_NSK1_Toroeffner 5c4868da-f33f-b82c-62fc-adf1d3ae45ecda3e
+attr FileLog_HMW_NSK1_Toroeffner logtype text
+attr FileLog_HMW_NSK1_Toroeffner room FileLog
 
 define HMW_NSK1_Taster_Unused_01 HM485 00009067_01
+setuuid HMW_NSK1_Taster_Unused_01 5c4868da-f33f-b82c-130a-f09c6a51f1f8530f
 attr HMW_NSK1_Taster_Unused_01 room HMWired
 attr HMW_NSK1_Taster_Unused_01 subType key
 define HMW_NSK1_Taster_Unused_02 HM485 00009067_02
+setuuid HMW_NSK1_Taster_Unused_02 5c4868da-f33f-b82c-fe6d-0dc6617357bd4729
 attr HMW_NSK1_Taster_Unused_02 room HMWired
 attr HMW_NSK1_Taster_Unused_02 subType key
 define HMW_NSK1_Taster_Unused_03 HM485 00009067_03
+setuuid HMW_NSK1_Taster_Unused_03 5c4868da-f33f-b82c-1c36-d073ac80711ac36a
 attr HMW_NSK1_Taster_Unused_03 room HMWired
 attr HMW_NSK1_Taster_Unused_03 subType key
 define HMW_NSK1_Taster_Unused_04 HM485 00009067_04
+setuuid HMW_NSK1_Taster_Unused_04 5c4868da-f33f-b82c-e76a-a730598b93efe30d
 attr HMW_NSK1_Taster_Unused_04 room HMWired
 attr HMW_NSK1_Taster_Unused_04 subType key
 define HMW_NSK1_Taster_Unused_05 HM485 00009067_05
+setuuid HMW_NSK1_Taster_Unused_05 5c4868da-f33f-b82c-ede8-48c40cac03084af7
 attr HMW_NSK1_Taster_Unused_05 room HMWired
 attr HMW_NSK1_Taster_Unused_05 subType key
 define HMW_NSK1_Taster_Unused_06 HM485 00009067_06
+setuuid HMW_NSK1_Taster_Unused_06 5c4868da-f33f-b82c-ab0f-b8d6ba07877eb789
 attr HMW_NSK1_Taster_Unused_06 room HMWired
 attr HMW_NSK1_Taster_Unused_06 subType key
 define HMW_NSK1_Taster_Unused_07 HM485 00009067_07
+setuuid HMW_NSK1_Taster_Unused_07 5c4868da-f33f-b82c-cee6-e2dca58ff67e2c36
 attr HMW_NSK1_Taster_Unused_07 room HMWired
 attr HMW_NSK1_Taster_Unused_07 subType key
 define HMW_NSK1_Taster_Unused_08 HM485 00009067_08
+setuuid HMW_NSK1_Taster_Unused_08 5c4868da-f33f-b82c-263e-8503371e27815d30
 attr HMW_NSK1_Taster_Unused_08 room HMWired
 attr HMW_NSK1_Taster_Unused_08 subType key
 define HMW_NSK1_Taster_Unused_09 HM485 00009067_09
+setuuid HMW_NSK1_Taster_Unused_09 5c4868da-f33f-b82c-a0fa-5f425f04d2d3bdc2
 attr HMW_NSK1_Taster_Unused_09 room HMWired
 attr HMW_NSK1_Taster_Unused_09 subType key
 define HMW_NSK1_Taster_Unused_10 HM485 00009067_10
+setuuid HMW_NSK1_Taster_Unused_10 5c4868da-f33f-b82c-482c-243670202174323d
 attr HMW_NSK1_Taster_Unused_10 room HMWired
 attr HMW_NSK1_Taster_Unused_10 subType key
 define HMW_NSK1_Taster_Unused_11 HM485 00009067_11
+setuuid HMW_NSK1_Taster_Unused_11 5c4868da-f33f-b82c-9f13-41bdb8c06dacfdb1
 attr HMW_NSK1_Taster_Unused_11 room HMWired
 attr HMW_NSK1_Taster_Unused_11 subType key
 define HMW_NSK1_Taster_Unused_12 HM485 00009067_12
+setuuid HMW_NSK1_Taster_Unused_12 5c4868da-f33f-b82c-eafa-237d5499749ac3a9
 attr HMW_NSK1_Taster_Unused_12 room HMWired
 attr HMW_NSK1_Taster_Unused_12 subType key
 
@@ -135,24 +160,29 @@ attr HMW_NSK1_Taster_Unused_12 subType key
 #	JEQ0546714
 #
 define HMW_NSK2_Nebensicherungskasten_LC_Sw2_0 HM485 000093BA
+setuuid HMW_NSK2_Nebensicherungskasten_LC_Sw2_0 5c4868da-f33f-b82c-667d-43d8b275919320a8
 attr HMW_NSK2_Nebensicherungskasten_LC_Sw2_0 IODev HM485_LAN
-attr HMW_NSK2_Nebensicherungskasten_LC_Sw2_0 room HMWired
 attr HMW_NSK2_Nebensicherungskasten_LC_Sw2_0 group HMW_NSK2_Nebensicherungskasten
+attr HMW_NSK2_Nebensicherungskasten_LC_Sw2_0 room HMWired
 define FileLog_HMW_NSK2_Nebensicherungskasten_LC_Sw2_0 FileLog ./log/HMW_NSK2_Nebensicherungskasten_LC_Sw2_0-%Y.log HMW_NSK2_Nebensicherungskasten_LC_Sw2_0
+setuuid FileLog_HMW_NSK2_Nebensicherungskasten_LC_Sw2_0 5c4868da-f33f-b82c-0342-cf0b30ecfcd0d864
 attr FileLog_HMW_NSK2_Nebensicherungskasten_LC_Sw2_0 logtype text
-attr FileLog_HMW_NSK2_Nebensicherungskasten_LC_Sw2_0 room HMWired,FileLog
-attr FileLog_HMW_NSK2_Nebensicherungskasten_LC_Sw2_0 group FileLog
+attr FileLog_HMW_NSK2_Nebensicherungskasten_LC_Sw2_0 room FileLog
 
 define HMW_NSK2_Taster_Unused_01 HM485 000093BA_01
+setuuid HMW_NSK2_Taster_Unused_01 5c4868da-f33f-b82c-443b-4149cffca7e0e08c
 attr HMW_NSK2_Taster_Unused_01 room HMWired
 attr HMW_NSK2_Taster_Unused_01 subType key
 define HMW_NSK2_Taster_Unused_02 HM485 000093BA_02
+setuuid HMW_NSK2_Taster_Unused_02 5c4868da-f33f-b82c-875e-a3b8ac03e6259fd0
 attr HMW_NSK2_Taster_Unused_02 room HMWired
 attr HMW_NSK2_Taster_Unused_02 subType key
 define HMW_NSK2_Schalter_Unused_03 HM485 000093BA_03
+setuuid HMW_NSK2_Schalter_Unused_03 5c4868da-f33f-b82c-6ecc-aa7c9e92be6ebf4f
 attr HMW_NSK2_Schalter_Unused_03 room HMWired
 attr HMW_NSK2_Schalter_Unused_03 subType switch
 define HMW_NSK2_Schalter_Unused_04 HM485 000093BA_04
+setuuid HMW_NSK2_Schalter_Unused_04 5c4868da-f33f-b82c-ff85-ec766a1a1c44ae2d
 attr HMW_NSK2_Schalter_Unused_04 room HMWired
 attr HMW_NSK2_Schalter_Unused_04 subType switch
 
@@ -162,67 +192,81 @@ attr HMW_NSK2_Schalter_Unused_04 subType switch
 #	JEQ0645890
 #
 define HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0 HM485 0000BBB1
+setuuid HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0 5c4868da-f33f-b82c-4270-61c107194bf847ba
 attr HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0 IODev HM485_LAN
 attr HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0 alias HMW SEN SC 12 FM JEQ0645890
-attr HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0 room HMWired
 attr HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0 group HMW_VRT1_Verteiler_Alarmanlage
+attr HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0 room HMWired
 define FileLog_HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0 FileLog ./log/HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0-%Y.log HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0
+setuuid FileLog_HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0 5c4868da-f33f-b82c-9be4-fd339d675cddc927
 attr FileLog_HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0 logtype text
-attr FileLog_HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0 room HMWired,FileLog
-attr FileLog_HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0 group FileLog
+attr FileLog_HMW_VRT1_Verteiler_Alarmanlage_Sen_SC_12_0 room FileLog
 
 define HMW_VRT1_InternScharf HM485 0000BBB1_01
+setuuid HMW_VRT1_InternScharf 5c4868da-f33f-b82c-b467-18a1d17dbfc91eae
+attr HMW_VRT1_InternScharf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 attr HMW_VRT1_InternScharf room HMWired
 attr HMW_VRT1_InternScharf subType sensor
-attr HMW_VRT1_InternScharf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 
 define HMW_VRT1_ExternScharf HM485 0000BBB1_02
+setuuid HMW_VRT1_ExternScharf 5c4868da-f33f-b82c-57da-36bf0cc26e898ac8
+attr HMW_VRT1_ExternScharf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 attr HMW_VRT1_ExternScharf room HMWired
 attr HMW_VRT1_ExternScharf subType sensor
-attr HMW_VRT1_ExternScharf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 
 define HMW_VRT1_AlarmAktiv HM485 0000BBB1_03
+setuuid HMW_VRT1_AlarmAktiv 5c4868db-f33f-b82c-d306-4dd066a608fa9aba
+attr HMW_VRT1_AlarmAktiv group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 attr HMW_VRT1_AlarmAktiv room HMWired
 attr HMW_VRT1_AlarmAktiv subType sensor
-attr HMW_VRT1_AlarmAktiv group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 
 define HMW_VRT1_TerasseAuf HM485 0000BBB1_04
+setuuid HMW_VRT1_TerasseAuf 5c4868db-f33f-b82c-f4a0-d807509364b5e3e9
+attr HMW_VRT1_TerasseAuf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 attr HMW_VRT1_TerasseAuf room HMWired
 attr HMW_VRT1_TerasseAuf subType sensor
-attr HMW_VRT1_TerasseAuf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 
 define HMW_VRT1_SeiteneingangAuf HM485 0000BBB1_05
+setuuid HMW_VRT1_SeiteneingangAuf 5c4868db-f33f-b82c-fd8e-688f535d9334cb1d
+attr HMW_VRT1_SeiteneingangAuf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 attr HMW_VRT1_SeiteneingangAuf room HMWired
 attr HMW_VRT1_SeiteneingangAuf subType sensor
-attr HMW_VRT1_SeiteneingangAuf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 
 define HMW_VRT1_GaesteterasseAuf HM485 0000BBB1_06
+setuuid HMW_VRT1_GaesteterasseAuf 5c4868db-f33f-b82c-d374-a2fba7cdf89d69f6
+attr HMW_VRT1_GaesteterasseAuf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 attr HMW_VRT1_GaesteterasseAuf room HMWired
 attr HMW_VRT1_GaesteterasseAuf subType sensor
-attr HMW_VRT1_GaesteterasseAuf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 
 define HMW_VRT1_KlingelTor HM485 0000BBB1_08
+setuuid HMW_VRT1_KlingelTor 5c4868db-f33f-b82c-e0e2-4a54ac2ad8f5e2fa
+attr HMW_VRT1_KlingelTor event-on-change-reading sensor
+attr HMW_VRT1_KlingelTor group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 attr HMW_VRT1_KlingelTor room HMWired
 attr HMW_VRT1_KlingelTor subType sensor
-attr HMW_VRT1_KlingelTor group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 define FileLog_HMW_VRT1_KlingelTor FileLog ./log/HMW_VRT1_KlingelTor-%Y.log HMW_VRT1_KlingelTor
+setuuid FileLog_HMW_VRT1_KlingelTor 5c4868db-f33f-b82c-3c20-3c561dec40dd57c6
 attr FileLog_HMW_VRT1_KlingelTor logtype text
-attr FileLog_HMW_VRT1_KlingelTor room HMWired,FileLog
-attr FileLog_HMW_VRT1_KlingelTor group FileLog
+attr FileLog_HMW_VRT1_KlingelTor room FileLog
 
 define HMW_VRT1_Verschluss_Unused_07 HM485 0000BBB1_07
+setuuid HMW_VRT1_Verschluss_Unused_07 5c4868db-f33f-b82c-6dda-e7cb4d5dfde3db63
 attr HMW_VRT1_Verschluss_Unused_07 room HMWired
 attr HMW_VRT1_Verschluss_Unused_07 subType sensor
 define HMW_VRT1_Verschluss_Unused_09 HM485 0000BBB1_09
+setuuid HMW_VRT1_Verschluss_Unused_09 5c4868db-f33f-b82c-cf07-cb54436a222f2d8f
 attr HMW_VRT1_Verschluss_Unused_09 room HMWired
 attr HMW_VRT1_Verschluss_Unused_09 subType sensor
 define HMW_VRT1_Verschluss_Unused_10 HM485 0000BBB1_10
+setuuid HMW_VRT1_Verschluss_Unused_10 5c4868db-f33f-b82c-92e9-818b5de2a245780e
 attr HMW_VRT1_Verschluss_Unused_10 room HMWired
 attr HMW_VRT1_Verschluss_Unused_10 subType sensor
 define HMW_VRT1_Verschluss_Unused_11 HM485 0000BBB1_11
+setuuid HMW_VRT1_Verschluss_Unused_11 5c4868db-f33f-b82c-bf9c-39c1b2859ccd8741
 attr HMW_VRT1_Verschluss_Unused_11 room HMWired
 attr HMW_VRT1_Verschluss_Unused_11 subType sensor
 define HMW_VRT1_Verschluss_Unused_12 HM485 0000BBB1_12
+setuuid HMW_VRT1_Verschluss_Unused_12 5c4868db-f33f-b82c-cab5-30410f2bc554c3c3
 attr HMW_VRT1_Verschluss_Unused_12 room HMWired
 attr HMW_VRT1_Verschluss_Unused_12 subType sensor
 
@@ -232,118 +276,147 @@ attr HMW_VRT1_Verschluss_Unused_12 subType sensor
 #	LEQ1286184
 #
 define HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 HM485 0001131D
+setuuid HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 5c4868db-f33f-b82c-153d-7dcdd32f527ded00
 attr HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 IODev HM485_LAN
-attr HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 room HMWired
 attr HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 group HMW_HSK1_Hauptsicherungskasten
+attr HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 room HMWired
 define FileLog_HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 FileLog ./log/HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0-%Y.log HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0
+setuuid FileLog_HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 5c4868db-f33f-b82c-263d-1c1856b71f16f3b2
 attr FileLog_HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 logtype text
-attr FileLog_HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 room HMWired,FileLog
-attr FileLog_HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 group FileLog
+attr FileLog_HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 room FileLog
 
 define HMW_HSK1_KlingelHaus HM485 0001131D_01
+setuuid HMW_HSK1_KlingelHaus 5c4868db-f33f-b82c-acdc-e8466073dd7886d9
+attr HMW_HSK1_KlingelHaus event-on-change-reading press_long,press_short
+attr HMW_HSK1_KlingelHaus group HMW_HSK1_Hauptsicherungskasten
 attr HMW_HSK1_KlingelHaus room HMWired
 attr HMW_HSK1_KlingelHaus subType key
-attr HMW_HSK1_KlingelHaus group HMW_HSK1_Hauptsicherungskasten
 define FileLog_HMW_HSK1_KlingelHaus FileLog ./log/HMW_HSK1_KlingelHaus-%Y.log HMW_HSK1_KlingelHaus
+setuuid FileLog_HMW_HSK1_KlingelHaus 5c4868db-f33f-b82c-82db-e8ce38ace1ee4711
 attr FileLog_HMW_HSK1_KlingelHaus logtype text
-attr FileLog_HMW_HSK1_KlingelHaus room HMWired,FileLog
-attr FileLog_HMW_HSK1_KlingelHaus group FileLog
+attr FileLog_HMW_HSK1_KlingelHaus room FileLog
 
 define HMW_HSK1_BM_Kueche HM485 0001131D_02
-attr HMW_HSK1_BM_Kueche room HMWired
-attr HMW_HSK1_BM_Kueche subType key
+setuuid HMW_HSK1_BM_Kueche 5c4868db-f33f-b82c-6b03-b9c23540d1b267bb
 attr HMW_HSK1_BM_Kueche alias Bewegungsmelder Küche
+attr HMW_HSK1_BM_Kueche dependencyDevice HM_Sw2_Haustuer_Lampe,webcamHaustuere,webcamTerrasse
+attr HMW_HSK1_BM_Kueche dependencyValue 30
+attr HMW_HSK1_BM_Kueche event-on-change-reading press_long,press_short
 attr HMW_HSK1_BM_Kueche group Bewegungsmelder,HMW_HSK1_Hauptsicherungskasten
 attr HMW_HSK1_BM_Kueche room HMWired,Garten
+attr HMW_HSK1_BM_Kueche subType key
 define FileLog_HMW_HSK1_BM_Kueche FileLog ./log/HMW_HSK1_BM_Kueche-%Y.log HMW_HSK1_BM_Kueche
-attr FileLog_HMW_HSK1_BM_Kueche room HMWired,FileLog
-attr HMW_HSK1_BM_Kueche group FileLog
+setuuid FileLog_HMW_HSK1_BM_Kueche 5c4868db-f33f-b82c-0e8a-a4e31abe24da2d9d
+attr FileLog_HMW_HSK1_BM_Kueche room FileLog
 
 define HMW_HSK1_BM_Esszimmer HM485 0001131D_03
-attr HMW_HSK1_BM_Esszimmer room HMWired
-attr HMW_HSK1_BM_Esszimmer subType key
+setuuid HMW_HSK1_BM_Esszimmer 5c4868db-f33f-b82c-6007-d13e8c5b2af69a8c
 attr HMW_HSK1_BM_Esszimmer alias Bewegungsmelder Esszimmer
+attr HMW_HSK1_BM_Esszimmer dependencyDevice HMW_HSK1_Strahler_Terrasse,HMW_HSK1_Strahler_Bauerngarten,webcamHaustuere,webcamTerrasse
+attr HMW_HSK1_BM_Esszimmer dependencyValue 30
+attr HMW_HSK1_BM_Esszimmer event-on-change-reading press_long,press_short
 attr HMW_HSK1_BM_Esszimmer group Bewegungsmelder,HMW_HSK1_Hauptsicherungskasten
 attr HMW_HSK1_BM_Esszimmer room HMWired,Garten
+attr HMW_HSK1_BM_Esszimmer subType key
 define FileLog_HMW_HSK1_BM_Esszimmer FileLog ./log/HMW_HSK1_BM_Esszimmer-%Y.log HMW_HSK1_BM_Esszimmer
-attr FileLog_HMW_HSK1_BM_Esszimmer room HMWired,FileLog
-attr HMW_HSK1_BM_Esszimmer group FileLog
+setuuid FileLog_HMW_HSK1_BM_Esszimmer 5c4868db-f33f-b82c-440c-18bf894cfe5fb3c1
+attr FileLog_HMW_HSK1_BM_Esszimmer room FileLog
 
 define HMW_HSK1_BM_Wohnzimmer HM485 0001131D_04
-attr HMW_HSK1_BM_Wohnzimmer room HMWired
-attr HMW_HSK1_BM_Wohnzimmer subType key
+setuuid HMW_HSK1_BM_Wohnzimmer 5c4868db-f33f-b82c-5e40-7919de6d8aa6e2a5
 attr HMW_HSK1_BM_Wohnzimmer alias Bewegungsmelder Wohnzimmer
+attr HMW_HSK1_BM_Wohnzimmer dependencyDevice HMW_HSK1_Strahler_Nebeneingang,HMW_HSK1_Strahler_Terrasse,webcamHaustuere,webcamTerrasse
+attr HMW_HSK1_BM_Wohnzimmer dependencyValue 30
+attr HMW_HSK1_BM_Wohnzimmer event-on-change-reading press_long,press_short
 attr HMW_HSK1_BM_Wohnzimmer group Bewegungsmelder,HMW_HSK1_Hauptsicherungskasten
 attr HMW_HSK1_BM_Wohnzimmer room HMWired,Garten
+attr HMW_HSK1_BM_Wohnzimmer subType key
 define FileLog_HMW_HSK1_BM_Wohnzimmer FileLog ./log/HMW_HSK1_BM_Wohnzimmer-%Y.log HMW_HSK1_BM_Wohnzimmer
-attr FileLog_HMW_HSK1_BM_Wohnzimmer room HMWired,FileLog
-attr HMW_HSK1_BM_Wohnzimmer group FileLog
+setuuid FileLog_HMW_HSK1_BM_Wohnzimmer 5c4868db-f33f-b82c-74a6-11905d25aa9fdc55
+attr FileLog_HMW_HSK1_BM_Wohnzimmer room FileLog
 
 define HMW_HSK1_BM_Bauerngarten HM485 0001131D_05
-attr HMW_HSK1_BM_Bauerngarten room HMWired
-attr HMW_HSK1_BM_Bauerngarten subType key
+setuuid HMW_HSK1_BM_Bauerngarten 5c4868db-f33f-b82c-ef34-1b766d562e6c003d
 attr HMW_HSK1_BM_Bauerngarten alias Bewegungsmelder Bauerngarten
+attr HMW_HSK1_BM_Bauerngarten dependencyDevice HMW_HSK1_Strahler_Terrasse
+attr HMW_HSK1_BM_Bauerngarten dependencyValue 30
+attr HMW_HSK1_BM_Bauerngarten event-on-change-reading press_long,press_short
 attr HMW_HSK1_BM_Bauerngarten group Bewegungsmelder,HMW_HSK1_Hauptsicherungskasten
 attr HMW_HSK1_BM_Bauerngarten room HMWired,Garten
+attr HMW_HSK1_BM_Bauerngarten subType key
 define FileLog_HMW_HSK1_BM_Bauerngarten FileLog ./log/HMW_HSK1_BM_Bauerngarten-%Y.log HMW_HSK1_BM_Bauerngarten
-attr FileLog_HMW_HSK1_BM_Bauerngarten room HMWired,FileLog
-attr HMW_HSK1_BM_Bauerngarten group FileLog
+setuuid FileLog_HMW_HSK1_BM_Bauerngarten 5c4868db-f33f-b82c-115f-3bfb53f9b5fcaec2
+attr FileLog_HMW_HSK1_BM_Bauerngarten room FileLog
 
 define HMW_HSK1_Strahler_Nebeneingang HM485 0001131D_13
-attr HMW_HSK1_Strahler_Nebeneingang room HMWired,Garten
-attr HMW_HSK1_Strahler_Nebeneingang subType switch
+setuuid HMW_HSK1_Strahler_Nebeneingang 5c4868db-f33f-b82c-6ad5-3327e90b0765b0b8
 attr HMW_HSK1_Strahler_Nebeneingang alias Strahler Nebeneingang
 attr HMW_HSK1_Strahler_Nebeneingang group HMW_HSK1_Hauptsicherungskasten,Schalter
+attr HMW_HSK1_Strahler_Nebeneingang room HMWired,Garten
+attr HMW_HSK1_Strahler_Nebeneingang subType switch
 
 define HMW_HSK1_Strahler_Terrasse HM485 0001131D_14
-attr HMW_HSK1_Strahler_Terrasse room HMWired,Garten
-attr HMW_HSK1_Strahler_Terrasse subType switch
+setuuid HMW_HSK1_Strahler_Terrasse 5c4868db-f33f-b82c-c71d-1c0e37b4a657fbde
 attr HMW_HSK1_Strahler_Terrasse alias Strahler Terrasse
 attr HMW_HSK1_Strahler_Terrasse group HMW_HSK1_Hauptsicherungskasten,Schalter
+attr HMW_HSK1_Strahler_Terrasse room HMWired,Garten
+attr HMW_HSK1_Strahler_Terrasse subType switch
 
 define HMW_HSK1_Strahler_Bauerngarten HM485 0001131D_15
-attr HMW_HSK1_Strahler_Bauerngarten room HMWired,Garten
-attr HMW_HSK1_Strahler_Bauerngarten subType switch
+setuuid HMW_HSK1_Strahler_Bauerngarten 5c4868db-f33f-b82c-ef8b-8c976185cf09f444
 attr HMW_HSK1_Strahler_Bauerngarten alias Strahler Bauerngarten
 attr HMW_HSK1_Strahler_Bauerngarten group HMW_HSK1_Hauptsicherungskasten,Schalter
+attr HMW_HSK1_Strahler_Bauerngarten room HMWired,Garten
+attr HMW_HSK1_Strahler_Bauerngarten subType switch
 
 define HMW_HSK1_IR_Strahler HM485 0001131D_16
-attr HMW_HSK1_IR_Strahler room HMWired,Garten
-attr HMW_HSK1_IR_Strahler subType switch
+setuuid HMW_HSK1_IR_Strahler 5c4868db-f33f-b82c-6f62-65faf919e6a793ad
 attr HMW_HSK1_IR_Strahler alias IR Strahler
 attr HMW_HSK1_IR_Strahler group HMW_HSK1_Hauptsicherungskasten,Schalter
+attr HMW_HSK1_IR_Strahler room HMWired,Garten
+attr HMW_HSK1_IR_Strahler subType switch
 
 define HMW_HSK1_Bewegungsmelder HM485 0001131D_17
-attr HMW_HSK1_Bewegungsmelder room HMWired,Garten
-attr HMW_HSK1_Bewegungsmelder subType switch
+setuuid HMW_HSK1_Bewegungsmelder 5c4868db-f33f-b82c-fbf4-32da0859b37ded94
 attr HMW_HSK1_Bewegungsmelder alias Bewegungsmelder aktiv
 attr HMW_HSK1_Bewegungsmelder group HMW_HSK1_Hauptsicherungskasten,Schalter
+attr HMW_HSK1_Bewegungsmelder room HMWired,Garten
+attr HMW_HSK1_Bewegungsmelder subType switch
 
 define HMW_IO_12_Sw7_DR_LEQ1286184_06 HM485 0001131D_06
+setuuid HMW_IO_12_Sw7_DR_LEQ1286184_06 5c4868db-f33f-b82c-161b-e9f7c680a0ab0440
 attr HMW_IO_12_Sw7_DR_LEQ1286184_06 room HMWired
 attr HMW_IO_12_Sw7_DR_LEQ1286184_06 subType key
 define HMW_IO_12_Sw7_DR_LEQ1286184_07 HM485 0001131D_07
+setuuid HMW_IO_12_Sw7_DR_LEQ1286184_07 5c4868db-f33f-b82c-a9b7-e121d8423b37b6bd
 attr HMW_IO_12_Sw7_DR_LEQ1286184_07 room HMWired
 attr HMW_IO_12_Sw7_DR_LEQ1286184_07 subType key
 define HMW_IO_12_Sw7_DR_LEQ1286184_08 HM485 0001131D_08
+setuuid HMW_IO_12_Sw7_DR_LEQ1286184_08 5c4868db-f33f-b82c-8458-d3078e8a22915289
 attr HMW_IO_12_Sw7_DR_LEQ1286184_08 room HMWired
 attr HMW_IO_12_Sw7_DR_LEQ1286184_08 subType key
 define HMW_IO_12_Sw7_DR_LEQ1286184_09 HM485 0001131D_09
+setuuid HMW_IO_12_Sw7_DR_LEQ1286184_09 5c4868db-f33f-b82c-e28f-bba8e264537f7516
 attr HMW_IO_12_Sw7_DR_LEQ1286184_09 room HMWired
 attr HMW_IO_12_Sw7_DR_LEQ1286184_09 subType key
 define HMW_IO_12_Sw7_DR_LEQ1286184_10 HM485 0001131D_10
+setuuid HMW_IO_12_Sw7_DR_LEQ1286184_10 5c4868db-f33f-b82c-7862-bd630d9449649f60
 attr HMW_IO_12_Sw7_DR_LEQ1286184_10 room HMWired
 attr HMW_IO_12_Sw7_DR_LEQ1286184_10 subType key
 define HMW_IO_12_Sw7_DR_LEQ1286184_11 HM485 0001131D_11
+setuuid HMW_IO_12_Sw7_DR_LEQ1286184_11 5c4868db-f33f-b82c-32d0-ba4b9145d3e85e1d
 attr HMW_IO_12_Sw7_DR_LEQ1286184_11 room HMWired
 attr HMW_IO_12_Sw7_DR_LEQ1286184_11 subType key
 define HMW_IO_12_Sw7_DR_LEQ1286184_12 HM485 0001131D_12
+setuuid HMW_IO_12_Sw7_DR_LEQ1286184_12 5c4868db-f33f-b82c-c560-f8062aa2c2ce94e4
 attr HMW_IO_12_Sw7_DR_LEQ1286184_12 room HMWired
 attr HMW_IO_12_Sw7_DR_LEQ1286184_12 subType key
 define HMW_IO_12_Sw7_DR_LEQ1286184_18 HM485 0001131D_18
+setuuid HMW_IO_12_Sw7_DR_LEQ1286184_18 5c4868db-f33f-b82c-c92d-f90fe193566a00e7
 attr HMW_IO_12_Sw7_DR_LEQ1286184_18 room HMWired
 attr HMW_IO_12_Sw7_DR_LEQ1286184_18 subType switch
 define HMW_IO_12_Sw7_DR_LEQ1286184_19 HM485 0001131D_19
+setuuid HMW_IO_12_Sw7_DR_LEQ1286184_19 5c4868db-f33f-b82c-2272-b9783669944e6e67
 attr HMW_IO_12_Sw7_DR_LEQ1286184_19 room HMWired
 attr HMW_IO_12_Sw7_DR_LEQ1286184_19 subType switch
 
@@ -352,6 +425,7 @@ attr HMW_IO_12_Sw7_DR_LEQ1286184_19 subType switch
 # DUMMY SECTION
 #
 define motionDetectionActive dummy
+setuuid motionDetectionActive 5c4868db-f33f-b82c-ae02-c5ec370da812ac5b
 attr motionDetectionActive room HMWired,Garten
 attr motionDetectionActive webCmd on:off
 
@@ -366,44 +440,41 @@ define HMW_HSK1_BM_Esszimmer_Notif notify HMW_HSK1_BM_Esszimmer {\
 	Log 1, "*** HMW_HSK1_BM_Esszimmer_Notif *** --> $NAME - $EVENT";;\
         spotlightControl($NAME);;\
 	}
+setuuid HMW_HSK1_BM_Esszimmer_Notif 5c4868db-f33f-b82c-1051-adb131bf43b8f07f
 attr HMW_HSK1_BM_Esszimmer_Notif room HMWired,Garten
 
 define HMW_HSK1_BM_Kueche_Notif notify HMW_HSK1_BM_Kueche {\
 	Log 1, "*** HMW_HSK1_BM_Kueche_Notif *** --> $NAME - $EVENT";;\
         spotlightControl($NAME);;\
 	}
+setuuid HMW_HSK1_BM_Kueche_Notif 5c4868db-f33f-b82c-e43f-a83103b19d1260b6
 attr HMW_HSK1_BM_Kueche_Notif room HMWired,Garten
 
 define HMW_VRT1_KlingelTor_Notify notify HMW_VRT1_KlingelTor {\
-	if ("$EVENT" eq "on") {;;\
+	Log 1, "*** HMW_VRT1_KlingelTor_Notify *** --> $NAME - $EVENT";;;;\
+	if (("$EVENT" eq "on") || ("$EVTPART1" eq "closed")) {;;\
 		doorBell();;\
 		};;\
 	}
+setuuid HMW_VRT1_KlingelTor_Notify 5c4868db-f33f-b82c-2745-962a882cd9513a7c
 attr HMW_VRT1_KlingelTor_Notify room HMWired,Garten
 
 define HMW_HSK1_KlingelHaus_Notify notify HMW_HSK1_KlingelHaus {\
 	execRinging();;\
 	}
+setuuid HMW_HSK1_KlingelHaus_Notify 5c4868db-f33f-b82c-f20a-bf778c8f8a119720
 attr HMW_HSK1_KlingelHaus_Notify room HMWired
 
 define HMW_VRT1_InternScharf_Notify_on notify HMW_VRT1_InternScharf:on set motionDetectionActive on
+setuuid HMW_VRT1_InternScharf_Notify_on 5c4868db-f33f-b82c-eb63-744072a7db18ef37
 attr HMW_VRT1_InternScharf_Notify_on room HMWired
 
 define HMW_VRT1_ExternScharf_Notify_on notify HMW_VRT1_ExternScharf:on set motionDetectionActive on
+setuuid HMW_VRT1_ExternScharf_Notify_on 5c4868db-f33f-b82c-8c26-954040a605a742e4
 attr HMW_VRT1_ExternScharf_Notify_on room HMWired
 
-#define ALARM_TOROEFFNER_ON notify TOROEFFNER {\
-#	Log 1,"ALARM_TOROEFFNER_ON $NAME $EVENT";;\
-#	fhem "reload 99_myUtils";;\
-#	doorControl($EVENT);;\
-#	}
 #attr ALARM_TOROEFFNER_ON room HMWired
 #
-#define ALARM_ON_Notify notify HMW_VRT1_AlarmAktiv {\
-#	if ("$EVENT" eq "sensor: 0") {;;\
-#		doorControl(180);;\
-#		};;\
-#	}
 #attr ALARM_ON_Notify room HMWired
 #################################################################################
 # AT SECTION
@@ -411,22 +482,26 @@ attr HMW_VRT1_ExternScharf_Notify_on room HMWired
 define motionDetectionActive_On_At at *{sunset("HORIZON=-0.833",1200,"17:00","21:45")} {\
 	fhem("set motionDetectionActive on");;\
 	}
+setuuid motionDetectionActive_On_At 5c4868db-f33f-b82c-7734-369acaa16671cb07
 attr motionDetectionActive_On_At room HMWired,Garten
 
 define motionDetectionActive_Off_At at *{sunrise("HORIZON=-0.833",-900,"06:30","08:00")} {\
 	fhem("set motionDetectionActive off");;\
 	}
+setuuid motionDetectionActive_Off_At 5c4868db-f33f-b82c-e2f2-53c76273f185468b
 attr motionDetectionActive_Off_At room HMWired,Garten
 
 define irSpotlightOn at *{sunset("HORIZON=-2",1200,"16:30","23:00")} {\
 	fhem("set HMW_HSK1_IR_Strahler on");;\
 	}
+setuuid irSpotlightOn 5c4868db-f33f-b82c-f082-e276936faa819402
 attr irSpotlightOn disable 0
 attr irSpotlightOn room HMWired,Garten
 
 define irSpotlightOff at *{sunrise("HORIZON=-2",-900,"04:00","09:00")} {\
 	fhem("set HMW_HSK1_IR_Strahler off");;\
 	}
+setuuid irSpotlightOff 5c4868db-f33f-b82c-d42a-04f23b0c3e907c80
 attr irSpotlightOff disable 0
 attr irSpotlightOff room HMWired,Garten
 
@@ -437,10 +512,5 @@ attr irSpotlightOff room HMWired,Garten
 #################################################################################
 #	Notifs OLD
 #	
-#define HMW_VRT1_KlingelTor_Notify notify HMW_VRT1_KlingelTor {\
-#	if ("$EVENT" eq "sensor_closed") {;;\
-#		doorBell();;\
-#		};;\
-#	}
 #attr HMW_VRT1_KlingelTor_Notify room HMWired
 #

@@ -83,6 +83,7 @@
       <a href="#setdefaultattr">setdefaultattr</a> &nbsp;
       <a href="#setreading">setreading</a> &nbsp;
       <a href="#setstate">setstate</a> &nbsp;
+      <a href="#setuuid">setuuid</a> &nbsp;
       <a href="#shutdown">shutdown</a> &nbsp;
       <a href="#sleep">sleep</a> &nbsp;
       <a href="#template">template</a> &nbsp;
@@ -451,6 +452,7 @@
       <a href="#TeslaPowerwall2AC">TeslaPowerwall2AC</a> &nbsp;
       <a href="#THINKINGCLEANER">THINKINGCLEANER</a> &nbsp;
       <a href="#THZ">THZ</a> &nbsp;
+      <a href="#todoist">todoist</a> &nbsp;
       <a href="#TPLinkHS110">TPLinkHS110</a> &nbsp;
       <a href="#TRAFFIC">TRAFFIC</a> &nbsp;
       <a href="#TRX">TRX</a> &nbsp;
@@ -1828,6 +1830,18 @@ The following local attributes are used by a wider range of devices:
 </ul>
 <!-- setstate end -->
 
+<a name="setuuid"></a>
+<h3>setuuid</h3>
+<div class='langLinks'>[EN <a href='commandref_DE.html#setuuid'>DE</a>]</div>
+<ul>
+  <code>setuuid &lt;device&gt; &lt;uuid&gt;</code>
+  <br><br>
+  System command, used to set the FUUID internal value.
+  Not intended to be used by an end user.
+</ul>
+<!-- setstate end -->
+
+
 <a name="shutdown"></a>
 <h3>shutdown</h3>
 <div class='langLinks'>[EN <a href='commandref_DE.html#shutdown'>DE</a>]</div>
@@ -1916,6 +1930,11 @@ The following local attributes are used by a wider range of devices:
 
   <b>Attributes</b>
   <ul>
+    <a name="altitude"></a>
+    <li>altitude<br>
+      Specifies the mean sea level in meters. Default is 0.
+      </li><br>
+
     <li><a href="#archivedir">archivedir</a></li>
     <li><a href="#archivecmd">archivecmd</a></li>
     <li><a href="#nrarchive">nrarchive</a></li>
@@ -2055,6 +2074,18 @@ The following local attributes are used by a wider range of devices:
         appended to FHEM/FhemUtils/
     </li><br>
 
+    <a name="latitude"></a>
+    <li>latitude<br>
+      Used e.g. by SUNRISE_EL to calculate sunset/sunrise.<br>
+      Default is Frankfurt am Main, Germany (50.112).
+      </li><br>
+
+    <a name="longitude"></a>
+    <li>longitude<br>
+      Used e.g. by SUNRISE_EL to calculate sunset/sunrise.<br>
+      Default is Frankfurt am Main, Germany (8.686).
+      </li><br>
+
     <a name="logdir"></a>
     <li>logdir<br>
         If set, the %L attribute in the logfile attribute (or in the FileLog
@@ -2073,6 +2104,13 @@ The following local attributes are used by a wider range of devices:
         <code>global</code> device as you would do for a FileLog device.<br>
         You can access the current name of the logfile with
         <code>{ $currlogfile }</code>.
+    </li><br>
+
+    <a name="maxShutdownDelay"></a>
+    <li>maxShutdownDelay<br>
+        Some modules need some time at shutdown to finish the cleanup, but FHEM
+        restricts the delay to 10 seconds. Use this attribute to modify the
+        maximum delay.
     </li><br>
 
     <a name="modpath"></a>
@@ -3920,10 +3958,10 @@ The following local attributes are used by a wider range of devices:
     <ul>
       <li><i>application</i><br>
         List of applications.
-        Applications are available with modells from 2013 and newer.</li>
+        Applications are available with models from 2013 and newer.</li>
       <li><i>channel</i><br>
         List of all known channels. The module collects all visited channels.
-        Channels can be loaded automtically with modells from 2013 and newer.
+        Channels can be loaded automtically with models from 2013 and newer.
         (number of channels, see <a href=#BRAVIAchannelsMax>channelsMax</a>).</li>
       <li><i>channelDown</i><br>
         Switches a channel back.</li>
@@ -3931,13 +3969,16 @@ The following local attributes are used by a wider range of devices:
         Switches a channel forward.</li>
       <li><i>input</i><br>
         List of input channels.
-        Imputs are available with modells from 2013 and newer.</li>
+        Imputs are available with models from 2013 and newer.</li>
       <li><i>mute</i><br>
         Set mute if <a href=#BRAVIAupnp>Upnp</a> is activated.</li>
       <li><i>off</i><br>
         Switches TV to off. State of device will have been set to "set_off" for 60 seconds or until off-status is pulled from TV.</li>
       <li><a name="BRAVIAon"></a><i>on</i><br>
-        Switches TV to on, with modells from 2013 using WOL. State of device will have been set to "set_on" for 60 seconds or until on-status is pulled from TV.</li>
+        Switches TV to on, with models from 2013 using WOL. State of device will have been set to "set_on" for 60 seconds or until on-status is pulled from TV.</li>
+      <li><i>openUrl</i><br>
+        Opens an URL on the screen.
+        This Feature is available on models from 2013 and newer.</li>
       <li><i>pause</i><br>
         Pauses a playing of a recording, of an internal App, etc.</li>
       <li><i>play</i><br>
@@ -3953,8 +3994,8 @@ The following local attributes are used by a wider range of devices:
           <li>Call with empty input. A PIN for registration has to be shown on the TV.</li>
           <li>Insert PIN into input field and register again.</li></ol></li>
       <li><a name="BRAVIArequestFormat"></a><i>requestFormat</i><br>
-        "xml" for xml based communication (modells from 2011 and 2012)<br>
-        "json" for communication with modells from 2013 and newer</li>
+        "xml" for xml based communication (models from 2011 and 2012)<br>
+        "json" for communication with models from 2013 and newer</li>
       <li><i>remoteControl</i><br>
         Sends command directly to TV.</li>
       <li><i>statusRequest</i><br>
@@ -11483,6 +11524,8 @@ Just one definition per FHEM-installation is allowed. <a href="https://fhem.de/c
 								 "allowDeletion" has to be set for security reason. <br>
                                  The statement doesn't consider limitations by attributes "device", "reading", "time.*" 
                                  respectively "aggregation". <br>
+                                 This command also accept the setting of SQL session variables like "SET @open:=NULL, 
+                                 @closed:=NULL;". <br>
 								 If the <a href="#DbRepattr">attribute</a> "timestamp_begin" respectively "timestamp_end" 
 								 is assumed in the statement, it is possible to use placeholder "<b>§timestamp_begin§</b>" respectively
 								 "<b>§timestamp_end§</b>" on suitable place. <br><br>
@@ -11505,6 +11548,25 @@ Just one definition per FHEM-installation is allowed. <a href="https://fhem.de/c
                                  <li>set &lt;name&gt; sqlCmd update history set TIMESTAMP=TIMESTAMP,VALUE='Val' WHERE VALUE='TestValue' </li>
                                  <li>set &lt;name&gt; sqlCmd select * from history where DEVICE = "Test" </li>
                                  <li>set &lt;name&gt; sqlCmd insert into history (TIMESTAMP, DEVICE, TYPE, EVENT, READING, VALUE, UNIT) VALUES ('2017-05-09 17:00:14','Test','manuell','manuell','Tes§e','TestValue','°C') </li>    
+                                 </ul>
+                                 <br>
+                                 
+                                 Here you can see an example of a more complex statement (MySQL) with setting SQL session 
+                                 variables: <br><br>
+                                 
+                                 <ul>
+                                 <li>set &lt;name&gt; sqlCmd SET @open:=NULL, @closed:=NULL;
+                                        SELECT
+                                            TIMESTAMP, VALUE,DEVICE,
+                                            @open AS open,
+                                            @open := IF(VALUE = 'open', TIMESTAMP, NULL) AS curr_open,
+                                            @closed  := IF(VALUE = 'closed',  TIMESTAMP, NULL) AS closed
+                                        FROM history WHERE
+                                           DATE(TIMESTAMP) = CURDATE() AND
+                                           DEVICE = "HT_Fensterkontakt" AND
+                                           READING = "state" AND
+                                           (VALUE = "open" OR VALUE = "closed")
+                                           ORDER BY  TIMESTAMP; </li>
                                  </ul>
 								 <br>
 								 
@@ -11720,6 +11782,8 @@ Just one definition per FHEM-installation is allowed. <a href="https://fhem.de/c
                             Executes the specified SQL-statement in <b>blocking</b> manner. Because of its mode of operation
                             this function is particular convenient for user own perl scripts.  <br>
                             The input accepts multi line commands and delivers multi line results as well. 
+                            This command also accept the setting of SQL session variables like "SET @open:=NULL, 
+                            @closed:=NULL;". <br>
                             If several fields are selected and passed back, the fieds are separated by the separator defined  
                             by <a href="#DbRepattr">attribute</a> "sqlResultFieldSep" (default "|"). Several result lines 
                             are separated by newline ("\n"). <br>
@@ -17776,12 +17840,12 @@ plugin_b =&gt; {
          <li><a href="#EnOcean_setpointRefDev">setpointRefDev</a></li>
          <li><a href="#EnOcean_setpointSummerMode">setpointSummerMode</a></li>
          <li><a href="#EnOcean_setpointTempRefDev">setpointTempRefDev</a></li>
-         <li><a href="#temperatureRefDev">temperatureRefDev</a></li>
          <li><a href="#EnOcean_summerMode">summerMode</a></li>
+         <li><a href="#temperatureRefDev">temperatureRefDev</a></li>
        </ul>
     The actual temperature will be reported by the Heating Radiator Actuating Drive or by the
     <a href="#temperatureRefDev">temperatureRefDev</a> if it is set. The internal temperature sensor
-    of the Micropelt iTRV is not suitable as an actual temperature value for the PID controller.
+    of the Micropelt iTRV MVA-002 is not suitable as an actual temperature value for the PID controller.
     An external room thermostat is required.<br>
     The attr event-on-change-reading .* shut not by set. The PID controller expects periodic events.
     If these are missing, a communication alarm is signaled.<br>
@@ -17835,10 +17899,12 @@ plugin_b =&gt; {
          <li><a href="#EnOcean_pidFactor_D">pidFactor_D</a></li>
          <li><a href="#EnOcean_pidIPortionCallBeforeSetting">pidIPortionCallBeforeSetting</a></li>
          <li><a href="#EnOcean_pidSensorTimeout">pidSensorTimeout</a></li>
+         <li><a href="#EnOcean_rcvRespAction">rcvRespAction</a></li>
          <li><a href="#EnOcean_setpointRefDev">setpointRefDev</a></li>
+         <li><a href="#EnOcean_setpointSummerMode">setpointSummerMode</a></li>
          <li><a href="#EnOcean_setpointTempRefDev">setpointTempRefDev</a></li>
-         <li><a href="#temperatureRefDev">temperatureRefDev</a></li>
          <li><a href="#EnOcean_summerMode">summerMode</a></li>
+         <li><a href="#temperatureRefDev">temperatureRefDev</a></li>
          <li><a href="#EnOcean_wakeUpCycle">wakeUpCycle</a></li>
        </ul>
     The actual temperature will be reported by the Heating Radiator Actuating Drive or by the
@@ -17852,6 +17918,66 @@ plugin_b =&gt; {
     attr <device> model Holter_OEM and attr <device> pidCtrl off.<br>
     The command is not sent until the device wakes up and sends a message, usually
     every 5 minutes.
+    </li>
+    <br><br>
+
+    <li>Heating Radiator Actuating Drive (EEP A5-20-06)<br>
+        [Micropelt iTRV MVA-005, OPUS Micropelt HOME]<br>
+    <ul>
+    <code>set &lt;name&gt; &lt;value&gt;</code>
+    <br><br>
+    where <code>value</code> is
+      <li>runInit<br>
+          Maintenance Mode: Run init sequence</li>
+      <li>setpoint setpoint/%<br>
+          Set the actuator to the specifed setpoint (0...100). The setpoint can also be set by the
+          <a href="#EnOcean_setpointRefDev">setpointRefDev</a> device if it is set.</li>
+      <li>setpointTemp t/&#176C<br>
+          Set the actuator to the specifed temperature setpoint. The temperature setpoint can also be set by the
+          <a href="#EnOcean_setpointTempRefDev">setpointTempRefDev</a> device if it is set.<br>
+          The FHEM PID controller calculates the actuator setpoint based on the temperature setpoint. The controller's
+          operation can be set via the PID parameters <a href="#EnOcean_pidFactor_P">pidFactor_P</a>,
+          <a href="#EnOcean_pidFactor_I">pidFactor_I</a> and <a href="#EnOcean_pidFactor_D">pidFactor_D</a>.</li>
+      <li>standby<br>
+          enter standby mode<br>
+          After the standby command, the valve remains closed permanently and can no longer be controlled by Fhem.
+          By pressing the button on the device itself, the actuator is returned to its normal operating state.</li>
+    </ul><br>
+       The Heating Radiator Actuating Drive is configured using the following attributes:<br>
+       <ul>
+         <li><a href="#EnOcean_blockKey">blockKey</a></li>
+         <li><a href="#EnOcean_measurementCtrl">measurementCtrl</a></li>
+         <li><a href="#model">model</a></li>
+         <li><a href="#EnOcean_pidActorCallBeforeSetting">pidActorCallBeforeSetting</a></li>
+         <li><a href="#EnOcean_pidActorErrorAction">pidActorErrorAction</a></li>
+         <li><a href="#EnOcean_pidActorErrorPos">pidActorErrorPos</a></li>
+         <li><a href="#EnOcean_pidActorLimitLower">pidActorLimitLower</a></li>
+         <li><a href="#EnOcean_pidActorLimitUpper">pidActorLimitUpper</a></li>
+         <li><a href="#EnOcean_pidCtrl">pidCtrl</a></li>
+         <li><a href="#EnOcean_pidDeltaTreshold">pidDeltaTreshold</a></li>
+         <li><a href="#EnOcean_pidFactor_P">pidFactor_P</a></li>
+         <li><a href="#EnOcean_pidFactor_I">pidFactor_I</a></li>
+         <li><a href="#EnOcean_pidFactor_D">pidFactor_D</a></li>
+         <li><a href="#EnOcean_pidIPortionCallBeforeSetting">pidIPortionCallBeforeSetting</a></li>
+         <li><a href="#EnOcean_pidSensorTimeout">pidSensorTimeout</a></li>
+         <li><a href="#EnOcean_rcvRespAction">rcvRespAction</a></li>
+         <li><a href="#EnOcean_setpointRefDev">setpointRefDev</a></li>
+         <li><a href="#EnOcean_setpointSummerMode">setpointSummerMode</a></li>
+         <li><a href="#EnOcean_setpointTempRefDev">setpointTempRefDev</a></li>
+         <li><a href="#temperatureRefDev">temperatureRefDev</a></li>
+         <li><a href="#EnOcean_summerMode">summerMode</a></li>
+         <li><a href="#EnOcean_wakeUpCycle">wakeUpCycle</a></li>
+         <li><a href="#EnOcean_windowOpenCtrl">windowOpenCtrl</a></li>
+       </ul>
+    The actual temperature will be reported by the Heating Radiator Actuating Drive or by the
+    <a href="#temperatureRefDev">temperatureRefDev</a> if it is set.<br>
+    The attr event-on-change-reading .* shut not by set. The PID controller expects periodic events.
+    If these are missing, a communication alarm is signaled.<br>
+    The attr subType must be hvac.06. This is done if the device was
+    created by autocreate. To control the device, it must be bidirectional paired,
+    see <a href="#EnOcean_teach-in">Teach-In / Teach-Out</a>.<br>
+    The command is not sent until the device wakes up and sends a message, usually
+    every 2 to 10 minutes.
     </li>
     <br><br>
 
@@ -19062,8 +19188,8 @@ plugin_b =&gt; {
       Manufacturer ID number
     </li>
     <li><a name="EnOcean_measurementCtrl">measurementCtrl</a> enable|disable<br>
-      Enable or disable the temperature measurements (room and feed temperature) of the actuator. If the temperature
-      measurements are turned off, an external temperature sensor must be exists, see attribute
+      Enable or disable the temperature measurements (room temperature) of the actuator. If the temperature
+      measurements are turned off, the foot temperature may be displayed and an external temperature sensor must be exists, see attribute
       <a href="#temperatureRefDev">temperatureRefDev</a>.
     </li>
     <li><a href="#model">model</a></li>
@@ -19156,9 +19282,11 @@ plugin_b =&gt; {
       If &lt;command&gt; is enclosed in {}, then it is a perl expression, if it is enclosed in "", then it is a shell command,
       else it is a "plain" fhem.pl command (chain). In the &lt;command&gt; you can access the name of the device by using $NAME
       and the current readings $ACTUATORSTATE, $BATTERY, $COVER, $ENERGYINPUT, $ENERGYSTORAGE, $MAINTENANCEMODE, $OPERATIONMODE,
-      $ROOMTEMP, $SELFCTRL, $SETPOINT, $SETPOINTTEMP, $SUMMERMODE, $TEMPERATURE, $WINDOW for the subType hvac.01 and $NAME,
+      $ROOMTEMP, $SELFCTRL, $SETPOINT, $SETPOINTTEMP, $SUMMERMODE, $TEMPERATURE, $WINDOW for the subType hvac.01, $NAME,
       $BATTERY, $FEEDTEMP, $MAINTENANCEMODE, $OPERATIONMODE, $ROOMTEMP, $SETPOINT, $SETPOINTTEMP, $SUMMERMODE, $TEMPERATURE
-      for the subType hvac.04.
+      for the subType hvac.04 and $ACTUATORSTATE, $BATTERY, $ENERGYINPUT, $ENERGYSTORAGE, $FEEDTEMP, $MAINTENANCEMODE, $OPERATIONMODE,
+      $RADIOCOMERR, $RADIOSIGNALSTRENGTH, $ROOMTEMP, $SETPOINT, $SETPOINTTEMP, $SETPOINTTEMPLOCAL, $SUMMERMODE, $TEMPERATURE, $WINDOW
+      for the subType hvac.06.
       This data is available as a local variable in perl, as environment variable for shell
       scripts, and will be textually replaced for Fhem commands.
     </li>
@@ -19378,7 +19506,7 @@ plugin_b =&gt; {
     </li>
     <li><a name="EnOcean_summerMode">summerMode</a> off|on,
       [summerMode] = off is default.<br>
-      Put Battery Powered Actuator (hvac.01) or Heating Radiator Actuating Drive (hvac.04) in summer operation
+      Put Battery Powered Actuator (hvac.01/hvac.06) or Heating Radiator Actuating Drive (hvac.04) in summer operation
       to reduce energy consumption. If [summerMode] = on, the set commands are not executed.
     </li>
     <li><a name="EnOcean_switchHysteresis">switchHysteresis</a> &lt;value&gt;,
@@ -19447,10 +19575,13 @@ plugin_b =&gt; {
       request UTE teach-in/teach-out response message, the standard value depends on the EEP profil
       </li>
     <li><a href="#verbose">verbose</a></li>
-    <li><a name="EnOcean_wakeUpCycle">wakeUpCycle</a> t/s, [wakeUpCycle] = 10 s ... 151200 s, 300 s is default.<br>
+    <li><a name="EnOcean_wakeUpCycle">wakeUpCycle</a> t/s, [wakeUpCycle] = auto|10 s ... 151200 s, 300 s is default for hvac.04 and auto for hvac.06.<br>
       Transmission cycle of the actuator.
     </li>
     <li><a href="#webCmd">webCmd</a></li>
+    <li><a name="EnOcean_windowOpenCtrl">windowOpenCtrl</a> disable|enable, disable s is default.<br>
+      Window open detection. Valve will be closed if the window is open.
+    </li>
     </ul>
   </ul>
   <br>
@@ -20619,8 +20750,8 @@ plugin_b =&gt; {
         [Holter SmartDrive MX]<br>
      <ul>
        <li>T: t/&#176C SPT: t/&#176C SP: setpoint/%</li>
-       <li>alarm: measurement_error|battery_empty|frost_protection|blocked_valve|end_point_detection_error|no_valve|not_taught_in|no_response_from_controller|teach-in_error</li>
-       <li>battery: ok|empty</li>
+       <li>alarm: no_response_from_actuator|measurement_error|battery_empty|frost_protection|blocked_valve|end_point_detection_error|no_valve|not_taught_in|no_response_from_controller|teach-in_error</li>
+       <li>battery: ok|low</li>
        <li>blockKey: yes|no</li>
        <li>delta: &lt;floating-point number&gt;</li>
        <li>feedTemp: t/&#176C</li>
@@ -20641,9 +20772,47 @@ plugin_b =&gt; {
        <li>teach: &lt;result of teach procedure&gt;</li>
        <li>temperature: t/&#176C</li>
        <li>waitingCmds: no_change|runInit|setpoint|setpointTemp|valveCloses|valveOpens</li>
+       <li>wakeUpCycle: t/s</li>
        <li>state: T: t/&#176C SPT: t/&#176C SP: setpoint/%</li>
      </ul><br>
         The attr subType must be hvac.04. This is done if the device was created by
+        autocreate.
+     </li>
+     <br><br>
+
+     <li>Heating Radiator Actuating Drive (EEP A5-20-06)<br>
+        [Micropelt iTRV MVA-005, OPUS Micropelt HOME]<br>
+     <ul>
+       <li>T: t/&#176C SPT: t/&#176C SP: setpoint/%</li>
+       <li>alarm: no_response_from_actuator</li>
+       <li>battery: ok|low</li>
+       <li>blockKey: yes|no</li>
+       <li>delta: &lt;floating-point number&gt;</li>
+       <li>feedTemp: t/&#176C</li>
+       <li>maintenanceMode: off|runInit|valveClosed|valveOpend:runInit</li>
+       <li>measurementState: active|inactive</li>
+       <li>operationMode: off|setpoint|setpointTemp</li>
+       <li>p_d: &lt;floating-point number&gt;</li>
+       <li>p_i: &lt;floating-point number&gt;</li>
+       <li>p_p: &lt;floating-point number&gt;</li>
+       <li>pidAlarm: actuator_in_errorPos|dead_sensor|no_temperature_value|setpoint_device_missing</li>
+       <li>pidState: alarm|idle|processing|start|stop|</li>
+       <li>radioComErr: off|on</li>
+       <li>radioSignalStrength: obstructed|ok</li>
+       <li>roomTemp: t/&#176C</li>
+       <li>setpoint: setpoint/%</li>
+       <li>setpointSet: setpoint/%</li>
+       <li>setpointCalc: setpoint/%</li>
+       <li>setpointTemp: t/&#176C</li>
+       <li>setpointTempSet: t/&#176C</li>
+       <li>teach: &lt;result of teach procedure&gt;</li>
+       <li>temperature: t/&#176C</li>
+       <li>waitingCmds: no_change|runInit|setpoint|setpointTemp|standby</li>
+       <li>wakeUpCycle: auto|t/s</li>
+       <li>window: open|closed</li>
+       <li>state: T: t/&#176C SPT: t/&#176C SP: setpoint/%</li>
+     </ul><br>
+        The attr subType must be hvac.06. This is done if the device was created by
         autocreate.
      </li>
      <br><br>
@@ -25737,8 +25906,8 @@ Step C0 C1<br>
 <div class='langLinks'>[EN <a href='commandref_DE.html#FULLY'>DE</a>]</div>
 <ul>
    Module for controlling of Fully browser on Android tablets. Requires a Plus license
-   of Fully browser app. Remote device management must be enabled in Fully app. Requires
-   Fully app version 1.27 or later.
+   of Fully browser app. Remote device management and remote admin in local network
+   must be enabled in Fully app. Requires Fully app version 1.27 or later.
    </br></br>
    
    <a name="HMCCUdefine"></a>
@@ -29253,7 +29422,7 @@ Step C0 C1<br>
       </li><br/>
       <li><b>rpcinterfaces &lt;interface&gt;[,...]</b><br/>
    		Specify list of CCU RPC interfaces. HMCCU will register a RPC server for each interface.
-   		Interface BidCos-RF is default and always active. Valid interfaces are:<br/><br/>
+   		Either interface BidCos-RF or HmIP-RF (HmIP only) is default. Valid interfaces are:<br/><br/>
    		<ul>
    		<li>BidCos-Wired (Port 2000)</li>
    		<li>BidCos-RF (Port 2001)</li>
@@ -29275,7 +29444,7 @@ Step C0 C1<br>
 	   </li><br/>
       <li><b>rpcport &lt;value[,...]&gt;</b><br/>
          Deprecated, use attribute 'rpcinterfaces' instead. Specify list of RPC ports on CCU.
-         Default is 2001. Valid RPC ports are:<br/><br/>
+         Either port 2001 or 2010 (HmIP only) is default. Valid RPC ports are:<br/><br/>
          <ul>
          <li>2000 = Wired components</li>
          <li>2001 = BidCos-RF (wireless 868 MHz components with BidCos protocol)</li>
@@ -35548,7 +35717,8 @@ absent:{&lt;json&gt;}</code></li>
 			Default: 1, valid values: 0, 1, 2<br><br>
 		</li>
 		<li>altitude<br>
-			if set, this altitude is used for calculating the pressure related to sea level (nautic null) NN<br><br>
+			if set, this altitude is used for calculating the pressure related to sea level
+			(metres above mean sea level) <abbr>MAMSL</abbr><br><br>
 			Note: this is a global attributes, e.g<br> 
 			<code>attr global altitude 220</code>
 		</li>
@@ -35655,7 +35825,8 @@ absent:{&lt;json&gt;}</code></li>
       Default: 1, valid values: 0, 1, 2<br><br>
     </li>
     <li>altitude<br>
-      if set, this altitude is used for calculating the pressure related to sea level (nautic null) NN<br><br>
+      if set, this altitude is used for calculating the pressure related to sea level
+      (metres above mean sea level) <abbr>MAMSL</abbr><br><br>
       Note: this is a global attributes, e.g<br> 
       <ul>
         attr global altitude 220
@@ -44340,12 +44511,6 @@ If you are using Mopidy with Spotify support you may also need LWP::UserAgent ->
       messages, but not forward them.
       </li><br>
 
-    <a name="rawEvents"></a>
-    <li>rawEvents &lt;topic-regexp&gt;<br>
-      Send all messages as events attributed to this MQTT2_SERVER instance.
-      Should only be used, if there is no MQTT2_DEVICE to process the topic.
-      </li><br>
-
     <a name="keepaliveFactor"></a>
     <li>keepaliveFactor<br>
       the oasis spec requires a disconnect, if after 1.5 times the client
@@ -44358,6 +44523,20 @@ If you are using Mopidy with Spotify support you may also need LWP::UserAgent ->
       </ul>
       </li>
     
+    <a name="rawEvents"></a>
+    <li>rawEvents &lt;topic-regexp&gt;<br>
+      Send all messages as events attributed to this MQTT2_SERVER instance.
+      Should only be used, if there is no MQTT2_DEVICE to process the topic.
+      </li><br>
+
+    <a name="rePublish"></a>
+    <li>rePublish<br>
+      if a topic is published from a source inside of FHEM (e.g. MQTT2_DEVICE),
+      it is only sent to real MQTT clients, and it will not internally
+      republished. By setting this attribute the topic will also be dispatched
+      to the FHEM internal clients.
+      </li><br>
+
     <a name="SSL"></a>
     <li>SSL<br>
       Enable SSL (i.e. TLS)
@@ -45195,8 +45374,9 @@ MSwitch is an auxiliary module that works both event- and time-controlled. <br /
     <li> MSwitch_Mode: Full, Notify, Toggle - Device Operation Mode </li>
     <li> MSwitch_Condition_Time: 0.1 - activation of the trigger conditions for timed triggering </li>
     <li> MSwitch_Safemode: 0.1 - 1. aborts all actions of the device if more than 20 calls per second take place </li>
-    <li> MSwitch_RandomTime - see Wiki </li>
-    <li> MSwitch_RandomNumber - see Wiki </li>
+    <li> MSwitch_RandomTime - see Wiki: https://wiki.fhem.de/wiki/MSwitch#MSwitch_Random_Time_.28HH:MM:SS-HH:MM:SS.29 </li>
+    <li> MSwitch_RandomNumber - see Wiki: https://wiki.fhem.de/wiki/MSwitch#MSwitch_Random_Number </li>
+	<li> MSwitch_Event_Id_Distributor - see Wiki: https://wiki.fhem.de/wiki/MSwitch#MSwitch_Event_Id_Distributor </li>
   </ul>
 </ul>
 
@@ -54835,6 +55015,8 @@ attr RFXCOMUSB longids TX3_T,TX3_H</PRE>
 <div>
 	<ul>The module ROLLO offers an easy away to control shutters with one or two relays and to stop them exactly. <br>
 	The current position (in %) will be displayed in fhem. It doesn't matter which hardware is used to control the shutters as long as they are working with FHEM. <br />
+	<h4>Note</h4>
+	If you had installed ROLLO before it became part of FHEM and you didn't update it for a long time, you might miss the "position" readings and the corresponding set command. "position" was replaced with "pct" to ensure compatibility with other modules (like <a href="https://fhem.de/commandref.html#AutoShuttersControl">Automatic shutter control - ASC</a>). Please adjust your notifies/DOIFs accordingly. 
 	<h4>Example</h4>
 		<code>define TestRollo ROLLO</code>
 		
@@ -58879,6 +59061,7 @@ Here an event is defined, where in time of 2 seconds the Mute-Button has to be p
        <li>Start a Recording</li>
        <li>Stop a Recording (using command or automatically after the &lt;RecordTime&gt; period</li>
        <li>Trigger of snapshots and optionally send them alltogether by Email using the integrated Email client </li>
+       <li>Trigger snapshots of all defined cams and optionally send them alltogether by Email using the integrated Email client </li>
        <li>Deaktivate a Camera in Synology Surveillance Station</li>
        <li>Activate a Camera in Synology Surveillance Station</li>
        <li>Control of the exposure modes day, night and automatic </li>
@@ -59640,52 +59823,49 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
   <li><b> set &lt;name&gt; snap [&lt;number&gt;] [&lt;time difference&gt;] [snapEmailTxt:"subject => &lt;subject text&gt;, body => &lt;message text&gt;"]</b> &nbsp;&nbsp;&nbsp;&nbsp;(valid for CAM)</li> <br>
   
   One or multiple snapshots are triggered. The number of snapshots to trigger and the time difference (in seconds) between
-  each snapshots can be optionally specified. Without any specification only one snapshot is triggered.
-  The ID and the filename of the last snapshot will be displayed in Reading "LastSnapId" respectively "LastSnapFilename" of the
-  device. <br>
-  The snapshot Email shipping is activated by setting the <a href="#SSCamattr">attribute</a> "snapEmailTxt". If you want 
-  temporary overwrite the message text set in "snapEmailTxt", you can optionally specify the "snapEmailTxt:"-tag as shown
-  above. <br><br>
+  each snapshot can be optionally specified. Without any specification only one snapshot is triggered. <br>
+  The ID and the filename of the last snapshot will be displayed in Reading "LastSnapId" respectively 
+  "LastSnapFilename". <br>
+  To get data of the last 1-10 snapshots in various versions, the <a href="#SSCamattr">attribute</a> "snapReadingRotate"
+  can be used.
+  <br><br>
   
-  <b>Email shipping preparation</b> <br><br>
+  The snapshot <b>Email shipping</b> can be activated by setting <a href="#SSCamattr">attribute</a> "snapEmailTxt". 
+  Before you have to prepare the Email shipping as described in section <a href="#SSCamEmail">Setup Email shipping</a>. 
+  (for further information execute "<b>get &lt;name&gt; versionNotes 7</b>") <br>
+  If you want temporary overwrite the message text set in attribute "snapEmailTxt", you can optionally specify the 
+  "snapEmailTxt:"-tag as shown above. <br><br>
   
-  The snapshots can be sent by <b>Email</b> alltogether after creation. For this purpose the module contains its own Email client. 
-  Before you can use this function you have to install the Perl-module <b>MIME::Lite</b>. On debian systems it can be 
-  installed with command: <br><br>
-   
-   <ul>
-    sudo apt-get install libmime-lite-perl
-   </ul>
-   <br>
+  <b>Examples:</b>
+  <pre>
+    set &lt;name&gt; snap 4 
+    set &lt;name&gt; snap 3 3 snapEmailTxt:"subject => Movement alarm $CAM, body => A movement was recognised at Carport"
+  </pre>
+  </ul>
+  <br><br>
   
-  There are some attributes must be set or can be used optionally. <br>
-  At first the Credentials for access the Email outgoing server must be set by command <b>"set &lt;name&gt; smtpcredentials &lt;user&gt; &lt;password&gt;"</b>.
-  The connection establishment to the server is initially done unencrypted and switches to an encrypted connection if SSL 
-  encryption is available. In that case the transmission of User/Password takes place encrypted too. 
-  If attribute "smtpSSLPort" is defined, the established connection to the Email server will be encrypted immediately.
-  Attributes which are optional are marked: <br><br>
+  <ul>
+  <li><b> set &lt;name&gt; snapCams [&lt;number&gt;] [&lt;time difference&gt;] [CAM:"&lt;camera&gt;, &lt;camera&gt, ..."]</b> &nbsp;&nbsp;&nbsp;&nbsp;(valid for SVS)</li> <br>
   
-  <ul>   
-    <table>  
-    <colgroup> <col width=12%> <col width=88%> </colgroup>
-      <tr><td style="vertical-align:top"> <b>snapEmailTxt</b> <td>- Activates the Email shipping. Has the form: <br>
-                                                                  <code>subject => &lt;subject text&gt;, body => &lt;message text&gt; </code><br> 
-                                                                  The placeholder variables $CAM, $DATE and $TIME can be used. $CAM is 
-                                                                  replaced by the device alias or the name of camera in SVS if alias is not 
-                                                                  defined. $DATE and $TIME are replaced with the current date and time. </td></tr>
-      <tr><td>                            <b>smtpHost</b>     </td><td>- Hostname of outgoing Email server (e.g. securesmtp.t-online.de) </td></tr>
-      <tr><td>                            <b>smtpFrom</b>     </td><td>- Return address (&lt;name&gt@&lt;domain&gt) </td></tr>
-      <tr><td>                            <b>smtpTo</b>       </td><td>- Receiving address(es) (&lt;name&gt@&lt;domain&gt) </td></tr>
-      <tr><td>                            <b>smtpPort</b>     </td><td>- (optional) Port of outgoing Email server (default: 25) </td></tr>
-	  <tr><td>                            <b>smtpCc</b>       </td><td>- (optional) carbon-copy receiving address(es) (&lt;name&gt@&lt;domain&gt) </td></tr>
-	  <tr><td>                            <b>smtpNoUseSSL</b> </td><td>- (optional) "1" if no SSL encryption should be used for Email shipping (default: 0) </td></tr>
-      <tr><td>                            <b>smtpSSLPort</b>  </td><td>- (optional) Port for SSL encrypted connection (default: 465) </td></tr>
-	  <tr><td>                            <b>smtpDebug</b>    </td><td>- (optional) switch on the debugging of SMTP connection </td></tr>
-    </table>
-   </ul>     
-   <br>
-   
-  For further information please see description of the <a href="#SSCamattr">attributes</a>. <br>
+  One or multiple snapshots of denoted cameras are triggered. If no cameras are denoted, the snapshots are triggered in all 
+  of the defined cameras in FHEM.
+  Optionally the number of snapshots to trigger (default: 1) and the time difference (in seconds) between
+  each snapshot (default: 2) can be specified. <br>
+  The ID and the filename of the last snapshot will be displayed in Reading "LastSnapId" respectively "LastSnapFilename" of
+  the appropriate camera device. <br><br>
+  
+  The snapshot <b>Email shipping</b> can be activated by setting <a href="#SSCamattr">attribute</a> "snapEmailTxt" in the 
+  SVS device <b>AND</b> in the camera devices whose snapshots should be shipped. 
+  Before you have to prepare the Email shipping as described in section <a href="#SSCamEmail">Setup Email shipping</a>. 
+  (for further information execute "<b>get &lt;name&gt; versionNotes 7</b>") <br>
+  Only the message text set in attribute "snapEmailTxt" of the SVS device is used in the created Email. The settings of 
+  those attribute in the camera devices is ignored !! <br><br>
+  
+  <b>Examples:</b>
+  <pre>
+    set &lt;name&gt; snapCams 4 
+    set &lt;name&gt; snapCams 3 3 CAM:"CamHE1, CamCarport"
+  </pre>
   </ul>
   <br><br>
   
@@ -59920,7 +60100,51 @@ http(s)://&lt;hostname&gt;&lt;port&gt;/webapi/entry.cgi?api=SYNO.SurveillanceSta
   If no options are specified, both release informations and hints will be shown. "rel" shows only release informations and
   "hints" shows only hints. By the &lt;key&gt;-specification only the hint with the specified number is shown.
   </ul>
-  <br><br>   
+  <br><br> 
+
+  <a name="SSCamEmail"></a>
+  <b>Setup Email shipping</b> <br><br>
+  
+  <ul>
+  Snapshots can be sent by <b>Email</b> alltogether after creation. For this purpose the module contains its own Email client. 
+  Before you can use this function you have to install the Perl-module <b>MIME::Lite</b>. On debian systems it can be 
+  installed with command: <br><br>
+   
+   <ul>
+    sudo apt-get install libmime-lite-perl
+   </ul>
+   <br>
+  
+  There are some attributes must be set or can be used optionally. <br>
+  At first the Credentials for access the Email outgoing server must be set by command <b>"set &lt;name&gt; smtpcredentials &lt;user&gt; &lt;password&gt;"</b>.
+  The connection establishment to the server is initially done unencrypted and switches to an encrypted connection if SSL 
+  encryption is available. In that case the transmission of User/Password takes place encrypted too. 
+  If attribute "smtpSSLPort" is defined, the established connection to the Email server will be encrypted immediately.
+  Attributes which are optional are marked: <br><br>
+  
+  <ul>   
+    <table>  
+    <colgroup> <col width=12%> <col width=88%> </colgroup>
+      <tr><td style="vertical-align:top"> <b>snapEmailTxt</b> <td>- <b>Activates the Email shipping.</b> This attribute has the format: <br>
+                                                                  <b>subject => &lt;subject text&gt;, body => &lt;message text&gt; </b><br> 
+                                                                  The placeholder $CAM, $DATE and $TIME can be used. $CAM is 
+                                                                  replaced by the device name, device alias or the name of camera in SVS if alias is not 
+                                                                  defined. $DATE and $TIME are replaced with the current date and time. </td></tr>
+      <tr><td>                            <b>smtpHost</b>     </td><td>- Hostname of outgoing Email server (e.g. securesmtp.t-online.de) </td></tr>
+      <tr><td>                            <b>smtpFrom</b>     </td><td>- Return address (&lt;name&gt@&lt;domain&gt) </td></tr>
+      <tr><td>                            <b>smtpTo</b>       </td><td>- Receiving address(es) (&lt;name&gt@&lt;domain&gt) </td></tr>
+      <tr><td>                            <b>smtpPort</b>     </td><td>- (optional) Port of outgoing Email server (default: 25) </td></tr>
+	  <tr><td>                            <b>smtpCc</b>       </td><td>- (optional) carbon-copy receiving address(es) (&lt;name&gt@&lt;domain&gt) </td></tr>
+	  <tr><td>                            <b>smtpNoUseSSL</b> </td><td>- (optional) "1" if no SSL encryption should be used for Email shipping (default: 0) </td></tr>
+      <tr><td>                            <b>smtpSSLPort</b>  </td><td>- (optional) Port for SSL encrypted connection (default: 465) </td></tr>
+	  <tr><td>                            <b>smtpDebug</b>    </td><td>- (optional) switch on the debugging of SMTP connection </td></tr>
+    </table>
+   </ul>     
+   <br>
+   
+  For further information please see description of the <a href="#SSCamattr">attributes</a>. <br>
+  </ul>
+  <br><br>  
   
   
   <a name="SSCamPolling"></a>
@@ -60268,6 +60492,12 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
 	 If mode "Full" is set, the images are retrieved with their original available resolution. That requires more ressources 
 	 and may slow down the display. By setting attribute "snapGalleryBoost=1" the display may accelerated, because in that case
 	 the images will be retrieved by continuous polling and need only bring to display. </li><br>
+     
+  <a name="snapReadingRotate"></a>
+  <li><b>snapReadingRotate 0...10</b><br>
+    Activates the version control of snapshot readings (default: 0). A consecutive number of readings "LastSnapFilename", 
+    "LastSnapId" and "LastSnapTime" until to the specified value of snapReadingRotate will be created and contain the data
+    of the last X snapshots. </li><br>
   
   <a name="showStmInfoFull"></a>
   <li><b>showStmInfoFull</b><br>
@@ -60324,7 +60554,7 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
     <tr><td><li>CamIP</li>              </td><td>- IP-Address of Camera  </td></tr>
     <tr><td><li>CamLastRec</li>         </td><td>- Path / name of last recording   </td></tr>
     <tr><td><li>CamLastRecId</li>       </td><td>- the ID of last recording   </td></tr>
-    <tr><td><li>CamLastRecTime</li>     </td><td>- date / starttime / endtime of the last recording   </td></tr>
+    <tr><td><li>CamLastRecTime</li>     </td><td>- date / starttime - endtime of the last recording (format depends of global attribute "language")  </td></tr>
     <tr><td><li>CamLiveFps</li>         </td><td>- Frames per second of Live-Stream  </td></tr>
     <tr><td><li>CamLiveMode</li>        </td><td>- Source of Live-View (DS, Camera)  </td></tr>
     <tr><td><li>camLiveQuality</li>     </td><td>- Live-Stream quality set in SVS  </td></tr>
@@ -60363,10 +60593,10 @@ attr &lt;name&gt; genericStrmHtmlTag &lt;video $HTMLATTR controls autoplay&gt;
     <tr><td><li>Errorcode</li>          </td><td>- error code of last error  </td></tr>
 	<tr><td><li>HomeModeState</li>      </td><td>- HomeMode-state (SVS-version 8.1.0 and above)   </td></tr>
 	<tr><td><li>LastLogEntry</li>       </td><td>- the neweset entry of Surveillance Station Log (only if SVS-device and if attribute pollcaminfoall is set)   </td></tr>
-    <tr><td><li>LastSnapFilename</li>   </td><td>- the filename of the last snapshot   </td></tr>
-    <tr><td><li>LastSnapId</li>         </td><td>- the ID of the last snapshot   </td></tr>    
-    <tr><td><li>LastSnapTime</li>       </td><td>- timestamp of the last snapshot   </td></tr> 
-    <tr><td><li>LastUpdateTime</li>     </td><td>- date / time the last update of readings by "caminfoall"  </td></tr> 
+    <tr><td><li>LastSnapFilename[x]</li></td><td>- the filename of the last snapshot or snapshots   </td></tr>
+    <tr><td><li>LastSnapId[x]</li>      </td><td>- the ID of the last snapshot or snapshots   </td></tr>    
+    <tr><td><li>LastSnapTime[x]</li>    </td><td>- timestamp of the last snapshot or snapshots (format depends of global attribute "language")  </td></tr> 
+    <tr><td><li>LastUpdateTime</li>     </td><td>- date / time the last update of readings by "caminfoall" (format depends of global attribute "language") </td></tr> 
     <tr><td><li>LiveStreamUrl </li>     </td><td>- the livestream URL if stream is started (is shown if <a href="#SSCamattr">attribute</a> "showStmInfoFull" is set) </td></tr> 
     <tr><td><li>Patrols</li>            </td><td>- in Synology Surveillance Station predefined patrols (at PTZ-Cameras)  </td></tr>
     <tr><td><li>PollState</li>          </td><td>- shows the state of automatic polling  </td></tr>    
@@ -60863,27 +61093,8 @@ isday</pre>
 
   <b>Attributes</b><br>
   <ul>
-    <a name="latitude"></a>
-    <li>latitude<br>
-      If set, this latitude is used to calculate sunset/sunrise<br>
-      Notation need to be in decimal format (for example Berlin = 52.666)
-      As default Frankfurt/Main, Germany (50.112) is used.
-      </li><br>
-    <a name="longitude"></a>
-    <li>longitude<br>
-        If set, this longitude is used to calculate sunset/sunrise<br>
-        Notation need to be in decimal format (for example Berlin = 13.400)
-        As default Frankfurt/Main, Germany (8.686) is used.
-        </li><br>
-    <a name="altitude"></a>
-    <li>altitude<br>
-        Used by other modules.
-        </li><br>
-    Note: these are global attributes, e.g.<br>
-    <ul>
-      attr global latitude 50.112<br>
-      attr global longitude 8.686<br>
-    </ul>
+    <li><a href="#latitude">latitude</a></li>
+    <li><a href="#longitude">longitude</a></li>
   </ul><br>
 
 </ul>
@@ -69586,7 +69797,7 @@ ZCode U</pre>
     Examples:
     <pre>
       define Forecast Weather apikey=987498ghjgf864
-      define MyWeather Weather api=OpenWeatherMapAPI,cachemaxage:600 apikey=09878945fdskv876 location=52.4545,13.4545 interval=3600 lang=de
+      define MyWeather Weather API=OpenWeatherMapAPI,cachemaxage:600 apikey=09878945fdskv876 location=52.4545,13.4545 interval=3600 lang=de
     </pre>
 
 
@@ -69654,7 +69865,7 @@ ZCode U</pre>
     Valid readings and their meaning (? can be one of 1, 2, 3, 4, 5 and stands
     for today, tomorrow, etc.):<br>
     <table>
-    <tr><td>.locense</td><td>license of the API provider, if available</td></tr>
+    <tr><td>.license</td><td>license of the API provider, if available</td></tr>
     <tr><td>city</td><td>name of town returned for location</td></tr>
     <tr><td>code</td><td>current condition code</td></tr>
     <tr><td>condition</td><td>current condition</td></tr>
@@ -69681,6 +69892,8 @@ ZCode U</pre>
     <tr><td>wind_direction</td><td>direction wind comes from in degrees (0 = north wind)</td></tr>
     <tr><td>wind_speed</td><td>same as wind</td></tr>
     </table>
+    <br>
+    The weekday of the forecast will be in the language of your FHEM system. Enter {$ENV{LANG}} into the FHEM command line to verify. If nothing is displayed or you see an unexpected language setting, add export LANG=de_DE.UTF-8 or something similar to your FHEM start script, restart FHEM and check again. If you get a locale warning when starting FHEM the required language pack might be missing. It can be installed depending on your OS and your preferences (e.g. dpkg-reconfigure locales, apt-get install language-pack-de or something similar).
     <br>
     Depending on the chosen API, other readings can be shown as well.
     The meaning of these readings can be determined from the API provider's
@@ -74548,8 +74761,8 @@ So here are some examples:
   Notes:
   <ul>
     <li>JSON has to be installed on the FHEM host.</li>
-    <li>HOWTO for public FHEM Connector skill: <a href='https://wiki.fhem.de/wiki/FHEM_Connector'>FHEM_Connector</li>
-    <li>HOWTO for privte skills: <a href='https://wiki.fhem.de/wiki/Alexa-Fhem'>alexa-fhem</li>
+    <li>HOWTO for public FHEM Connector skill: <a href='https://wiki.fhem.de/wiki/FHEM_Connector'>FHEM_Connector</a></li>
+    <li>HOWTO for privte skills: <a href='https://wiki.fhem.de/wiki/Alexa-Fhem'>alexa-fhem</a></li>
   </ul>
 
   <a name="alexa_Set"></a>
@@ -74570,6 +74783,9 @@ So here are some examples:
     <li>createDefaultConfig<br>
     adds the default config for the sshproxy to the existing config file or creates a new config file. sets the
     alexaFHEM-config attribut if not already set.</li>
+
+    <li>clearProxyCredentials<br>
+    clears all stored sshproxy credentials</li>
     <br>
   </ul>
 
@@ -77002,7 +77218,11 @@ Elsevier, Kidlington, UK, 2013
 	<ul>
 		<li><a name="inactive">inactive</a>: disables the device (similar to attribute "disable", however without the need to save</li>
 		<li><a name="active">active</a>: reactivates the device after it was set inactive</li>
-		<li><a name="clear">clear</a>: clears all readings (including the list of the last 20 freezes.)</li>
+		<li><a name="clear">clear</a>: 
+			<ul><li>statistics_all: clears the statistics (i.e. deletes all the readings created for statistics)</li>
+			<li>statistics_low: clears the statistics with low significance (see attribute fm_statistics_low)</li>
+			<li>all: clears all readings (including the list of the last 20 freezes.)</li>
+			</ul></li>
 	</ul>
   </ul>	
 <a name="freezemonGet"></a>
@@ -77024,7 +77244,10 @@ Elsevier, Kidlington, UK, 2013
 				<li>ftDay: cumulated duration of freezes per day</li>
 				<li>fcDayLast: stores cumulated no. of freezes of the last day (for daily plots)</li>
 				<li>fcDayLast: stores cumulated duration of freezes of the last day (for daily plots)</li>
+				<li>fs_.*_c: freeze statistics - count of freezes where the device was probably involved</li>
+				<li>fs_.*_t: freeze statistics - cumulated time of freezes where the device was probably involved</li>
 				<li>state: s:&lt;startTime&gt; e:&lt;endTime&gt; f:&lt;Duration&gt; d:&lt;Devices&gt;</li>;
+				
 			</ul>
 		</ul>
 
@@ -77049,7 +77272,11 @@ Elsevier, Kidlington, UK, 2013
 				<li><a name="fm_logFile">fm_logFile</a>: takes a valid file name (like e.g. ./log/freeze-%Y%m%d-%H%M%S.log). If set, logs messages of loglevel 5 (even if global loglevel is < 5) before a freeze in separate file.</li>
 				<li><a name="fm_logExtraSeconds">fm_logExtraSeconds</a>: obsolete attribute, not used anymore and should be deleted.</li>
 				<li><a name="fm_logKeep">fm_logKeep</a>: A number that defines how many logFiles should be kept. If set all logfiles except the latest n freezemon logfiles will be deleted regularly.</li>
+				<li><a name="fm_statistics">fm_statistics</a>: EXPERIMENTAL! Creates a reading for each device probably causing a freeze and counts how often it probably caused a freeze. </li>
 				<li><a name="fm_whitelistSub">fm_whitelistSub</a>: Comma-separated list of subroutines that you're sure that don't cause a freeze. Whitelisted Subs do not appear in the  "possibly caused by" list. Typically you would list subroutines here that frequently appear in the "possibly caused by" list, but you're really sure they are NOT the issue. Note: The subroutine is the initial part (before the devicename in brackets) in freezemon log messages.  </li>
+				<li><a name="fm_statistics">fm_statistics</a>: activate/deactivate freeze statistics. Creates readings for each device that possibly caused a freeze and sums up occurences and duration of those freezes</li>
+				<li><a name="fm_statistics_low">fm_statistics_low</a>: Parametrization of clear statistics_low set command, format is c:t. With clear statistics_low all statistics-readings will be deleted where count is less or equal "c" AND cumulated duration is less or equal "t"</li>
+
 				<li><a name="disable">disable</a>: activate/deactivate freeze detection</li>
 			</ul>
 		</ul>
@@ -82211,6 +82438,291 @@ sub rssFeedPrep($$)
  
 </ul>
 
+<p><a name="todoist"></a>
+<h3>todoist</h3>
+<div class='langLinks'>[EN <a href='commandref_DE.html#todoist'>DE</a>]</div>
+<ul>
+    A module to get a task list as readings from todoist. Tasks can be completed, updated and deleted.
+    The modul comes with a weblink-widget to manage tasks comfortable.
+    <br /><br />
+    As preparation to use this module, you need to get your API Symbol (API ID) from the
+    preferences of your account. 
+    <br /><br />
+    Notes:<br />
+    <ul>
+        <li>JSON, Data::Dumper, Digest::MD5, Date::Parse and Data::UUID have to be installed on the FHEM host.</li>
+    </ul>
+    <br /><br />
+    <a name="todoist_Define"></a>
+    <h4>Define</h4>
+    <ul>
+        <code>define &lt;name&gt; todoist &lt;PROJECT-ID&gt;</code><br />
+        <br />
+        <b>PROJECT-ID:</b> The ID of your project (=list).<br />
+        <br /><br />
+
+        Example:
+        <ul>
+            <code>define Einkaufsliste todoist 257528237</code><br />
+        </ul>
+    </ul><br />
+    <a name="todoist_Set"></a>
+    <h4>Set</h4>
+    <ul>
+        <li><b>accessToken</b> - set the API Symbol for your todoist app</li><br />
+        <li><b>active</b> - set the device active (starts the timer for reading task-list periodically)</li><br />
+        <li><b>inactive</b> - set the device inactive (deletes the timer, polling is off)</li><br />
+        <li><b>newAccessToken</b> - replace the saved token with a new one.</li><br />
+        <li><b>getTasks</b> - get the task list immediately, reset timer.</li><br />
+        <li><b>getUsers</b> - get the projects users immediately.</li><br />
+        <li><b>addTask</b> - create a new task. Needs title as parameter.</li><br /><br />
+        <code>set &lt;DEVICE&gt; addTask &lt;TASK_TITLE&gt;[:&lt;DUE_DATE&gt;]</code><br ><br />
+        Additional Parameters are:<br />
+        <ul>
+         <li>dueDate (due_date)=&lt;DUE_DATE&gt; (can be free form text or format: YYYY-MM-DDTHH:MM)</li>
+         <li>priority=the priority of the task (a number between 1 and 4, 4 for very urgent and 1 for natural).</li>
+         <li>responsibleUid=the todoist-ID of the user who is responsible for accomplishing the current task</li>
+         <li>assignedByUid=the todoist-ID of the user who assigned the current task</li>
+         <li>order=the order of the task inside a project (the smallest value would place the task at the top)</li>
+         <li>parentID=parent_id of the parent task. indent will be updated automatically.</li>
+         <li>indent=the indent of the task (a number between 1 and 4, where 1 is top-level)</li>
+        </ul><br />
+        Examples: <br /><br />
+            <code>set &lt;DEVICE&gt; addTask &lt;TASK_TITLE&gt; dueDate=2017-01-15 priority=2</code><br /><br />
+            <code>set &lt;DEVICE&gt; addTask &lt;TASK_TITLE&gt; dueDate=morgen</code><br /><br />
+        <li><b>updateTask</b> - update a task. Needs Task-ID or todoist-Task-ID as parameter<br /><br />
+        Possible additional parameters are:<br />
+            <ul>
+             <li>dueDate (due_date)=&lt;DUE_DATE&gt; (can be free form text or format: YYYY-MM-DDTHH:MM)</li>
+             <li>priority=(1..4) (string)</li>
+             <li>title=&lt;TITLE&gt; (string)</li>
+             <li>responsibleUid=the todoist-ID of the user who is responsible for accomplishing the current task</li>
+             <li>assignedByUid=the todoist-ID of the user who assigned the current task</li>
+             <li>order=the order of the task inside a project (the smallest value would place the task at the top)</li>
+             <li>indent=the indent of the task (a number between 1 and 4, where 1 is top-level)</li>
+             <li>parentID=parent_id of the parent task. indent will be updated automatically.</li>
+             <li>remove=&lt;TYPE&gt; (comma seperated list of attributes which should be removed from the task)</li>
+            </ul><br />
+        Examples: <br /><br />
+        <code>set &lt;DEVICE&gt; updateTask ID:12345678 dueDate=2017-01-15 priority=1</code><br />
+        <code>set &lt;DEVICE&gt; updateTask 1 dueDate=übermorgen</code><br />
+        <code>set &lt;DEVICE&gt; updateTask TITLE:Brot dueDate=übermorgen</code><br /><br /></li>
+        <li><b>completeTask</b> - completes a task. Needs number of task (reading 'Task_NUMBER'), the title (TITLE:&lt;TITLE&gt;) or the 
+        todoist-Task-ID (ID:&lt;ID&gt;) as parameter<br /><br />
+        <code>set &lt;DEVICE&gt; completeTask &lt;TASK-ID&gt;</code> - completes a task by number<br >
+        <code>set &lt;DEVICE&gt; completeTask ID:&lt;todoist-TASK-ID&gt;</code> - completes a task by todoist-Task-ID
+        <code>set &lt;DEVICE&gt; completeTask TITLE:&lt;Task title&gt;</code> - completes a task by title<br /><br /></li>
+        <li><b>closeTask</b> - closes a task. Needs number of task (reading 'Task_NUMBER')m the title (TITLE:&lt;TITLE&gt;) or the 
+        todoist-Task-ID (ID:<ID>) as parameter<br />
+        Difference to complete is: regular task is completed and moved to history, subtask is checked (marked as done, but not moved to history),<br /> 
+        recurring task is moved forward (due date is updated).<br /><br />
+        <code>set &lt;DEVICE&gt; closeTask &lt;TASK-ID&gt;</code> - completes a task by number<br />
+        <code>set &lt;DEVICE&gt; closeTask ID:&lt;todoist-TASK-ID&gt;</code> - completes a task by todoist-Task-ID
+        <code>set &lt;DEVICE&gt; closeTask TITLE:&lt;Task title&gt;</code> - completes a task by title<br /><br /></li>
+        <li><b>uncompleteTask</b> - uncompletes a Task. Use it like complete.<br /><br /></li>
+        <li><b>deleteTask</b> - deletes a task. Needs number of task (reading 'Task_NUMBER'), title (TITLE:&lt;TITLE&gt;) or the todoist-Task-ID (ID:&lt;ID&gt;) as parameter<br /><br />
+        <code>set &lt;DEVICE&gt; deleteTask &lt;TASK-ID&gt;</code> - deletes a task by number<br />
+        <code>set &lt;DEVICE&gt; deleteTask ID:&lt;todoist-TASK-ID&gt;</code> - deletes a task by todoist-Task-ID
+        <code>set &lt;DEVICE&gt; deleteTask TITLE:&lt;Task title&gt;</code> - deletes a task by title<br /><br /></li>
+        <li><b>sortTasks</b> - sort Tasks alphabetically<br /><br /></li>
+        <li><b>clearList</b> - <b><u>deletes</u></b> all Tasks from the list (only FHEM listed Tasks can be deleted)<br /><br /></li>
+        <li><b>cChildProjects</b> - searches for children and defines them if possible, deletes lists that are deleted 
+        in todoist (Attribut delDeletedLists)<br /></li>
+    </ul>
+    <br />
+    <a name="todoist_Attributes"></a>
+    <h4>Attributes</h4>
+    <ul>
+        <li><a href="#readingFnAttributes">readingFnAttributes</a></li>
+        <li><a href="#do_not_notify">do_not_notify</a></li>
+        <li><a name="#disable">disable</a></li>
+        <li>pollInterval
+        get the list every pollInterval seconds. Default is 1800. Smallest possible value is 20.<br /><br /></li>
+        <li>sortTasks
+        <ul>
+        <li>0: don't sort the tasks (default)</li>
+        <li>1: sorts Tasks alphabetically after every update</li>
+        <!--<li>2: sorts Tasks in todoist order</li>-->
+        </ul></li>
+        <br />
+        <li>hideId
+        <ul>
+        <li>0: show todoist-Task-ID (default)</li>
+        <li>1: hide the todoist-Task-ID</li>
+        </ul></li>
+        <br />
+        <li>hideListIfEmpty
+        <ul>
+        <li>0: don't hide list in widget, if empty (default)</li>
+        <li>1: hide list in widget, if empty</li>
+        </ul></li>
+        <br />
+        <li>showPriority
+        <ul>
+        <li>0: don't show priority (default)</li>
+        <li>1: show priority</li>
+        </ul></li>
+        <br />
+        <li>showAssignedBy
+        <ul>
+        <li>0: don't show assignedByUid (default)</li>
+        <li>1: show assignedByUid</li>
+        </ul></li>
+        <br />
+        <li>showIndent
+        <ul>
+        <li>0: don't show indent of the task (default)</li>
+        <li>1: show indent</li>
+        </ul></li>
+        <br />
+        <li>showOrder
+        <ul>
+        <li>0: don't show order no. of the task (default)</li>
+        <li>1: show order number</li>
+        </ul></li>
+        <br />
+        <li>showChecked
+        <ul>
+        <li>0: don't show if a task is checked (for tasks with parent_id)</li>
+        <li>1: show if a task is checked (default)</li>
+        </ul></li>
+        <br />
+        <li>showDeleted
+        <ul>
+        <li>0: don't show if a task is deleted (for tasks with parent_id)</li>
+        <li>1: show if a task is deleted (default)</li>
+        </ul></li>
+        <br />
+        <li>showResponsible
+        <ul>
+        <li>0: don't show responsibleUid (default)</li>
+        <li>1: show responsibleUid</li>
+        </ul></li>
+        <br />
+        <li>showDetailWidget
+        <ul>
+        <li>0: don't show widget in detail view of device</li>
+        <li>1: show widget in detail view of device (default)</li>
+        </ul></li>
+        <br />
+        <li>getCompleted
+        <ul>
+        <li>0: don't get completet tasks (default)</li>
+        <li>1: get completed tasks</li>
+        </ul><br />
+        <b>ATTENTION: Only premium users have access to completed tasks!</b></li>
+        <br /><br />
+        <li>autoGetUsers
+        <ul>
+        <li>0: don't get users automatically</li>
+        <li>1: get users after every "getTasks" (default)</li>
+        </ul></li>
+        <br />
+        <li>avoidDuplicates
+        <ul>
+        <li>0: don't check for duplicates (default)</li>
+        <li>1: check for duplicates, deny new entries if task exists (exactly)</li>
+        </ul></li>
+        <br />
+        <li>delDeletedLists
+        <ul>
+        <li>0: don't delete deleted childrens (default)</li>
+        <li>1: delete deleted childrens</li>
+        </ul></li>
+        <br />
+        <li>listDivider<br />
+        set the divider for the Reading listText. Default is ", ".</li>
+    </ul>
+    
+    <a name="todoist_Readings"></a>
+    <h4>Readings</h4>
+    <ul>
+        <li>Task_XXX<br />
+            the tasks are listet as Task_000, Task_001 [...].</li>
+        <li>Task_XXX_parentID<br />
+            parent ID of task XXX if not null</li>
+        <li>Task_XXX_checked<br />
+            1 when a task with parent_id is checked</li>  
+        <li>Task_XXX_isDeleted<br />
+            1 when a task with parent_id is deleted</li>
+        <li>Task_XXX_dueDate<br />
+            if a task has a due date, this reading should be filled with the date.</li>
+        <li>Task_XXX_priority<br />
+            the priority of your task.</li>
+        <li>Task_XXX_ID<br />
+            the todoist ID of Task_X.</li>
+        <li>Task_XXX_completedAt<br />
+            only for completed Tasks (attribute getCompleted).</li>
+        <li>Task_XXX_completedById<br />
+            only for completed Tasks (attribute getCompleted).</li>
+        <li>Task_XXX_assignedByUid<br />
+            the user this task was assigned by.</li>
+        <li>Task_XXX_responsibleUid<br />
+            the user this task was assigned to.</li>
+        <li>Task_XXX_indent<br />
+            shows the indent of the task (attribute showIndent).</li>
+        <li>Task_XXX_order<br />
+            shows the order no. of the task (attribute showOrder).</li>
+        <li>User_XXX<br />
+            the lists users are listet as User_000, User_001 [...].</li>
+        <li>User_XXX_ID<br />
+            the users todoist ID.</li>
+        <li>listText<br />
+            a comma seperated list of tasks in the specified list. This may be used for TTS, Messages etc.</li>
+        <li>count<br />
+            number of Tasks in list.</li>
+        <li>error<br />
+            current error. Default is none.</li>
+        <li>lastCompletedTask<br />
+            title of the last completed task.</li>
+        <li>lastCreatedTask<br />
+            title of the last created task.</li>
+        <li>lastDeletedTask<br />
+            title of the last deleted task.</li>
+        <li>lastError<br />
+            last Error.</li>
+        <li>state<br />
+            state of the todoist-Device</li>
+    </ul><br />
+    <a name="todoist_Weblink"></a>
+    <h4>Weblinks</h4>
+        FHEMWEB weblink as frontend for one or more. There are 3 different ways to setup a todoist-weblink:<br /><br />
+        <ul>
+          <li>Define a simple weblink for a Task list:
+          <br /><br />
+          <code>define &lt;NAME&gt; weblink htmlCode {todoist_Html("&lt;TODOIST-DEVCICENAME&gt;")}</code><br /><br /></li>
+          <li>Define a simple weblink for all active Task lists:
+          <br /><br />
+          <code>define &lt;NAME&gt; weblink htmlCode {todoist_Html()}</code><br /><br /></li>
+          <li>Define a simple weblink for a group of active Task lists:
+          <br /><br />
+          <code>define &lt;NAME&gt; weblink htmlCode {todoist_Html('&lt;REGEX-FILTER&gt;')}</code><br /><br /></li>
+        </ul>
+        Examples:<br /><br />
+        <code>define EinkaufslisteWeb weblink htmlCode {todoist_Html("Einkaufsliste")}</code> - single list<br />
+        <code>define EinkaufslistenWeb weblink htmlCode {todoist_Html()}</code> - all active lists<br />
+        <code>define PapaLists weblink htmlCode {todoist_Html("Papa_list.*")}</code> - all active lists beginning with "Papa_list"
+        <br /><br />
+        <ul>
+          <li>Tasks can be sorted, updated and added inside the widget. You can reload a list and delete all entries of a list.</li>
+          <li>To check (close) a task, click the checkbox in front of the completed task.</li>
+          <li>A list can be sorted by by drag & drop. You can also move a task from one list to another. This deletes the task from the "old" list and<br />
+              adds it to the new one.</li>
+          <li>The input field under the actual list can be used for adding tasks to this list. Leaving the field or pressing enter triggers addTask.</li>
+          <li>Update a task by clicking it's text. You can edit the task in an input field. Leaving the field or pressing enter triggers updateTask.</li>
+          <li>You can use parameters like "dueDate" in the input fields like this:
+            <ul>
+              <code>Milch -dueDate=morgen</code>
+            </ul>
+          </li>
+          <li>Clicking the cross behind every task deletes this one for good.</li>
+          <li>Clicking the trashcan symbol in the title bar of every list deletes all tasks from the list.</li>
+          <li>A list can be reloaded by clicking the round arrow symbol in the title bar of every list.</li>
+          <li>A list is refreshed if a getTasks for this is fired (by interval or manually).</li>
+        </ul>
+</ul>
+
+
 <p><a name="unmark"></a>
 <h3>mark</h3>
 <div class='langLinks'>[EN <a href='commandref_DE.html#unmark'>DE</a>]</div>
@@ -82380,9 +82892,12 @@ sub rssFeedPrep($$)
     <a name="vitoconnectdefine"></a>
     <b>Define</b>
     <ul>
-        <code>define &lt;name&gt; vitoconnect &lt;user&gt; &lt;password&gt; &lt;interval&gt;</code>
+        <code>define &lt;name&gt; vitoconnect &lt;user&gt; &lt;password&gt; &lt;interval&gt;</code><br>
+        It is a good idea to use a fake password here an set the correct one later because it is readable in the detail view of the device
         <br><br>
-        Example: <code>define vitoconnect vitoconnect user@mail.xx geheim 60</code>
+        Example:<br>
+        <code>define vitoconnect vitoconnect user@mail.xx fakePassword 60</code><br>
+        <code>set vitoconnect password correctPassword 60</code>
         <br><br>
                 
     </ul>
@@ -82391,15 +82906,56 @@ sub rssFeedPrep($$)
     <a name="vitoconnectset"></a>
     <b>Set</b><br>
     <ul>
-    	<li>update<br>
+    	<li><code>update</code><br>
         update readings immeadiatlely</li>
-      <li>clearReadings<br>
+      <li><code>clearReadings</code><br>
         clear all readings immeadiatlely</li> 
-      <li>password <passwd><br>
+      <li><code>password <passwd></code><br>
         store password in key store</li>
-      <li>oneTimeCharge><br>
-        store password in key store</li>
-            
+    	<li><code>logResponseOnce</code><br>
+        dumps the json response of Vissmann server to entities.json, entities.json, actions.json in FHEM log directory</li>
+        
+      <li><code>HK1-Heizkurve-Niveau shift</code><br>
+      set shift of heating curve</li>
+      <li><code>HK1-Heizkurve-Steigung slope</code><br>
+      set slope of heating curve</li>
+      
+		<li><code>HK1-Betriebsart standby,dhw,dhwAndHeating,forcedReduced,forcedNormal</code> <br>
+		set HK1-Betriebsart to standby,dhw,dhwAndHeating,forcedReduced or forcedNormal</li>
+		
+		<li><code>HK1-Solltemperatur_comfort_aktiv activate,deactivate</code> <br>
+       activate/deactivate comfort temperature</li>
+		<li><code>HK1-Solltemperatur_comfort targetTemperature</code><br>
+       set comfort target temperatur </li>
+		<li><code>HK1-Solltemperatur_eco_aktiv activate,deactivate </code><br>
+        activate/deactivate eco temperature</li>
+		<li><code>HK1-Urlaub_Start start</code><br>
+       set holiday start time <br>
+       start has to look like this: 2019-02-02T23:59:59.000Z</li>
+       <li><code>HK1-Urlaub_Ende end</code><br>
+       set holiday end time <br>
+       end has to look like this: 2019-02-16T00:00:00.000Z</li>
+		<li><code>HK1-Urlaub_unschedule</code> <br>
+       remove holiday start and end time </li>
+       
+		<li><code>HK1-Solltemperatur_normal targetTemperature</code><br>
+       sets the normale target temperature where targetTemperature is an integer between 3 and 37</li>
+		<li><code>HK1-Solltemperatur_reduziert targetTemperature</code><br>
+       sets the reduced target temperature where targetTemperature is an integer between 3 and 37 </li>
+       
+		<li><code>WW-einmaliges_Aufladen activate,deactivate</code><br>
+       activate or deactivate one time charge for hot water </li>
+       
+		<li><code>WW-Zirkulationspumpe_Zeitplan  schedule</code><br>
+       not implemented </li>
+		<li><code>WW-Zeitplan schedule</code> <br>
+       not implemented </li>
+		<li><code>WW-Haupttemperatur targetTemperature</code><br>
+       targetTemperature is an integer between 10 and 60<br>
+       sets hot water main temperature to targetTemperature </li>
+		<li><code>WW-Solltemperatur targetTemperature</code><br>
+       targetTemperature is an integer between 10 and 60<br>
+       sets hot water temperature to targetTemperature </li>     
     </ul>
     <br>
 
@@ -82421,10 +82977,10 @@ sub rssFeedPrep($$)
         Attributes:
         <ul>
 				<li><i>disable</i>:<br>         
-                xxxx  
+                stop communication with Vissmann server  
             </li>
             <li><i>verbose</i>:<br>         
-                xxxx  
+                set the verbosity level  
             </li>
             <li><i>vitoconnect_raw_readings</i>:<br>         
                 create readings with plain JSON names like 'heating.circuits.0.heating.curve.slope' instead of german identifiers  

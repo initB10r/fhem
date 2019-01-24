@@ -1,5 +1,5 @@
 ########################################################################################
-# $Id: 44_ROLLO.pm 18244 2019-01-13 22:31:34Z KernSani $ #
+# $Id: 44_ROLLO.pm 18352 2019-01-20 15:24:51Z KernSani $ #
 # Modul zur einfacheren Rolladensteuerung   										   #
 #  																					   #
 # Thomas Ramm, 2016                                                                    #
@@ -25,13 +25,17 @@
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
+#  CHANGELOG:
+#		1.404:		Hint in Commandref regarding position->pct
+# 		1.403: 		Loglevel from 3 to 5 for few messages
+#					Rollo should only drive 10 steps in "force" mode for up/down
 ########################################################################################
 package main;
 
 use strict;
 use warnings;
 
-my $version = "1.401";
+my $version = "1.403";
 
 my %sets = (
     "open"      => "noArg",
@@ -217,7 +221,7 @@ sub ROLLO_Set($@) {
         Log3 $name, 1,
           "ROLLO ($name) Set command \"position\" is deprecated. Please change your definitions to \"pct\"";
     }
-
+    my $desiredPos;
     my $arg = "";
     $arg = $a[2] if defined $a[2];
     my $arg2 = "";
@@ -249,6 +253,7 @@ sub ROLLO_Set($@) {
     if ( $cmd eq "extern" ) {
         readingsSingleUpdate( $hash, "drive-type", "extern", 1 );
         $cmd = $arg;
+        $arg = "";
     }
     elsif ( $cmd eq "reset" ) {
         my $reset_pct = $pcts{$arg};
@@ -302,7 +307,7 @@ sub ROLLO_Set($@) {
 
     ##### now do the real drive stuff
 
-    my $desiredPos = $cmd;
+    $desiredPos = $cmd;
     Log3 $name, 5, "ROLLO ($name) DesiredPos set to $desiredPos, ($arg) ";
     my $typ = AttrVal( $name, "rl_type", "normal" );
 
@@ -348,6 +353,10 @@ sub ROLLO_Set($@) {
 # Ich verstehe nicht wann nachfolgender Zustand eintreten kann, das Coding führt aber dazu, dass pct 0 (open) auf "none" gesetzt wird
 #$desiredPos = "none" if !$desiredPos || $desiredPos eq "";
     }
+
+    #set desiredPos to avoid "uninitialized" message later (happens with "blocked" - KernSani 14.01.2019
+    $desiredPos = ReadingsNum( $name, "desired_pct", 0 ) unless defined($desiredPos);
+
     Log3 $name, 5, "ROLLO ($name) DesiredPos now $desiredPos, $cmd";
 
     #wenn ich gerade am fahren bin und eine neue Zielposition angefahren werden soll,
@@ -386,7 +395,7 @@ sub ROLLO_isAllowed($$$) {
     my $pct = ReadingsVal( $name, "pct", undef );
     $pct = 100 - $pct if ( AttrVal( $name, "rl_type", "normal" ) eq "HomeKit" );    # KernSani 30.12.2018
     my $blockmode = AttrVal( $name, "rl_blockMode", "none" );
-    Log3 $name, 3, "ROLLO ($name) >> Blockmode:$blockmode $pct-->$desired_pct";
+    Log3 $name, 5, "ROLLO ($name) >> Blockmode:$blockmode $pct-->$desired_pct";
     if (   $blockmode eq "blocked"
         || ( $blockmode eq "only-up"   && $pct <= $desired_pct )
         || ( $blockmode eq "only-down" && $pct >= $desired_pct ) )
@@ -568,7 +577,7 @@ sub ROLLO_Stop($) {
     Log3 $name, 4, "ROLLO ($name) stops from $state at pct $pct";
 
     #wenn autostop=1 und pct <> 0+100 und rollo fährt, dann kein stopbefehl ausführen...
-    if ( ( $state =~ /drive-/ && $pct >= 0 && $pct <= 100 ) || AttrVal( $name, "rl_autoStop", 0 ) ne 1 ) {
+    if ( ( $state =~ /drive-/ && $pct > 0 && $pct < 100 ) || AttrVal( $name, "rl_autoStop", 0 ) ne 1 ) {
         my $command = AttrVal( $name, 'rl_commandStop', "" );
         $command = AttrVal( $name, 'rl_commandStopUp', "" ) if ( AttrVal( $name, 'rl_commandStopUp', "" ) ne "" );
         $command = AttrVal( $name, 'rl_commandStopDown', "" )
@@ -732,7 +741,13 @@ sub ROLLO_calculateDriveTime(@) {
         # Wenn force-Drive gesetzt ist fahren wir immer 100% (wenn "open" oder "closed")
         if ( AttrVal( $name, "rl_forceDrive", 0 ) == 1 && ( $oldpos == 0 || $oldpos == 100 ) ) {
             Log3 $name, 4, "ROLLO ($name): forceDrive set, driving $direction";
-            $steps = 100;
+            my $cmd = ReadingsVal( $name, "command", "stop" );
+            if ( $cmd eq "up" or $cmd eq "down" ) {
+                $steps = 10;
+            }
+            else {
+                $steps = 100;
+            }
         }
     }
 
@@ -742,6 +757,7 @@ sub ROLLO_calculateDriveTime(@) {
     }
 
     my $drivetime = $time * $steps / 100;
+    Log3 $name, 5, "ROLLO ($name) netto drive time = $drivetime";
 
     # reactionTime etc... sollten nur hinzugefügt werden, wenn auch gefahren wird...
     if ( $drivetime > 0 ) {
@@ -849,6 +865,8 @@ sub ROLLO_Attr(@) {
 <div>
 	<ul>The module ROLLO offers an easy away to control shutters with one or two relays and to stop them exactly. <br>
 	The current position (in %) will be displayed in fhem. It doesn't matter which hardware is used to control the shutters as long as they are working with FHEM. <br />
+	<h4>Note</h4>
+	If you had installed ROLLO before it became part of FHEM and you didn't update it for a long time, you might miss the "position" readings and the corresponding set command. "position" was replaced with "pct" to ensure compatibility with other modules (like <a href="https://fhem.de/commandref.html#AutoShuttersControl">Automatic shutter control - ASC</a>). Please adjust your notifies/DOIFs accordingly. 
 	<h4>Example</h4>
 		<code>define TestRollo ROLLO</code>
 		
@@ -977,10 +995,16 @@ sub ROLLO_Attr(@) {
 <div>
 	<ul>
 			<p>Das Modul ROLLO bietet eine einfache Moeglichkeit, mit ein bis zwei Relais den Hoch-/Runterlauf eines Rolladen zu steuern und punktgenau anzuhalten.<br>
-			Ausserdem wird die aktuelle Position in FHEM dargestellt. Ueber welche Hardware/Module die Ausgaenge angesprochen werden ist dabei egal.<br /><h4>Example</h4>
+			Ausserdem wird die aktuelle Position in FHEM dargestellt. Ueber welche Hardware/Module die Ausgaenge angesprochen werden ist dabei egal.<br />
+			<h4>Anmerkung</h4>
+			Wenn ROLLO installiert wurde, bevor es Bestandteil von FHEM wurde und lange kein Update gemacht wurde, wirst du die "position" readings und das entsprechende set Kommando vermissen. "position" wurde durch "pct" ersetzt, um Kompatibilität mit anderen Modulen (wie <a href="https://fhem.de/commandref_DE.html#AutoShuttersControl">Automatic shutter control - ASC</a>) sicher zu stellen. Bitte passe deine notifies/DOIFs entsprechend an.
+			
+			<h4>Example</h4>
 			<p>
 				<code>define TestRollo ROLLO</code>
 				<br />
+				
+			
 			</p><a name="ROLLO_Define"></a>
 			<h4>Define</h4>
 			<p>

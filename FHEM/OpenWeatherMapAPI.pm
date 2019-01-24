@@ -1,4 +1,4 @@
-# $Id: OpenWeatherMapAPI.pm 18241 2019-01-13 20:18:04Z CoolTux $
+# $Id: OpenWeatherMapAPI.pm 18306 2019-01-17 21:25:55Z CoolTux $
 ###############################################################################
 #
 # Developed with Kate
@@ -48,6 +48,7 @@ eval "use Encode qw(encode_utf8);1" or $missingModul .= "Encode ";
 # use Data::Dumper;    # for Debug only
 ## API URL
 use constant URL => 'https://api.openweathermap.org/data/2.5/';
+use constant VERSION => '0.2.2';
 ## URL . 'weather?' for current data
 ## URL . 'forecast?' for forecast data
 
@@ -259,10 +260,11 @@ sub _ProcessingRetrieveData($$) {
                 _ErrorHandling( $self, $data->{cod} . ': ' . $data->{message} );
             }
             else {
-
+                ### Debug
+#                 print 'Response: ' . Dumper $data;
                 ###### Ab hier wird die ResponseHash Referenze für die Rückgabe zusammen gestellt
                 $self->{cached}->{current_date_time} =
-                strftime( "%a, %e %b %Y %H:%M %p",
+                strftime( "%a, %e %b %Y %H:%M",
                     localtime( $self->{fetchTime} ) );
 
                 if ( $self->{endpoint} eq 'weather' ) {
@@ -296,29 +298,29 @@ sub _ProcessingRetrieveData($$) {
                         ),
                         'humidity' => $data->{main}->{humidity},
                         'condition' =>
-                        encode_utf8( $data->{weather}->[0]->{description} ),
+                            encode_utf8( $data->{weather}->[0]->{description} ),
                         'pressure' =>
-                        int( sprintf( "%.1f", $data->{main}->{pressure} ) + 0.5 ),
+                            int( sprintf( "%.1f", $data->{main}->{pressure} ) + 0.5 ),
                         'wind' =>
-                        int( sprintf( "%.1f", ($data->{wind}->{speed} * 3.6) ) + 0.5 ),
+                            int( sprintf( "%.1f", ($data->{wind}->{speed} * 3.6) ) + 0.5 ),
                         'wind_speed' =>
-                        int( sprintf( "%.1f", ($data->{wind}->{speed} * 3.6) ) + 0.5 ),
+                            int( sprintf( "%.1f", ($data->{wind}->{speed} * 3.6) ) + 0.5 ),
                         'wind_direction' => $data->{wind}->{deg},
                         'cloudCover'     => $data->{clouds}->{all},
                         'visibility' =>
-                        int( sprintf( "%.1f", $data->{visibility} ) + 0.5 ),
+                            int( sprintf( "%.1f", $data->{visibility} ) + 0.5 ),
                         'code'       => $codes{ $data->{weather}->[0]->{id} },
                         'iconAPI'    => $data->{weather}->[0]->{icon},
                         'sunsetTime' => strftime(
-                            "%a, %e %b %Y %H:%M %p",
+                            "%a, %e %b %Y %H:%M",
                             localtime( $data->{sys}->{sunset} )
                         ),
                         'sunriseTime' => strftime(
-                            "%a, %e %b %Y %H:%M %p",
+                            "%a, %e %b %Y %H:%M",
                             localtime( $data->{sys}->{sunrise} )
                         ),
                         'pubDate' => strftime(
-                            "%a, %e %b %Y %H:%M %p",
+                            "%a, %e %b %Y %H:%M",
                             localtime( $data->{dt} )
                         ),
                     };
@@ -337,13 +339,13 @@ sub _ProcessingRetrieveData($$) {
                                 @{ $self->{cached}->{forecast}->{hourly} },
                                 {
                                     'pubDate' => strftime(
-                                        "%a, %e %b %Y %H:%M %p",
+                                        "%a, %e %b %Y %H:%M",
                                         localtime(
                                             ( $data->{list}->[$i]->{dt} ) - 3600
                                         )
                                     ),
                                     'day_of_week' => strftime(
-                                        "%a",
+                                        "%a, %H:%M",
                                         localtime(
                                             ( $data->{list}->[$i]->{dt} ) - 3600
                                         )
@@ -403,7 +405,7 @@ sub _ProcessingRetrieveData($$) {
                                         ) + 0.5
                                     ),
                                     'humidity' =>
-                                    $data->{list}->[$i]->{main}->{humidity},
+                                        $data->{list}->[$i]->{main}->{humidity},
                                     'condition' => encode_utf8(
                                         $data->{list}->[$i]->{weather}->[0]
                                         ->{description}
@@ -424,12 +426,20 @@ sub _ProcessingRetrieveData($$) {
                                         + 0.5
                                     ),
                                     'cloudCover' =>
-                                    $data->{list}->[$i]->{clouds}->{all},
+                                        $data->{list}->[$i]->{clouds}->{all},
                                     'code' =>
-                                    $codes{ $data->{list}->[$i]->{weather}->[0]
+                                        $codes{ $data->{list}->[$i]->{weather}->[0]
                                         ->{id} },
                                     'iconAPI' =>
-                                    $data->{list}->[$i]->{weather}->[0]->{icon},
+                                        $data->{list}->[$i]->{weather}->[0]->{icon},
+                                    'rain1h' =>
+                                        $data->{list}->[$i]->{rain}->{'1h'},
+                                    'rain3h' =>
+                                        $data->{list}->[$i]->{rain}->{'3h'},
+                                    'snow1h' =>
+                                        $data->{list}->[$i]->{snow}->{'1h'},
+                                    'snow3h' =>
+                                        $data->{list}->[$i]->{snow}->{'3h'},
                                 },
                             );
 
@@ -462,7 +472,7 @@ sub _ErrorHandling($$) {
     my ( $self, $err ) = @_;
 
     $self->{cached}->{current_date_time} =
-      strftime( "%a, %e %b %Y %H:%M %p", localtime( $self->{fetchTime} ) ),
+      strftime( "%a, %e %b %Y %H:%M", localtime( $self->{fetchTime} ) ),
       $self->{cached}->{status} = $err;
     $self->{cached}->{validity} = 'stale';
 }
@@ -476,6 +486,7 @@ sub _CreateForecastRef($) {
             long => $self->{long},
             apiMaintainer =>
 'Leon Gaultier (<a href=https://forum.fhem.de/index.php?action=profile;u=13684>CoolTux</a>)',
+            apiVersion => VERSION,
         }
     );
 

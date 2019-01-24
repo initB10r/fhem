@@ -52,10 +52,11 @@ our %definition = (
 				"direction" => "from_device",
 				"event" => true,
 				"parameter" => {
-					"index" => 11.0,
-					"param" => "state",
-					"size" => 3.0,
-					"type" => "integer"
+					"11.0" => {
+						"param" => "state",
+						"size" => 3.0,
+						"type" => "integer"
+					}
 				},
 				"type" => 0x69
 			},
@@ -64,10 +65,11 @@ our %definition = (
 				"direction" => "from_device",
 				"event" => true,
 				"parameter" => {
-					"index" => 11.0,
-					"param" => "state",
-					"size" => 2.0,
-					"type" => "integer"
+					"11.0" => {
+						"param" => "state",
+						"size" => 2.0,
+						"type" => "integer"
+					}
 				},
 				"type" => 0x69
 			},
@@ -80,10 +82,11 @@ our %definition = (
 				"channel_field" => 10,
 				"direction" => "to_device",
 				"parameter" => {
-					"index" => 11.0,
-					"param" => "state",
-					"size" => 2.0,
-					"type" => "integer"
+					"11.0" => {
+						"param" => "state",
+						"size" => 2.0,
+						"type" => "integer"
+					}
 				},
 				"type" => 0x73
 			}
