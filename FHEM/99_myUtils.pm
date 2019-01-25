@@ -1225,20 +1225,33 @@ presentNotifier($$)
 Log 3, 'Start presentNotifier';
 my $readingName  = shift; 
 my $readingValue = shift;
+my $readingUser  = ""; 
 my $lastSeen = "";
 my $notifActive = "off";
 
 if (index($readingName,"Marc") != -1) {
+	$readingUser = "Marc";
 	$notifActive = Value("present_Marc_StatusMsg");
 	$lastSeen = ReadingsVal("unifiController","Marc-Business_last_seen","null");
 	} 
 elsif(index($readingName,"Henny") != -1) {
+	$readingUser = "Henny";
 	$notifActive = Value("present_Henny_StatusMsg");
 	$lastSeen = ReadingsVal("unifiController","Hennis-iPhone_last_seen","null");
 	}
+elsif(index($readingName,"Maike") != -1) {
+	$readingUser = "Maike";
+	$notifActive = Value("present_Maike_StatusMsg");
+	$lastSeen = ReadingsVal("unifiController","schneckenSonyMaike_last_seen","null");
+	}
+elsif(index($readingName,"Jacob") != -1) {
+	$readingUser = "Jacob";
+	$notifActive = Value("present_Jacob_StatusMsg");
+	$lastSeen = ReadingsVal("unifiController","schneckenSonyJacob_last_seen","null");
+	}
 
 if ( lc($notifActive) eq 'on' ) {
-	mySendMessage("0","$readingValue - $lastSeen","1");
+	mySendMessage("0","$readingUser - $readingValue - $lastSeen","1");
 	}
 
 Log 3, "\$notifActive = $notifActive - \$readingValue = $readingValue";
