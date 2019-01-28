@@ -110,50 +110,62 @@ define HMW_NSK1_Taster_Unused_01 HM485 00009067_01
 setuuid HMW_NSK1_Taster_Unused_01 5c4868da-f33f-b82c-130a-f09c6a51f1f8530f
 attr HMW_NSK1_Taster_Unused_01 room HMWired
 attr HMW_NSK1_Taster_Unused_01 subType key
+attr HMW_NSK1_Taster_Unused_01 event-on-change-reading press_long,press_short
 define HMW_NSK1_Taster_Unused_02 HM485 00009067_02
 setuuid HMW_NSK1_Taster_Unused_02 5c4868da-f33f-b82c-fe6d-0dc6617357bd4729
 attr HMW_NSK1_Taster_Unused_02 room HMWired
 attr HMW_NSK1_Taster_Unused_02 subType key
+attr HMW_NSK1_Taster_Unused_02 event-on-change-reading press_long,press_short
 define HMW_NSK1_Taster_Unused_03 HM485 00009067_03
 setuuid HMW_NSK1_Taster_Unused_03 5c4868da-f33f-b82c-1c36-d073ac80711ac36a
 attr HMW_NSK1_Taster_Unused_03 room HMWired
 attr HMW_NSK1_Taster_Unused_03 subType key
+attr HMW_NSK1_Taster_Unused_03 event-on-change-reading press_long,press_short
 define HMW_NSK1_Taster_Unused_04 HM485 00009067_04
 setuuid HMW_NSK1_Taster_Unused_04 5c4868da-f33f-b82c-e76a-a730598b93efe30d
 attr HMW_NSK1_Taster_Unused_04 room HMWired
 attr HMW_NSK1_Taster_Unused_04 subType key
+attr HMW_NSK1_Taster_Unused_04 event-on-change-reading press_long,press_short
 define HMW_NSK1_Taster_Unused_05 HM485 00009067_05
 setuuid HMW_NSK1_Taster_Unused_05 5c4868da-f33f-b82c-ede8-48c40cac03084af7
 attr HMW_NSK1_Taster_Unused_05 room HMWired
 attr HMW_NSK1_Taster_Unused_05 subType key
+attr HMW_NSK1_Taster_Unused_05 event-on-change-reading press_long,press_short
 define HMW_NSK1_Taster_Unused_06 HM485 00009067_06
 setuuid HMW_NSK1_Taster_Unused_06 5c4868da-f33f-b82c-ab0f-b8d6ba07877eb789
 attr HMW_NSK1_Taster_Unused_06 room HMWired
 attr HMW_NSK1_Taster_Unused_06 subType key
+attr HMW_NSK1_Taster_Unused_06 event-on-change-reading press_long,press_short
 define HMW_NSK1_Taster_Unused_07 HM485 00009067_07
 setuuid HMW_NSK1_Taster_Unused_07 5c4868da-f33f-b82c-cee6-e2dca58ff67e2c36
 attr HMW_NSK1_Taster_Unused_07 room HMWired
 attr HMW_NSK1_Taster_Unused_07 subType key
+attr HMW_NSK1_Taster_Unused_07 event-on-change-reading press_long,press_short
 define HMW_NSK1_Taster_Unused_08 HM485 00009067_08
 setuuid HMW_NSK1_Taster_Unused_08 5c4868da-f33f-b82c-263e-8503371e27815d30
 attr HMW_NSK1_Taster_Unused_08 room HMWired
 attr HMW_NSK1_Taster_Unused_08 subType key
+attr HMW_NSK1_Taster_Unused_08 event-on-change-reading press_long,press_short
 define HMW_NSK1_Taster_Unused_09 HM485 00009067_09
 setuuid HMW_NSK1_Taster_Unused_09 5c4868da-f33f-b82c-a0fa-5f425f04d2d3bdc2
 attr HMW_NSK1_Taster_Unused_09 room HMWired
 attr HMW_NSK1_Taster_Unused_09 subType key
+attr HMW_NSK1_Taster_Unused_09 event-on-change-reading press_long,press_short
 define HMW_NSK1_Taster_Unused_10 HM485 00009067_10
 setuuid HMW_NSK1_Taster_Unused_10 5c4868da-f33f-b82c-482c-243670202174323d
 attr HMW_NSK1_Taster_Unused_10 room HMWired
 attr HMW_NSK1_Taster_Unused_10 subType key
+attr HMW_NSK1_Taster_Unused_10 event-on-change-reading press_long,press_short
 define HMW_NSK1_Taster_Unused_11 HM485 00009067_11
 setuuid HMW_NSK1_Taster_Unused_11 5c4868da-f33f-b82c-9f13-41bdb8c06dacfdb1
 attr HMW_NSK1_Taster_Unused_11 room HMWired
 attr HMW_NSK1_Taster_Unused_11 subType key
+attr HMW_NSK1_Taster_Unused_11 event-on-change-reading press_long,press_short
 define HMW_NSK1_Taster_Unused_12 HM485 00009067_12
 setuuid HMW_NSK1_Taster_Unused_12 5c4868da-f33f-b82c-eafa-237d5499749ac3a9
 attr HMW_NSK1_Taster_Unused_12 room HMWired
 attr HMW_NSK1_Taster_Unused_12 subType key
+attr HMW_NSK1_Taster_Unused_12 event-on-change-reading press_long,press_short
 
 #################################################################################
 # RS 485 Schaltaktor 2-fach / 76801 Setting
@@ -173,10 +185,12 @@ define HMW_NSK2_Taster_Unused_01 HM485 000093BA_01
 setuuid HMW_NSK2_Taster_Unused_01 5c4868da-f33f-b82c-443b-4149cffca7e0e08c
 attr HMW_NSK2_Taster_Unused_01 room HMWired
 attr HMW_NSK2_Taster_Unused_01 subType key
+attr HMW_NSK2_Taster_Unused_01 event-on-change-reading press_long,press_short
 define HMW_NSK2_Taster_Unused_02 HM485 000093BA_02
 setuuid HMW_NSK2_Taster_Unused_02 5c4868da-f33f-b82c-875e-a3b8ac03e6259fd0
 attr HMW_NSK2_Taster_Unused_02 room HMWired
 attr HMW_NSK2_Taster_Unused_02 subType key
+attr HMW_NSK2_Taster_Unused_02 event-on-change-reading press_long,press_short
 define HMW_NSK2_Schalter_Unused_03 HM485 000093BA_03
 setuuid HMW_NSK2_Schalter_Unused_03 5c4868da-f33f-b82c-6ecc-aa7c9e92be6ebf4f
 attr HMW_NSK2_Schalter_Unused_03 room HMWired
@@ -207,43 +221,49 @@ setuuid HMW_VRT1_InternScharf 5c4868da-f33f-b82c-b467-18a1d17dbfc91eae
 attr HMW_VRT1_InternScharf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 attr HMW_VRT1_InternScharf room HMWired
 attr HMW_VRT1_InternScharf subType sensor
+attr HMW_VRT1_InternScharf event-on-change-reading sensor
 
 define HMW_VRT1_ExternScharf HM485 0000BBB1_02
 setuuid HMW_VRT1_ExternScharf 5c4868da-f33f-b82c-57da-36bf0cc26e898ac8
 attr HMW_VRT1_ExternScharf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 attr HMW_VRT1_ExternScharf room HMWired
 attr HMW_VRT1_ExternScharf subType sensor
+attr HMW_VRT1_ExternScharf event-on-change-reading sensor
 
 define HMW_VRT1_AlarmAktiv HM485 0000BBB1_03
 setuuid HMW_VRT1_AlarmAktiv 5c4868db-f33f-b82c-d306-4dd066a608fa9aba
 attr HMW_VRT1_AlarmAktiv group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 attr HMW_VRT1_AlarmAktiv room HMWired
 attr HMW_VRT1_AlarmAktiv subType sensor
+attr HMW_VRT1_AlarmAktiv event-on-change-reading sensor
 
 define HMW_VRT1_TerasseAuf HM485 0000BBB1_04
 setuuid HMW_VRT1_TerasseAuf 5c4868db-f33f-b82c-f4a0-d807509364b5e3e9
 attr HMW_VRT1_TerasseAuf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 attr HMW_VRT1_TerasseAuf room HMWired
 attr HMW_VRT1_TerasseAuf subType sensor
+attr HMW_VRT1_TerasseAuf event-on-change-reading sensor
 
 define HMW_VRT1_SeiteneingangAuf HM485 0000BBB1_05
 setuuid HMW_VRT1_SeiteneingangAuf 5c4868db-f33f-b82c-fd8e-688f535d9334cb1d
 attr HMW_VRT1_SeiteneingangAuf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 attr HMW_VRT1_SeiteneingangAuf room HMWired
 attr HMW_VRT1_SeiteneingangAuf subType sensor
+attr HMW_VRT1_SeiteneingangAuf event-on-change-reading sensor
 
 define HMW_VRT1_GaesteterasseAuf HM485 0000BBB1_06
 setuuid HMW_VRT1_GaesteterasseAuf 5c4868db-f33f-b82c-d374-a2fba7cdf89d69f6
 attr HMW_VRT1_GaesteterasseAuf group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 attr HMW_VRT1_GaesteterasseAuf room HMWired
 attr HMW_VRT1_GaesteterasseAuf subType sensor
+attr HMW_VRT1_GaesteterasseAuf event-on-change-reading sensor
 
 define HMW_VRT1_KlingelTor HM485 0000BBB1_08
 setuuid HMW_VRT1_KlingelTor 5c4868db-f33f-b82c-e0e2-4a54ac2ad8f5e2fa
-attr HMW_VRT1_KlingelTor event-on-change-reading sensor
 attr HMW_VRT1_KlingelTor group Verschlüsse,HMW_VRT1_Verteiler_Alarmanlage
 attr HMW_VRT1_KlingelTor room HMWired
 attr HMW_VRT1_KlingelTor subType sensor
+attr HMW_VRT1_KlingelTor event-on-change-reading sensor
 define FileLog_HMW_VRT1_KlingelTor FileLog ./log/HMW_VRT1_KlingelTor-%Y.log HMW_VRT1_KlingelTor
 setuuid FileLog_HMW_VRT1_KlingelTor 5c4868db-f33f-b82c-3c20-3c561dec40dd57c6
 attr FileLog_HMW_VRT1_KlingelTor logtype text
@@ -253,23 +273,27 @@ define HMW_VRT1_Verschluss_Unused_07 HM485 0000BBB1_07
 setuuid HMW_VRT1_Verschluss_Unused_07 5c4868db-f33f-b82c-6dda-e7cb4d5dfde3db63
 attr HMW_VRT1_Verschluss_Unused_07 room HMWired
 attr HMW_VRT1_Verschluss_Unused_07 subType sensor
+attr HMW_VRT1_Verschluss_Unused_07 event-on-change-reading sensor
 define HMW_VRT1_Verschluss_Unused_09 HM485 0000BBB1_09
 setuuid HMW_VRT1_Verschluss_Unused_09 5c4868db-f33f-b82c-cf07-cb54436a222f2d8f
 attr HMW_VRT1_Verschluss_Unused_09 room HMWired
 attr HMW_VRT1_Verschluss_Unused_09 subType sensor
+attr HMW_VRT1_Verschluss_Unused_09 event-on-change-reading sensor
 define HMW_VRT1_Verschluss_Unused_10 HM485 0000BBB1_10
 setuuid HMW_VRT1_Verschluss_Unused_10 5c4868db-f33f-b82c-92e9-818b5de2a245780e
 attr HMW_VRT1_Verschluss_Unused_10 room HMWired
 attr HMW_VRT1_Verschluss_Unused_10 subType sensor
+attr HMW_VRT1_Verschluss_Unused_10 event-on-change-reading sensor
 define HMW_VRT1_Verschluss_Unused_11 HM485 0000BBB1_11
 setuuid HMW_VRT1_Verschluss_Unused_11 5c4868db-f33f-b82c-bf9c-39c1b2859ccd8741
 attr HMW_VRT1_Verschluss_Unused_11 room HMWired
 attr HMW_VRT1_Verschluss_Unused_11 subType sensor
+attr HMW_VRT1_Verschluss_Unused_11 event-on-change-reading sensor
 define HMW_VRT1_Verschluss_Unused_12 HM485 0000BBB1_12
 setuuid HMW_VRT1_Verschluss_Unused_12 5c4868db-f33f-b82c-cab5-30410f2bc554c3c3
 attr HMW_VRT1_Verschluss_Unused_12 room HMWired
 attr HMW_VRT1_Verschluss_Unused_12 subType sensor
-
+attr HMW_VRT1_Verschluss_Unused_12 event-on-change-reading sensor
 
 #################################################################################
 # RS 485 I/O Modul 12 Eingänge, 7 Schaltausgänge Setting
@@ -287,10 +311,10 @@ attr FileLog_HMW_HSK1_Hauptsicherungskasten_IO_12_Sw7_0 room FileLog
 
 define HMW_HSK1_KlingelHaus HM485 0001131D_01
 setuuid HMW_HSK1_KlingelHaus 5c4868db-f33f-b82c-acdc-e8466073dd7886d9
-attr HMW_HSK1_KlingelHaus event-on-change-reading press_long,press_short
 attr HMW_HSK1_KlingelHaus group HMW_HSK1_Hauptsicherungskasten
 attr HMW_HSK1_KlingelHaus room HMWired
 attr HMW_HSK1_KlingelHaus subType key
+attr HMW_HSK1_KlingelHaus event-on-change-reading press_long,press_short
 define FileLog_HMW_HSK1_KlingelHaus FileLog ./log/HMW_HSK1_KlingelHaus-%Y.log HMW_HSK1_KlingelHaus
 setuuid FileLog_HMW_HSK1_KlingelHaus 5c4868db-f33f-b82c-82db-e8ce38ace1ee4711
 attr FileLog_HMW_HSK1_KlingelHaus logtype text
@@ -301,10 +325,10 @@ setuuid HMW_HSK1_BM_Kueche 5c4868db-f33f-b82c-6b03-b9c23540d1b267bb
 attr HMW_HSK1_BM_Kueche alias Bewegungsmelder Küche
 attr HMW_HSK1_BM_Kueche dependencyDevice HM_Sw2_Haustuer_Lampe,webcamHaustuere,webcamTerrasse
 attr HMW_HSK1_BM_Kueche dependencyValue 30
-attr HMW_HSK1_BM_Kueche event-on-change-reading press_long,press_short
 attr HMW_HSK1_BM_Kueche group Bewegungsmelder,HMW_HSK1_Hauptsicherungskasten
 attr HMW_HSK1_BM_Kueche room HMWired,Garten
 attr HMW_HSK1_BM_Kueche subType key
+attr HMW_HSK1_BM_Kueche event-on-change-reading press_long,press_short
 define FileLog_HMW_HSK1_BM_Kueche FileLog ./log/HMW_HSK1_BM_Kueche-%Y.log HMW_HSK1_BM_Kueche
 setuuid FileLog_HMW_HSK1_BM_Kueche 5c4868db-f33f-b82c-0e8a-a4e31abe24da2d9d
 attr FileLog_HMW_HSK1_BM_Kueche room FileLog
@@ -314,10 +338,10 @@ setuuid HMW_HSK1_BM_Esszimmer 5c4868db-f33f-b82c-6007-d13e8c5b2af69a8c
 attr HMW_HSK1_BM_Esszimmer alias Bewegungsmelder Esszimmer
 attr HMW_HSK1_BM_Esszimmer dependencyDevice HMW_HSK1_Strahler_Terrasse,HMW_HSK1_Strahler_Bauerngarten,webcamHaustuere,webcamTerrasse
 attr HMW_HSK1_BM_Esszimmer dependencyValue 30
-attr HMW_HSK1_BM_Esszimmer event-on-change-reading press_long,press_short
 attr HMW_HSK1_BM_Esszimmer group Bewegungsmelder,HMW_HSK1_Hauptsicherungskasten
 attr HMW_HSK1_BM_Esszimmer room HMWired,Garten
 attr HMW_HSK1_BM_Esszimmer subType key
+attr HMW_HSK1_BM_Esszimmer event-on-change-reading press_long,press_short
 define FileLog_HMW_HSK1_BM_Esszimmer FileLog ./log/HMW_HSK1_BM_Esszimmer-%Y.log HMW_HSK1_BM_Esszimmer
 setuuid FileLog_HMW_HSK1_BM_Esszimmer 5c4868db-f33f-b82c-440c-18bf894cfe5fb3c1
 attr FileLog_HMW_HSK1_BM_Esszimmer room FileLog
@@ -327,10 +351,10 @@ setuuid HMW_HSK1_BM_Wohnzimmer 5c4868db-f33f-b82c-5e40-7919de6d8aa6e2a5
 attr HMW_HSK1_BM_Wohnzimmer alias Bewegungsmelder Wohnzimmer
 attr HMW_HSK1_BM_Wohnzimmer dependencyDevice HMW_HSK1_Strahler_Nebeneingang,HMW_HSK1_Strahler_Terrasse,webcamHaustuere,webcamTerrasse
 attr HMW_HSK1_BM_Wohnzimmer dependencyValue 30
-attr HMW_HSK1_BM_Wohnzimmer event-on-change-reading press_long,press_short
 attr HMW_HSK1_BM_Wohnzimmer group Bewegungsmelder,HMW_HSK1_Hauptsicherungskasten
 attr HMW_HSK1_BM_Wohnzimmer room HMWired,Garten
 attr HMW_HSK1_BM_Wohnzimmer subType key
+attr HMW_HSK1_BM_Wohnzimmer event-on-change-reading press_long,press_short
 define FileLog_HMW_HSK1_BM_Wohnzimmer FileLog ./log/HMW_HSK1_BM_Wohnzimmer-%Y.log HMW_HSK1_BM_Wohnzimmer
 setuuid FileLog_HMW_HSK1_BM_Wohnzimmer 5c4868db-f33f-b82c-74a6-11905d25aa9fdc55
 attr FileLog_HMW_HSK1_BM_Wohnzimmer room FileLog
@@ -340,10 +364,10 @@ setuuid HMW_HSK1_BM_Bauerngarten 5c4868db-f33f-b82c-ef34-1b766d562e6c003d
 attr HMW_HSK1_BM_Bauerngarten alias Bewegungsmelder Bauerngarten
 attr HMW_HSK1_BM_Bauerngarten dependencyDevice HMW_HSK1_Strahler_Terrasse
 attr HMW_HSK1_BM_Bauerngarten dependencyValue 30
-attr HMW_HSK1_BM_Bauerngarten event-on-change-reading press_long,press_short
 attr HMW_HSK1_BM_Bauerngarten group Bewegungsmelder,HMW_HSK1_Hauptsicherungskasten
 attr HMW_HSK1_BM_Bauerngarten room HMWired,Garten
 attr HMW_HSK1_BM_Bauerngarten subType key
+attr HMW_HSK1_BM_Bauerngarten event-on-change-reading press_long,press_short
 define FileLog_HMW_HSK1_BM_Bauerngarten FileLog ./log/HMW_HSK1_BM_Bauerngarten-%Y.log HMW_HSK1_BM_Bauerngarten
 setuuid FileLog_HMW_HSK1_BM_Bauerngarten 5c4868db-f33f-b82c-115f-3bfb53f9b5fcaec2
 attr FileLog_HMW_HSK1_BM_Bauerngarten room FileLog
@@ -387,30 +411,37 @@ define HMW_IO_12_Sw7_DR_LEQ1286184_06 HM485 0001131D_06
 setuuid HMW_IO_12_Sw7_DR_LEQ1286184_06 5c4868db-f33f-b82c-161b-e9f7c680a0ab0440
 attr HMW_IO_12_Sw7_DR_LEQ1286184_06 room HMWired
 attr HMW_IO_12_Sw7_DR_LEQ1286184_06 subType key
+attr HMW_IO_12_Sw7_DR_LEQ1286184_06 event-on-change-reading press_long,press_short
 define HMW_IO_12_Sw7_DR_LEQ1286184_07 HM485 0001131D_07
 setuuid HMW_IO_12_Sw7_DR_LEQ1286184_07 5c4868db-f33f-b82c-a9b7-e121d8423b37b6bd
 attr HMW_IO_12_Sw7_DR_LEQ1286184_07 room HMWired
 attr HMW_IO_12_Sw7_DR_LEQ1286184_07 subType key
+attr HMW_IO_12_Sw7_DR_LEQ1286184_07 event-on-change-reading press_long,press_short
 define HMW_IO_12_Sw7_DR_LEQ1286184_08 HM485 0001131D_08
 setuuid HMW_IO_12_Sw7_DR_LEQ1286184_08 5c4868db-f33f-b82c-8458-d3078e8a22915289
 attr HMW_IO_12_Sw7_DR_LEQ1286184_08 room HMWired
 attr HMW_IO_12_Sw7_DR_LEQ1286184_08 subType key
+attr HMW_IO_12_Sw7_DR_LEQ1286184_08 event-on-change-reading press_long,press_short
 define HMW_IO_12_Sw7_DR_LEQ1286184_09 HM485 0001131D_09
 setuuid HMW_IO_12_Sw7_DR_LEQ1286184_09 5c4868db-f33f-b82c-e28f-bba8e264537f7516
 attr HMW_IO_12_Sw7_DR_LEQ1286184_09 room HMWired
 attr HMW_IO_12_Sw7_DR_LEQ1286184_09 subType key
+attr HMW_IO_12_Sw7_DR_LEQ1286184_09 event-on-change-reading press_long,press_short
 define HMW_IO_12_Sw7_DR_LEQ1286184_10 HM485 0001131D_10
 setuuid HMW_IO_12_Sw7_DR_LEQ1286184_10 5c4868db-f33f-b82c-7862-bd630d9449649f60
 attr HMW_IO_12_Sw7_DR_LEQ1286184_10 room HMWired
 attr HMW_IO_12_Sw7_DR_LEQ1286184_10 subType key
+attr HMW_IO_12_Sw7_DR_LEQ1286184_10 event-on-change-reading press_long,press_short
 define HMW_IO_12_Sw7_DR_LEQ1286184_11 HM485 0001131D_11
 setuuid HMW_IO_12_Sw7_DR_LEQ1286184_11 5c4868db-f33f-b82c-32d0-ba4b9145d3e85e1d
 attr HMW_IO_12_Sw7_DR_LEQ1286184_11 room HMWired
 attr HMW_IO_12_Sw7_DR_LEQ1286184_11 subType key
+attr HMW_IO_12_Sw7_DR_LEQ1286184_11 event-on-change-reading press_long,press_short
 define HMW_IO_12_Sw7_DR_LEQ1286184_12 HM485 0001131D_12
 setuuid HMW_IO_12_Sw7_DR_LEQ1286184_12 5c4868db-f33f-b82c-c560-f8062aa2c2ce94e4
 attr HMW_IO_12_Sw7_DR_LEQ1286184_12 room HMWired
 attr HMW_IO_12_Sw7_DR_LEQ1286184_12 subType key
+attr HMW_IO_12_Sw7_DR_LEQ1286184_12 event-on-change-reading press_long,press_short
 define HMW_IO_12_Sw7_DR_LEQ1286184_18 HM485 0001131D_18
 setuuid HMW_IO_12_Sw7_DR_LEQ1286184_18 5c4868db-f33f-b82c-c92d-f90fe193566a00e7
 attr HMW_IO_12_Sw7_DR_LEQ1286184_18 room HMWired

@@ -940,7 +940,7 @@ sub spotlightControl($) {
 		for(@targetGroupDevices) {
 			$targetDevices = $_;
 			$targetDevicesType = InternalVal($targetDevices,"TYPE","");
-			if ("HMCCUCHN" eq uc($targetDevicesType)) {
+			if (("HMCCUCHN" eq uc($targetDevicesType)) || ("HM485" eq uc($targetDevicesType))){
 				Log 3, "*** set targetDevices=$targetDevices on until $activeHour:$activeMinutes:$activeSeconds***";
 				fhem("set $targetDevices on");
 				fhem("delete SPOTLIGHT_".$targetDevices."_OFF");
